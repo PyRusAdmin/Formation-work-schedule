@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь отпусков на октябрь 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .employee-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        .employee-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .employee-name input {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 250px;
+        }
+
+        .vacation-inputs {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .vacation-inputs label {
+            display: flex;
+            flex-direction: column;
+            font-weight: bold;
+        }
+
+        .vacation-inputs input {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 140px;
+        }
+
+        .custom-weekends {
+            margin-top: 10px;
+        }
+
+        .weekend-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .weekend-selector label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px 5px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .calendar-day {
+            height: 80px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+            background-color: #fff;
+            position: relative;
+            border-radius: 4px;
+        }
+
+        .calendar-day.weekend {
+            background-color: #ffebee;
+        }
+
+        .calendar-day.vacation {
+            background-color: #ffcdd2;
+        }
+
+        .calendar-day.working {
+            background-color: #c8e6c9;
+        }
+
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .day-status {
+            font-size: 12px;
+        }
+
+        .add-employee-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .add-employee-btn:hover {
+            background-color: #45a049;
+        }
+
+        .employee-list {
+            margin-top: 20px;
+        }
+
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+        }
+
+        .summary h3 {
+            margin-top: 0;
+        }
+
+        .summary-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Календарь отпусков на октябрь 2025</h1>
+
+    <button class="add-employee-btn" onclick="addEmployee()">Добавить сотрудника</button>
+
+    <div id="employees-container"></div>
+
+    <div class="summary">
+        <h3>Сводная информация</h3>
+        <div id="summary-content"></div>
+    </div>
+</div>
+
+<script>
+    // Глобальные переменные
+    const employees = [];
+    const month = 9; // Октябрь (0-11)
+    const year = 2025;
+
+    // Названия дней недели и месяцев (начинаем с понедельника)
+    const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    const months = [
+        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+    ];
+
+    // Инициализация при загрузке страницы
+    window.onload = function () {
+        addEmployee(); // Добавляем первого сотрудника по умолчанию
+    };
+
+    // Функция добавления нового сотрудника
+    function addEmployee() {
+        const employeeId = employees.length;
+        employees.push({
+            id: employeeId,
+            name: `Сотрудник ${employeeId + 1}`,
+            vacationStart: null,
+            vacationEnd: null,
+            weekends: [5, 6] // Суббота и воскресенье по умолчанию
+        });
+
+        renderEmployeeSection(employeeId);
+        updateCalendar();
+    }
+
+    // Функция отображения секции сотрудника
+    function renderEmployeeSection(employeeId) {
+        const employee = employees[employeeId];
+        const container = document.getElementById('employees-container');
+
+        const employeeDiv = document.createElement('div');
+        employeeDiv.className = 'employee-section';
+        employeeDiv.id = `employee-${employeeId}`;
+
+        employeeDiv.innerHTML = `
+                <div class="employee-header">
+                    <div class="employee-name">
+                        <input type="text" value="${employee.name}" onchange="updateEmployeeName(${employeeId}, this.value)">
+                    </div>
+                    <button onclick="removeEmployee(${employeeId})">Удалить сотрудника</button>
+                </div>
+
+                <div class="vacation-inputs">
+                    <label>
+                        Начало отпуска:
+                        <input type="date" onchange="updateVacation(${employeeId}, 'start', this.value)"
+                               min="2025-10-01" max="2025-10-31">
+                    </label>
+
+                    <label>
+                        Конец отпуска:
+                        <input type="date" onchange="updateVacation(${employeeId}, 'end', this.value)"
+                               min="2025-10-01" max="2025-10-31">
+                    </label>
+                </div>
+
+                <div class="custom-weekends">
+                    <label>Выходные дни:</label>
+                    <div class="weekend-selector">
+                        ${weekdays.map((day, index) => {
+            // Преобразуем индекс для соответствия стандартному представлению (0=вс, 1=пн, ..., 6=сб)
+            const standardIndex = index === 6 ? 0 : index + 1;
+            return `
+                                <label>
+                                    <input type="checkbox" ${employee.weekends.includes(standardIndex) ? 'checked' : ''}
+                                           onchange="toggleWeekend(${employeeId}, ${standardIndex}, this.checked)">
+                                    ${day}
+                                </label>
+                            `;
+        }).join('')}
+                    </div>
+                </div>
+
+                <div class="calendar-grid" id="calendar-${employeeId}">
+                    <!-- Календарь будет сгенерирован здесь -->
+                </div>
+            `;
+
+        container.appendChild(employeeDiv);
+    }
+
+    // Обновление имени сотрудника
+    function updateEmployeeName(employeeId, name) {
+        employees[employeeId].name = name;
+        updateCalendar();
+    }
+
+    // Обновление отпуска сотрудника
+    function updateVacation(employeeId, type, date) {
+        if (type === 'start') {
+            employees[employeeId].vacationStart = date ? new Date(date) : null;
+        } else {
+            employees[employeeId].vacationEnd = date ? new Date(date) : null;
+        }
+        updateCalendar();
+    }
+
+    // Переключение выходного дня
+    function toggleWeekend(employeeId, dayIndex, isChecked) {
+        const weekends = employees[employeeId].weekends;
+        if (isChecked) {
+            if (!weekends.includes(dayIndex)) {
+                weekends.push(dayIndex);
+            }
+        } else {
+            const index = weekends.indexOf(dayIndex);
+            if (index > -1) {
+                weekends.splice(index, 1);
+            }
+        }
+        updateCalendar();
+    }
+
+    // Удаление сотрудника
+    function removeEmployee(employeeId) {
+        if (employees.length <= 1) {
+            alert('Нельзя удалить последнего сотрудника');
+            return;
+        }
+
+        employees.splice(employeeId, 1);
+        // Переиндексируем оставшихся сотрудников
+        for (let i = employeeId; i < employees.length; i++) {
+            employees[i].id = i;
+        }
+
+        renderAllEmployees();
+        updateCalendar();
+    }
+
+    // Перерисовка всех сотрудников
+    function renderAllEmployees() {
+        const container = document.getElementById('employees-container');
+        container.innerHTML = '';
+
+        employees.forEach((_, index) => {
+            renderEmployeeSection(index);
+        });
+    }
+
+    // Обновление календаря для всех сотрудников
+    function updateCalendar() {
+        employees.forEach(employee => {
+            renderCalendarForEmployee(employee);
+        });
+        updateSummary();
+    }
+
+    // Отображение календаря для конкретного сотрудника
+    function renderCalendarForEmployee(employee) {
+        const calendarContainer = document.getElementById(`calendar-${employee.id}`);
+        if (!calendarContainer) return;
+
+        // Очищаем контейнер
+        calendarContainer.innerHTML = '';
+
+        // Добавляем заголовки дней недели (начиная с понедельника)
+        weekdays.forEach(day => {
+            const header = document.createElement('div');
+            header.className = 'calendar-header';
+            header.textContent = day;
+            calendarContainer.appendChild(header);
+        });
+
+        // Получаем первый день месяца
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+
+        // День недели первого числа (0 - воскресенье, 1 - понедельник, и т.д.)
+        const firstDayOfWeek = firstDay.getDay();
+
+        // Корректируем для начала недели с понедельника
+        // 0 (вс) -> 6, 1 (пн) -> 0, 2 (вт) -> 1, ..., 6 (сб) -> 5
+        const adjustedFirstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+
+        // Добавляем пустые ячейки для дней предыдущего месяца
+        for (let i = 0; i < adjustedFirstDayOfWeek; i++) {
+            const emptyDay = document.createElement('div');
+            emptyDay.className = 'calendar-day';
+            calendarContainer.appendChild(emptyDay);
+        }
+
+        // Добавляем ячейки для дней октября
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+            const currentDate = new Date(year, month, day);
+            const dayOfWeek = currentDate.getDay();
+
+            // Преобразуем день недели для нашего представления (0=пн, 1=вт, ..., 6=вс)
+            const adjustedDayOfWeek = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+
+            // Определяем классы для стилизации
+            if (employee.weekends.includes(dayOfWeek)) {
+                dayElement.classList.add('weekend');
+            }
+
+            // Проверяем, находится ли день в отпуске
+            if (isDateInVacation(currentDate, employee)) {
+                dayElement.classList.add('vacation');
+            } else if (!employee.weekends.includes(dayOfWeek)) {
+                dayElement.classList.add('working');
+            }
+
+            // Добавляем номер дня и статус
+            dayElement.innerHTML = `
+                    <div class="day-number">${day}</div>
+                    <div class="day-status">${getDayStatus(currentDate, employee)}</div>
+                `;
+
+            calendarContainer.appendChild(dayElement);
+        }
+    }
+
+    // Проверка, находится ли дата в отпуске
+    function isDateInVacation(date, employee) {
+        if (!employee.vacationStart || !employee.vacationEnd) return false;
+
+        const startDate = new Date(employee.vacationStart);
+        const endDate = new Date(employee.vacationEnd);
+
+        // Устанавливаем время в 00:00 для корректного сравнения
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(0, 0, 0, 0);
+        date.setHours(0, 0, 0, 0);
+
+        return date >= startDate && date <= endDate;
+    }
+
+    // Получение статуса дня
+    function getDayStatus(date, employee) {
+        const dayOfWeek = date.getDay();
+
+        if (employee.weekends.includes(dayOfWeek)) {
+            return 'Выходной';
+        }
+
+        if (isDateInVacation(date, employee)) {
+            return 'Отпуск';
+        }
+
+        return 'Рабочий';
+    }
+
+    // Обновление сводной информации
+    function updateSummary() {
+        const summaryContainer = document.getElementById('summary-content');
+        if (!summaryContainer) return;
+
+        const summary = employees.map(employee => {
+            const stats = calculateEmployeeStats(employee);
+            return `
+                    <div class="summary-item">
+                        <strong>${employee.name}:</strong>
+                        Рабочих дней: ${stats.workingDays},
+                        Отпускных дней: ${stats.vacationDays},
+                        Выходных: ${stats.weekendDays}
+                    </div>
+                `;
+        }).join('');
+
+        summaryContainer.innerHTML = summary;
+    }
+
+    // Расчет статистики для сотрудника
+    function calculateEmployeeStats(employee) {
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+
+        let workingDays = 0;
+        let vacationDays = 0;
+        let weekendDays = 0;
+
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+            const currentDate = new Date(year, month, day);
+            const dayOfWeek = currentDate.getDay();
+
+            if (employee.weekends.includes(dayOfWeek)) {
+                weekendDays++;
+            } else if (isDateInVacation(currentDate, employee)) {
+                vacationDays++;
+            } else {
+                workingDays++;
+            }
+        }
+
+        return {workingDays, vacationDays, weekendDays};
+    }
+</script>
+</body>
+</html>
