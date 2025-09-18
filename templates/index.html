@@ -210,16 +210,45 @@
     // Функция добавления нового сотрудника
     function addEmployee() {
         const employeeId = employees.length;
-        employees.push({
+        const newEmployee = {
             id: employeeId,
             name: `Сотрудник ${employeeId + 1}`,
             vacationStart: null,
             vacationEnd: null,
-            weekends: [5, 6] // Суббота и воскресенье по умолчанию
-        });
+            weekends: [0, 6] // по умолчанию суббота и воскресенье
+        };
 
+        employees.push(newEmployee);
         renderEmployeeSection(employeeId);
         updateCalendar();
+    }
+
+    //    Сохранение данных в базу данных
+    async function saveEmployee(employeeId) {
+        const employee = employees[employeeId];
+        if (!employee.vacationStart || !employee.vacationEnd) {
+            alert("Заполните даты отпуска перед сохранением!");
+            return;
+        }
+
+        try {
+            const response = await fetch('/employees/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: employee.name,
+                    vacation_start: employee.vacationStart,
+                    vacation_end: employee.vacationEnd,
+                    weekends: employee.weekends
+                })
+            });
+            const data = await response.json();
+            console.log('Сотрудник сохранён:', data);
+        } catch (error) {
+            console.error('Ошибка при сохранении:', error);
+        }
     }
 
     // Функция отображения секции сотрудника
@@ -236,6 +265,7 @@
                     <div class="employee-name">
                         <input type="text" value="${employee.name}" onchange="updateEmployeeName(${employeeId}, this.value)">
                     </div>
+                    <button onclick="saveEmployee(${employeeId})">Сохранить</button>
                     <button onclick="removeEmployee(${employeeId})">Удалить сотрудника</button>
                 </div>
 
