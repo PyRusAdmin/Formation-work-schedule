@@ -34,6 +34,17 @@ class EmployeeResponse(BaseModel):
     weekends: List[int]
 
 
+@app.get("/list_employees", response_model=EmployeeResponse)
+async def list_employees(request: Request):
+    """
+    Страница списка сотрудников
+    :param request:
+    :return:
+    """
+    # Если используешь Jinja2Templates (рекомендуется):
+    return templates.TemplateResponse("list_employees.html", {"request": request})
+
+
 # CRUD операции
 @app.post("/employees/", response_model=EmployeeResponse)
 async def create_employee(employee: EmployeeCreate):
