@@ -3,8 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Список сотрудников</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+
+<div class="menu">
+    <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
+    <label for="burger-checkbox" class="burger"></label>
+    <div class="overlay"></div> <!-- Добавлено -->
+    <ul class="menu-list">
+        <li><a href="#" class="menu-item">Главная</a></li>
+        <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
+        <li><a href="#" class="menu-item">Команда</a></li>
+        <li><a href="#" class="menu-item">Контакты</a></li>
+    </ul>
+</div>
+
+
+<div class="container" style="margin-top: 80px;">
+    <h1>Список сотрудников</h1>
+
+    {% if employees %}
+    <table class="employees-table">
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Начало отпуска</th>
+            <th>Конец отпуска</th>
+            <th>Выходные дни</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for emp in employees %}
+        <tr>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.vacation_start }}</td>
+            <td>{{ emp.vacation_end }}</td>
+            <td>
+                {% set days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"] %}
+                {% for day_index in emp.get_weekends() %}
+                {{ days[day_index] }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                {% if not emp.get_weekends() %}—{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Сотрудников пока нет. Добавьте их через <a href="/">календарь отпусков</a>.</p>
+    {% endif %}
+</div>
+
+
+<script>
+    // Закрытие меню при клике на оверлей
+    document.querySelector('.overlay').addEventListener('click', function() {
+        document.getElementById('burger-checkbox').checked = false;
+    });
+</script>
 
 </body>
 </html>

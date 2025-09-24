@@ -41,8 +41,13 @@ async def list_employees(request: Request):
     :param request:
     :return:
     """
-    # Если используешь Jinja2Templates (рекомендуется):
-    return templates.TemplateResponse("list_employees.html", {"request": request})
+    employees = Employee.select()
+
+    # Передаём в шаблон
+    return templates.TemplateResponse(
+        "list_employees.html",
+        {"request": request, "employees": employees}
+    )
 
 
 # CRUD операции
