@@ -13,7 +13,6 @@ class Employee(BaseModel):
     name = CharField()  # Имя сотрудника
     vacation_start = DateField()  # Дата начала отпуска
     vacation_end = DateField()  # Дата окончания отпуска
-    weekends = CharField()  # Храним выходные дни как строку JSON
 
 
 # Функция для подключения к БД

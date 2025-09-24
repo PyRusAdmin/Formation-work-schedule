@@ -23,7 +23,6 @@ class EmployeeCreate(BaseModel):
     name: str
     vacation_start: date
     vacation_end: date
-    weekends: List[int]
 
 
 class EmployeeResponse(BaseModel):
@@ -31,7 +30,6 @@ class EmployeeResponse(BaseModel):
     name: str
     vacation_start: date
     vacation_end: date
-    weekends: List[int]
 
 
 @app.get("/list_employees", response_model=None)  # response_model лучше убрать
@@ -46,7 +44,6 @@ async def list_employees(request: Request):
                 "name": emp.name,
                 "vacation_start": emp.vacation_start,
                 "vacation_end": emp.vacation_end,
-                "weekends": json.loads(emp.weekends) if emp.weekends else []
             })
 
         return templates.TemplateResponse(
@@ -56,6 +53,7 @@ async def list_employees(request: Request):
     except Exception as e:
         logger.exception(e)
 
+
 # CRUD операции
 @app.post("/employees/", response_model=EmployeeResponse)
 async def create_employee(employee: EmployeeCreate):
@@ -63,14 +61,12 @@ async def create_employee(employee: EmployeeCreate):
         name=employee.name,
         vacation_start=employee.vacation_start,
         vacation_end=employee.vacation_end,
-        weekends=str(employee.weekends)  # Конвертируем список в строку
     )
     return EmployeeResponse(
         id=new_employee.id,
         name=new_employee.name,
         vacation_start=new_employee.vacation_start,
         vacation_end=new_employee.vacation_end,
-        weekends=eval(new_employee.weekends)  # Конвертируем строку обратно в список
     )
 
 
@@ -83,7 +79,6 @@ async def get_employees():
             name=emp.name,
             vacation_start=emp.vacation_start,
             vacation_end=emp.vacation_end,
-            weekends=eval(emp.weekends)
         )
         for emp in employees
     ]
