@@ -21,38 +21,24 @@
 
 
 <div class="container" style="margin-top: 80px;">
-    <h1>Список сотрудников</h1>
+    <h1>Список сотрудников в отпуске</h1>
 
-    {% if employees %}
-    <table class="employees-table">
-        <thead>
-        <tr>
-            <th>Имя</th>
-            <th>Начало отпуска</th>
-            <th>Конец отпуска</th>
-            <th>Выходные дни</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for emp in employees %}
-        <tr>
-            <td>{{ emp.name }}</td>
-            <td>{{ emp.vacation_start }}</td>
-            <td>{{ emp.vacation_end }}</td>
-            <td>
-                {% set days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"] %}
-                {% for day_index in emp.get_weekends() %}
-                {{ days[day_index] }}{% if not loop.last %}, {% endif %}
-                {% endfor %}
-                {% if not emp.get_weekends() %}—{% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>Сотрудников пока нет. Добавьте их через <a href="/">календарь отпусков</a>.</p>
-    {% endif %}
+    <tbody>
+    {% for emp in employees %}
+    <tr>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.vacation_start }}</td>
+        <td>{{ emp.vacation_end }}</td>
+        <td>
+            {% if emp.weekends %}
+            {{ emp.weekends|length }} дн. <br>
+            {% else %}
+            -
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
 </div>
 
 

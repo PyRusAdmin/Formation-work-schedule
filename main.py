@@ -1,11 +1,11 @@
 from datetime import date
 from typing import List
-
+from loguru import logger
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-
+import json
 from database import Employee, initialize_db
 
 app = FastAPI()  # Создаем экземпляр FastAPI
@@ -34,21 +34,27 @@ class EmployeeResponse(BaseModel):
     weekends: List[int]
 
 
-@app.get("/list_employees", response_model=EmployeeResponse)
+@app.get("/list_employees", response_model=None)  # response_model лучше убрать
 async def list_employees(request: Request):
     """
     Страница списка сотрудников
-    :param request:
-    :return:
     """
-    employees = Employee.select()
+    try:
+        employees = []
+        for emp in Employee.select():
+            employees.append({
+                "name": emp.name,
+                "vacation_start": emp.vacation_start,
+                "vacation_end": emp.vacation_end,
+                "weekends": json.loads(emp.weekends) if emp.weekends else []
+            })
 
-    # Передаём в шаблон
-    return templates.TemplateResponse(
-        "list_employees.html",
-        {"request": request, "employees": employees}
-    )
-
+        return templates.TemplateResponse(
+            "list_employees.html",
+            {"request": request, "employees": employees}
+        )
+    except Exception as e:
+        logger.exception(e)
 
 # CRUD операции
 @app.post("/employees/", response_model=EmployeeResponse)
