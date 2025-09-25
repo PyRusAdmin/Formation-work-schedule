@@ -8,7 +8,7 @@ from fastapi.templating import Jinja2Templates
 from loguru import logger
 from pydantic import BaseModel
 
-from database import Employee, initialize_db
+from database import Employee, initialize_db, writing_employee_database
 
 app = FastAPI()  # Создаем экземпляр FastAPI
 # Монтируем статические файлы
@@ -22,14 +22,14 @@ initialize_db()
 
 # Модели Pydantic
 class EmployeeCreate(BaseModel):
-    name: str
+    service_number: str
     vacation_start: date
     vacation_end: date
 
 
 class EmployeeResponse(BaseModel):
     id: int
-    name: str
+    service_number: str
     vacation_start: date
     vacation_end: date
 
@@ -43,7 +43,7 @@ async def list_employees(request: Request):
         employees = []
         for emp in Employee.select():
             employees.append({
-                "name": emp.name,
+                "service_number": emp.service_number,
                 "vacation_start": emp.vacation_start,
                 "vacation_end": emp.vacation_end,
             })
@@ -60,13 +60,13 @@ async def list_employees(request: Request):
 @app.post("/employees/", response_model=EmployeeResponse)
 async def create_employee(employee: EmployeeCreate):
     new_employee = Employee.create(
-        name=employee.name,
+        name=employee.service_number,
         vacation_start=employee.vacation_start,
         vacation_end=employee.vacation_end,
     )
     return EmployeeResponse(
         id=new_employee.id,
-        name=new_employee.name,
+        service_number=new_employee.service_number,
         vacation_start=new_employee.vacation_start,
         vacation_end=new_employee.vacation_end,
     )
@@ -78,7 +78,7 @@ async def get_employees():
     return [
         EmployeeResponse(
             id=emp.id,
-            name=emp.name,
+            service_number=emp.service_number,
             vacation_start=emp.vacation_start,
             vacation_end=emp.vacation_end,
         )
@@ -89,4 +89,5 @@ async def get_employees():
 @app.get("/")
 async def index(request: Request):
     # Передаем контекст в шаблон
+    writing_employee_database()
     return templates.TemplateResponse("index.html", {"request": request})

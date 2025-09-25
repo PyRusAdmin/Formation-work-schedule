@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Список сотрудников</title>
@@ -10,40 +10,48 @@
 <div class="menu">
     <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
     <label for="burger-checkbox" class="burger"></label>
-    <div class="overlay"></div> <!-- Добавлено -->
+    <div class="overlay"></div>
     <ul class="menu-list">
-        <li><a href="#" class="menu-item">Главная</a></li>
+        <li><a href="/" class="menu-item">Главная</a></li>
         <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
         <li><a href="#" class="menu-item">Команда</a></li>
         <li><a href="#" class="menu-item">Контакты</a></li>
     </ul>
 </div>
 
-
 <div class="container" style="margin-top: 80px;">
     <h1>Список сотрудников в отпуске</h1>
 
-    <tbody>
-    {% for emp in employees %}
-    <tr>
-        <td>{{ emp.name }}</td>
-        <td>{{ emp.vacation_start }}</td>
-        <td>{{ emp.vacation_end }}</td>
-        <td>
-            {% if emp.weekends %}
-            {{ emp.weekends|length }} дн. <br>
-            {% else %}
-            -
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-    </tbody>
+    <!-- Таблица -->
+    <table class="employees-table">
+        <thead>
+        <tr>
+            <th>Табельный номер</th>
+            <th>Начало отпуска</th>
+            <th>Окончание отпуска</th>
+            <th>Выходные дни</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for emp in employees %}
+        <tr>
+            <td>{{ emp.service_number }}</td>
+            <td>{{ emp.vacation_start }}</td>
+            <td>{{ emp.vacation_end }}</td>
+            <td>
+                {% if emp.weekends %}
+                {{ emp.weekends|length }} дн.
+                {% else %}
+                –
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 
-
 <script>
-    // Закрытие меню при клике на оверлей
     document.querySelector('.overlay').addEventListener('click', function() {
         document.getElementById('burger-checkbox').checked = false;
     });
