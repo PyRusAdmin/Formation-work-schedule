@@ -1,11 +1,13 @@
+# -*- coding: utf-8 -*-
 from datetime import date
 from typing import List
-from loguru import logger
+
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from loguru import logger
 from pydantic import BaseModel
-import json
+
 from database import Employee, initialize_db
 
 app = FastAPI()  # Создаем экземпляр FastAPI

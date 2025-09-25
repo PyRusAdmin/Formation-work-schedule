@@ -1,1 +1,1 @@
-uvicorn main:app --reload
+python run_all.py
