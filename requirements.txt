@@ -1,7 +1,7 @@
-fastapi~=0.116.1
-peewee~=3.18.2
-pydantic~=2.11.7
-loguru~=0.7.3
-openpyxl~=3.1.5
-uvicorn~=0.34.3
+fastapi
+peewee
+pydantic
+loguru
+openpyxl
+uvicorn
 jinja2
