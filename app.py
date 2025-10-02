@@ -34,6 +34,12 @@ class EmployeeResponse(BaseModel):
     vacation_end: date
 
 
+@app.get("/report_card", response_model=None)
+async def report_card(request: Request):
+    """Страница формирования табеля сотрудников"""
+    return templates.TemplateResponse("report_card.html", {"request": request})
+
+
 @app.get("/list_employees", response_model=None)  # response_model лучше убрать
 async def list_employees(request: Request):
     """

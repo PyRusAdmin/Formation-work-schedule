@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>График работы сотрудников</title>
+    <title>График работы сотрудников на октябрь 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .dropdown-menu {
@@ -35,37 +35,51 @@
     </style>
 </head>
 <body class="p-4 bg-gray-50 min-h-screen">
-<h1 class="text-2xl font-bold mb-6 text-center">График работы сотрудников</h1>
+<h1 class="text-2xl font-bold mb-6 text-center">График работы сотрудников на октябрь 2025</h1>
 
 <!-- Filters -->
 <div class="bg-white p-4 rounded-lg shadow-md mb-6">
     <h2 class="text-lg font-semibold mb-4">Фильтры</h2>
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
         <div>
             <label class="block text-sm font-medium text-gray-700">КСП</label>
             <input type="text" id="filter-ksp"
-                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700">Наименование КСП</label>
             <input type="text" id="filter-name"
-                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700">Категория</label>
             <input type="text" id="filter-category"
-                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700">Профессия</label>
             <input type="text" id="filter-profession"
-                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700">Статус</label>
             <input type="text" id="filter-status"
-                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
+<!--        Поле ввода табельного номера-->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Табельный номер</label>
+            <input type="text" id="filter-service-number"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <!--        Поле ввода фамилии-->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Фамилия</label>
+            <input type="text" id="filter-surname"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+
     </div>
 </div>
 
@@ -204,9 +218,6 @@
         }
     }
 
-
-
-
     // Get cell color based on value
     function getCellColor(value) {
     switch(value) {
@@ -227,6 +238,10 @@
     const filterCategory = document.getElementById('filter-category').value;
     const filterProfession = document.getElementById('filter-profession').value;
     const filterStatus = document.getElementById('filter-status').value;
+    // Поиск по табельному номеру
+    const filterServiceNumber = document.getElementById('filter-service-number').value;
+    // Поиск по фамилии
+    const filterSurname = document.getElementById('filter-surname').value;
 
     // Filter data
     const filteredData = data.filter(row => {
@@ -235,7 +250,9 @@
     (!filterName || row.Наименование.toLowerCase().includes(filterName.toLowerCase())) &&
     (!filterCategory || row.Категория.toLowerCase().includes(filterCategory.toLowerCase())) &&
     (!filterProfession || row.Профессия.toLowerCase().includes(filterProfession.toLowerCase())) &&
-    (!filterStatus || row.Статус.toLowerCase().includes(filterStatus.toLowerCase()))
+    (!filterStatus || row.Статус.toLowerCase().includes(filterStatus.toLowerCase())) &&
+    (!filterServiceNumber || row.Таб.includes(filterServiceNumber)) &&
+    (!filterSurname || row.ФИО.toLowerCase().includes(filterSurname.toLowerCase()))
     );
     });
 
@@ -358,6 +375,10 @@
     document.getElementById('filter-category').oninput = renderTable;
     document.getElementById('filter-profession').oninput = renderTable;
     document.getElementById('filter-status').oninput = renderTable;
+// Фильтр по табельному номеру
+    document.getElementById('filter-service-number').oninput = renderTable;
+    // Фильтр по фамилии
+    document.getElementById('filter-surname').oninput = renderTable;
 
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
