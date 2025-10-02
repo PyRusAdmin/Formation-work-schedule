@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from datetime import date
 from typing import List
-
+import json
+from pathlib import Path
+from fastapi.responses import JSONResponse
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -32,6 +34,27 @@ class EmployeeResponse(BaseModel):
     service_number: str
     vacation_start: date
     vacation_end: date
+
+
+DATA_FILE = Path("data.json")
+
+
+@app.get("/data")
+async def get_data():
+    """Возвращаем данные из JSON"""
+    if DATA_FILE.exists():
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return JSONResponse(content=data)
+    return JSONResponse(content=[], status_code=200)
+
+
+@app.post("/data")
+async def save_data(new_data: list):
+    """Сохраняем данные в JSON"""
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(new_data, f, ensure_ascii=False, indent=4)
+    return {"status": "ok"}
 
 
 @app.get("/report_card", response_model=None)
