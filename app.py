@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from datetime import date
-from typing import List
 import json
+from datetime import date
 from pathlib import Path
-from fastapi.responses import JSONResponse
+from typing import List
+
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -41,20 +41,40 @@ DATA_FILE = Path("data/data.json")
 
 @app.get("/data")
 async def get_data():
-    """Возвращаем данные из JSON"""
-    if DATA_FILE.exists():
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return JSONResponse(content=data)
-    return JSONResponse(content=[], status_code=200)
+    employees = []
+    for emp in ReportCard.select():
+        employees.append({
+            "КСП": emp.ksp,
+            "Наименование": emp.name,
+            "Категория": emp.category,
+            "Профессия": emp.profession,
+            "Статус": emp.status,
+            "Сокращение": emp.abbreviation,
+            "Разряд": emp.grade,
+            "Таб": emp.tab,
+            "ФИО": emp.fio,
+            "Тариф": emp.salary,
+            "days": json.loads(emp.days)
+        })
+    return employees
 
 
 @app.post("/data")
 async def save_data(request: Request):
-    """Сохранение данных"""
     new_data = await request.json()
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(new_data, f, ensure_ascii=False, indent=4)
+    for row in new_data:
+        emp, created = ReportCard.get_or_create(tab=row["Таб"])
+        emp.ksp = row["КСП"]
+        emp.name = row["Наименование"]
+        emp.category = row["Категория"]
+        emp.profession = row["Профессия"]
+        emp.status = row["Статус"]
+        emp.abbreviation = row.get("Сокращение", "")
+        emp.grade = row.get("Разряд", "")
+        emp.fio = row["ФИО"]
+        emp.salary = row["Тариф"]
+        emp.days = json.dumps(row["days"], ensure_ascii=False)
+        emp.save()
     return {"status": "ok"}
 
 

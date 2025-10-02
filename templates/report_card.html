@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>График работы сотрудников на октябрь 2025</title>
+    <link rel="stylesheet" href="/static/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .dropdown-menu {
@@ -34,6 +35,21 @@
         }
     </style>
 </head>
+
+<div class="menu">
+    <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
+    <label for="burger-checkbox" class="burger"></label>
+    <div class="overlay"></div> <!-- Добавлено -->
+    <ul class="menu-list">
+        <li><a href="#" class="menu-item">Главная</a></li>
+        <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
+        <li><a href="/report_card" class="menu-item">График выходов</a></li>
+        <li><a href="#" class="menu-item">Контакты</a></li>
+    </ul>
+</div>
+
+
+
 <body class="p-4 bg-gray-50 min-h-screen">
 <h1 class="text-2xl font-bold mb-6 text-center">График работы сотрудников на октябрь 2025</h1>
 
@@ -88,13 +104,9 @@
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
         <tr>
-            <!--            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">КСП</th>-->
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Наименование КСП</th>
-            <!--            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th>-->
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Профессия</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th>
-            <!--            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Сокращение</th>-->
-            <!--            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">"Разряд"</th>-->
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Таб №</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ф.И.О.</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Тариф / Оклад</th>
@@ -215,12 +227,6 @@
         }
     }
 
-    await fetch("/data", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-});
-
     // Get cell color based on value
     function getCellColor(value) {
     switch(value) {
@@ -268,13 +274,9 @@
     }
 
     tr.innerHTML = `
-<!--                <td class="w-1 py-3 whitespace-nowrap text-sm text-gray-900">${row.КСП}</td>-->
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Наименование}</td>
-<!--                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Категория}</td>-->
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Профессия}</td>
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Статус}</td>
-<!--                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Сокращение}</td>-->
-<!--                <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Разряд}</td>-->
                 <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Таб}</td>
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.ФИО}</td>
                 <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Тариф}</td>
@@ -324,24 +326,45 @@
     }
     }
 
-    // Create dropdown menu
+    // Выпадающий список
     function createDropdownMenu(rowIndex, dayIndex) {
-    const cell = document.querySelectorAll('#table-body tr')[rowIndex]?.cells[10 + dayIndex];
+    const fixedColumns = 6;
+    const cell = document.querySelectorAll('#table-body tr')[rowIndex]?.cells[fixedColumns + dayIndex];
     if (!cell) return;
 
+    // убираем старое меню
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.remove());
+
     const dropdown = document.createElement('div');
-    dropdown.className = 'dropdown-menu';
+    dropdown.className = 'dropdown-menu absolute';
 
     dropdownOptions.forEach(option => {
-    const button = document.createElement('button');
-    button.className = 'dropdown-item';
-    button.textContent = `${option.label} (${option.value})`;
-    button.onclick = () => handleOptionSelect(rowIndex, dayIndex, option.value);
-    dropdown.appendChild(button);
+        const button = document.createElement('button');
+        button.className = 'dropdown-item';
+        button.textContent = `${option.label} (${option.value})`;
+        button.onclick = () => handleOptionSelect(rowIndex, dayIndex, option.value);
+        dropdown.appendChild(button);
     });
 
     cell.appendChild(dropdown);
+
+    // позиционирование
+    const rect = cell.getBoundingClientRect();
+    const menuRect = dropdown.getBoundingClientRect();
+
+    // если не помещается справа → сдвигаем влево
+    if (rect.right + menuRect.width > window.innerWidth) {
+        dropdown.style.left = "auto";
+        dropdown.style.right = "0";
     }
+
+    // если не помещается снизу → открываем вверх
+    if (rect.bottom + menuRect.height > window.innerHeight) {
+        dropdown.style.top = "auto";
+        dropdown.style.bottom = "100%";
+    }
+}
+
 
     // Handle option select
     function handleOptionSelect(rowIndex, dayIndex, value) {
@@ -359,14 +382,25 @@
     renderTable();
     }
 
-    // Save changes
-    function handleSave() {
-    editMode = false;
-    selectedRow = null;
-    openDropdown = null;
-    document.getElementById('edit-controls').classList.add('hidden');
-    alert('Изменения сохранены!');
+    // сохранение данных на сервере
+    async function handleSave() {
+    try {
+        const response = await fetch("/data", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data) // data = твоя таблица
+        });
+
+        if (!response.ok) {
+            throw new Error("Ошибка при сохранении данных!");
+        }
+
+        alert("Изменения сохранены в базе!");
+    } catch (error) {
+        console.error("Ошибка сохранения:", error);
+        alert("Не удалось сохранить изменения!");
     }
+}
 
     // Event listeners
     document.getElementById('save-btn').onclick = handleSave;
