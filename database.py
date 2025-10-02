@@ -1,4 +1,4 @@
-from peewee import SqliteDatabase, Model, CharField, DateField
+from peewee import SqliteDatabase, Model, CharField, DateField, TextField
 
 from work_with_excel import get_data_from_excel
 
@@ -11,6 +11,20 @@ class BaseModel(Model):
         database = db
 
 
+class ReportCard(BaseModel):
+    ksp = CharField()
+    name = CharField()
+    category = CharField()
+    profession = CharField()
+    status = CharField()
+    abbreviation = CharField(null=True)
+    grade = CharField(null=True)
+    tab = CharField()
+    fio = CharField()
+    salary = CharField()
+    days = TextField()  # Храним JSON как текст
+
+
 class Employee(BaseModel):
     service_number = CharField()  # Имя сотрудника
     vacation_start = DateField()  # Дата начала отпуска
@@ -21,6 +35,7 @@ class Employee(BaseModel):
 def initialize_db():
     db.connect()
     db.create_tables([Employee])
+    db.create_tables([ReportCard])
     db.create_tables([DataStaff])
 
 

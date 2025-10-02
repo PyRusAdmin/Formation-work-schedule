@@ -10,7 +10,7 @@ from fastapi.templating import Jinja2Templates
 from loguru import logger
 from pydantic import BaseModel
 
-from database import Employee, initialize_db, writing_employee_database
+from database import ReportCard, initialize_db, writing_employee_database
 
 app = FastAPI()  # Создаем экземпляр FastAPI
 # Монтируем статические файлы
@@ -50,8 +50,9 @@ async def get_data():
 
 
 @app.post("/data")
-async def save_data(new_data: list):
-    """Сохраняем данные в JSON"""
+async def save_data(request: Request):
+    """Сохранение данных"""
+    new_data = await request.json()
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(new_data, f, ensure_ascii=False, indent=4)
     return {"status": "ok"}
@@ -70,7 +71,7 @@ async def list_employees(request: Request):
     """
     try:
         employees = []
-        for emp in Employee.select():
+        for emp in ReportCard.select():
             employees.append({
                 "service_number": emp.service_number,
                 "vacation_start": emp.vacation_start,
@@ -88,7 +89,7 @@ async def list_employees(request: Request):
 # CRUD операции
 @app.post("/employees/", response_model=EmployeeResponse)
 async def create_employee(employee: EmployeeCreate):
-    new_employee = Employee.create(
+    new_employee = ReportCard.create(
         name=employee.service_number,
         vacation_start=employee.vacation_start,
         vacation_end=employee.vacation_end,
@@ -103,7 +104,7 @@ async def create_employee(employee: EmployeeCreate):
 
 @app.get("/employees/", response_model=List[EmployeeResponse])
 async def get_employees():
-    employees = Employee.select()
+    employees = ReportCard.select()
     return [
         EmployeeResponse(
             id=emp.id,
