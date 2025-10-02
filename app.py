@@ -36,7 +36,7 @@ class EmployeeResponse(BaseModel):
     vacation_end: date
 
 
-DATA_FILE = Path("data.json")
+DATA_FILE = Path("data/data.json")
 
 
 @app.get("/data")
