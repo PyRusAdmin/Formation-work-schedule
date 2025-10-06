@@ -35,11 +35,11 @@
         }
 
         thead {
-  position: sticky;
-  top: 0;
-  background: #f9fafb;
-  z-index: 10;
-}
+            position: sticky;
+            top: 0;
+            background: #f9fafb;
+            z-index: 10;
+        }
 
     </style>
 </head>
@@ -223,15 +223,15 @@
 
     // Доступные параметры для выпадающего списка, для каждого дня
     const dropdownOptions = [
-    { value: '1', label: 'Рабочий день' },
-    { value: 'В', label: 'Выходной' },
-    { value: 'О', label: 'Отпуск' },
-    { value: 'Б', label: 'Больничный' },
-    { value: '-', label: 'Не работает' },
-    { value: 'Г', label: 'Служит' },
-    { value: 'ДО', label: 'Декрет' },
-    { value: 'БД', label: 'Не полная рабочая неделя' },
-    { value: 'ПС', label: 'Простой' },
+        { value: '1', label: 'Рабочий день' },
+        { value: 'В', label: 'Выходной' },
+        { value: 'О', label: 'Отпуск' },
+        { value: 'Б', label: 'Больничный' },
+        { value: '-', label: 'Не работает' },
+        { value: 'Г', label: 'Служит' },
+        { value: 'ДО', label: 'Декрет' },
+        { value: 'БД', label: 'Не полная рабочая неделя' },
+        { value: 'ПС', label: 'Простой' },
     ];
 
     async function loadData() {
@@ -267,39 +267,39 @@
 
     // Рендеринг таблица
     function renderTable() {
-    const tbody = document.getElementById('table-body');
-    const filterKsp = document.getElementById('filter-ksp').value;
-    const filterName = document.getElementById('filter-name').value;
-    const filterCategory = document.getElementById('filter-category').value;
-    const filterProfession = document.getElementById('filter-profession').value;
-    const filterStatus = document.getElementById('filter-status').value;
-    // Поиск по табельному номеру
-    const filterServiceNumber = document.getElementById('filter-service-number').value;
-    // Поиск по фамилии
-    const filterSurname = document.getElementById('filter-surname').value;
+        const tbody = document.getElementById('table-body');
+        const filterKsp = document.getElementById('filter-ksp').value;
+        const filterName = document.getElementById('filter-name').value;
+        const filterCategory = document.getElementById('filter-category').value;
+        const filterProfession = document.getElementById('filter-profession').value;
+        const filterStatus = document.getElementById('filter-status').value;
+        // Поиск по табельному номеру
+        const filterServiceNumber = document.getElementById('filter-service-number').value;
+        // Поиск по фамилии
+        const filterSurname = document.getElementById('filter-surname').value;
 
-    // Filter data
-    const filteredData = data.filter(row => {
-    return (
-    (!filterKsp || row.КСП.includes(filterKsp)) &&
-    (!filterName || row.Наименование.toLowerCase().includes(filterName.toLowerCase())) &&
-    (!filterCategory || row.Категория.toLowerCase().includes(filterCategory.toLowerCase())) &&
-    (!filterProfession || row.Профессия.toLowerCase().includes(filterProfession.toLowerCase())) &&
-    (!filterStatus || row.Статус.toLowerCase().includes(filterStatus.toLowerCase())) &&
-    (!filterServiceNumber || row.Таб.includes(filterServiceNumber)) &&
-    (!filterSurname || row.ФИО.toLowerCase().includes(filterSurname.toLowerCase()))
-    );
-    });
+        // Filter data
+        const filteredData = data.filter(row => {
+            return (
+            (!filterKsp || row.КСП.includes(filterKsp)) &&
+            (!filterName || row.Наименование.toLowerCase().includes(filterName.toLowerCase())) &&
+            (!filterCategory || row.Категория.toLowerCase().includes(filterCategory.toLowerCase())) &&
+            (!filterProfession || row.Профессия.toLowerCase().includes(filterProfession.toLowerCase())) &&
+            (!filterStatus || row.Статус.toLowerCase().includes(filterStatus.toLowerCase())) &&
+            (!filterServiceNumber || row.Таб.includes(filterServiceNumber)) &&
+            (!filterSurname || row.ФИО.toLowerCase().includes(filterSurname.toLowerCase()))
+            );
+        });
 
-    tbody.innerHTML = '';
+        tbody.innerHTML = '';
 
-    filteredData.forEach((row, rowIndex) => {
-    const tr = document.createElement('tr');
-    if (selectedRow === rowIndex) {
-    tr.classList.add('bg-blue-50');
-    }
+        filteredData.forEach((row, rowIndex) => {
+            const tr = document.createElement('tr');
+            if (selectedRow === rowIndex) {
+                tr.classList.add('bg-blue-50');
+            }
 
-    tr.innerHTML = `
+            tr.innerHTML = `
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Наименование}</td>
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Профессия}</td>
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Статус}</td>
@@ -308,10 +308,10 @@
                 <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Тариф}</td>
             `;
 
-    row.days.forEach((day, dayIndex) => {
-    const td = document.createElement('td');
-    td.className = `w-2 py-2 whitespace-nowrap text-sm ${getCellColor(day)} cursor-pointer relative border-2 ${openDropdown?.row === rowIndex && openDropdown?.day === dayIndex ? 'border-blue-500' : 'border-transparent'}`;
-    td.innerHTML = `
+            row.days.forEach((day, dayIndex) => {
+                const td = document.createElement('td');
+                td.className = `w-2 py-2 whitespace-nowrap text-sm ${getCellColor(day)} cursor-pointer relative border-2 ${openDropdown?.row === rowIndex && openDropdown?.day === dayIndex ? 'border-blue-500' : 'border-transparent'}`;
+                td.innerHTML = `
                     <div class="flex items-center justify-center">
                         <span>${day}</span>
                         <svg class="w-3 h-3 ml-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,114 +319,114 @@
                         </svg>
                     </div>
                 `;
-    td.onclick = () => handleCellClick(rowIndex, dayIndex);
-    tr.appendChild(td);
-    });
+                td.onclick = () => handleCellClick(rowIndex, dayIndex);
+                tr.appendChild(td);
+            });
 
-    tbody.appendChild(tr);
-    });
+            tbody.appendChild(tr);
+        });
     }
 
     // Handle cell click
     function handleCellClick(rowIndex, dayIndex) {
-    if (!editMode) {
-    selectedRow = rowIndex;
-    editMode = true;
-    document.getElementById('edit-controls').classList.remove('hidden');
-    }
+        if (!editMode) {
+            selectedRow = rowIndex;
+            editMode = true;
+            document.getElementById('edit-controls').classList.remove('hidden');
+        }
 
-    // Close any existing dropdown
-    if (openDropdown) {
-    const existingDropdown = document.querySelector('.dropdown-menu');
-    if (existingDropdown) {
-    existingDropdown.remove();
-    }
-    }
+        // Close any existing dropdown
+        if (openDropdown) {
+            const existingDropdown = document.querySelector('.dropdown-menu');
+            if (existingDropdown) {
+                existingDropdown.remove();
+            }
+        }
 
-    // Toggle dropdown for this cell
-    if (openDropdown?.row === rowIndex && openDropdown?.day === dayIndex) {
-    openDropdown = null;
-    } else {
-    openDropdown = { row: rowIndex, day: dayIndex };
-    createDropdownMenu(rowIndex, dayIndex);
-    }
+        // Toggle dropdown for this cell
+        if (openDropdown?.row === rowIndex && openDropdown?.day === dayIndex) {
+            openDropdown = null;
+        } else {
+            openDropdown = { row: rowIndex, day: dayIndex };
+            createDropdownMenu(rowIndex, dayIndex);
+        }
     }
 
     // Выпадающий список
     function createDropdownMenu(rowIndex, dayIndex) {
-    const fixedColumns = 6;
-    const cell = document.querySelectorAll('#table-body tr')[rowIndex]?.cells[fixedColumns + dayIndex];
-    if (!cell) return;
+        const fixedColumns = 6;
+        const cell = document.querySelectorAll('#table-body tr')[rowIndex]?.cells[fixedColumns + dayIndex];
+        if (!cell) return;
 
-    // убираем старое меню
-    document.querySelectorAll('.dropdown-menu').forEach(m => m.remove());
+        // убираем старое меню
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.remove());
 
-    const dropdown = document.createElement('div');
-    dropdown.className = 'dropdown-menu absolute';
+        const dropdown = document.createElement('div');
+        dropdown.className = 'dropdown-menu absolute';
 
-    dropdownOptions.forEach(option => {
-        const button = document.createElement('button');
-        button.className = 'dropdown-item';
-        button.textContent = `${option.label} (${option.value})`;
-        button.onclick = () => handleOptionSelect(rowIndex, dayIndex, option.value);
-        dropdown.appendChild(button);
-    });
+        dropdownOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'dropdown-item';
+            button.textContent = `${option.label} (${option.value})`;
+            button.onclick = () => handleOptionSelect(rowIndex, dayIndex, option.value);
+            dropdown.appendChild(button);
+        });
 
-    cell.appendChild(dropdown);
+        cell.appendChild(dropdown);
 
-    // позиционирование
-    const rect = cell.getBoundingClientRect();
-    const menuRect = dropdown.getBoundingClientRect();
+        // позиционирование
+        const rect = cell.getBoundingClientRect();
+        const menuRect = dropdown.getBoundingClientRect();
 
-    // если не помещается справа → сдвигаем влево
-    if (rect.right + menuRect.width > window.innerWidth) {
-        dropdown.style.left = "auto";
-        dropdown.style.right = "0";
+        // если не помещается справа → сдвигаем влево
+        if (rect.right + menuRect.width > window.innerWidth) {
+            dropdown.style.left = "auto";
+            dropdown.style.right = "0";
+        }
+
+        // если не помещается снизу → открываем вверх
+        if (rect.bottom + menuRect.height > window.innerHeight) {
+            dropdown.style.top = "auto";
+            dropdown.style.bottom = "100%";
+        }
     }
-
-    // если не помещается снизу → открываем вверх
-    if (rect.bottom + menuRect.height > window.innerHeight) {
-        dropdown.style.top = "auto";
-        dropdown.style.bottom = "100%";
-    }
-}
 
 
     // Handle option select
     function handleOptionSelect(rowIndex, dayIndex, value) {
-    data[rowIndex].days[dayIndex] = value;
-    openDropdown = null;
-    renderTable();
+        data[rowIndex].days[dayIndex] = value;
+        openDropdown = null;
+        renderTable();
     }
 
     // Cancel edit mode
     function handleCancelEdit() {
-    editMode = false;
-    selectedRow = null;
-    openDropdown = null;
-    document.getElementById('edit-controls').classList.add('hidden');
-    renderTable();
+        editMode = false;
+        selectedRow = null;
+        openDropdown = null;
+        document.getElementById('edit-controls').classList.add('hidden');
+        renderTable();
     }
 
     // сохранение данных на сервере
     async function handleSave() {
-    try {
-        const response = await fetch("/data", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data) // data = твоя таблица
-        });
+        try {
+            const response = await fetch("/data", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data) // data = твоя таблица
+            });
 
-        if (!response.ok) {
-            throw new Error("Ошибка при сохранении данных!");
+            if (!response.ok) {
+                throw new Error("Ошибка при сохранении данных!");
+            }
+
+            alert("Изменения сохранены в базе!");
+        } catch (error) {
+            console.error("Ошибка сохранения:", error);
+            alert("Не удалось сохранить изменения!");
         }
-
-        alert("Изменения сохранены в базе!");
-    } catch (error) {
-        console.error("Ошибка сохранения:", error);
-        alert("Не удалось сохранить изменения!");
     }
-}
 
     // Event listeners
     document.getElementById('save-btn').onclick = handleSave;
@@ -438,22 +438,22 @@
     document.getElementById('filter-category').oninput = renderTable;
     document.getElementById('filter-profession').oninput = renderTable;
     document.getElementById('filter-status').oninput = renderTable;
-// Фильтр по табельному номеру
+    // Фильтр по табельному номеру
     document.getElementById('filter-service-number').oninput = renderTable;
     // Фильтр по фамилии
     document.getElementById('filter-surname').oninput = renderTable;
 
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
-    if (!e.target.closest('.dropdown-menu') && !e.target.closest('td')) {
-    if (openDropdown) {
-    const existingDropdown = document.querySelector('.dropdown-menu');
-    if (existingDropdown) {
-    existingDropdown.remove();
-    }
-    openDropdown = null;
-    }
-    }
+        if (!e.target.closest('.dropdown-menu') && !e.target.closest('td')) {
+            if (openDropdown) {
+                const existingDropdown = document.querySelector('.dropdown-menu');
+                if (existingDropdown) {
+                    existingDropdown.remove();
+                }
+                openDropdown = null;
+            }
+        }
     });
 
     // Initial render
