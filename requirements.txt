@@ -6,3 +6,4 @@ openpyxl
 uvicorn
 jinja2
 python-multipart
+playhouse

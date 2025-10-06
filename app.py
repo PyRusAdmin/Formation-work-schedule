@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from typing import List
 
@@ -61,7 +61,10 @@ async def get_data():
 
 @app.post("/data")
 async def save_data(request: Request):
+    """Сохранение данных в БД и запись даты изменения"""
     new_data = await request.json()
+    now = datetime.now()  # текущее время
+
     for row in new_data:
         emp, created = ReportCard.get_or_create(tab=row["Таб"])
         emp.ksp = row["КСП"]
@@ -74,6 +77,7 @@ async def save_data(request: Request):
         emp.fio = row["ФИО"]
         emp.salary = row["Тариф"]
         emp.days = json.dumps(row["days"], ensure_ascii=False)
+        emp.date_change = now  # 🕒 записываем текущие дату и время
         emp.save()
     return {"status": "ok"}
 

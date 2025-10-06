@@ -1,4 +1,6 @@
-from peewee import SqliteDatabase, Model, CharField, DateField, TextField
+from datetime import datetime
+
+from peewee import SqliteDatabase, Model, CharField, DateField, TextField, DateTimeField
 
 from work_with_excel import get_data_from_excel
 
@@ -12,6 +14,7 @@ class BaseModel(Model):
 
 
 class ReportCard(BaseModel):
+    """График выходов сотрудников"""
     ksp = CharField()
     name = CharField()
     category = CharField()
@@ -23,6 +26,7 @@ class ReportCard(BaseModel):
     fio = CharField()
     salary = CharField()
     days = TextField()  # Храним JSON как текст
+    date_change = DateTimeField(default=datetime.now)  # Дата изменения графика 🆕 Новая колонка
 
 
 class Employee(BaseModel):
