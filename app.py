@@ -84,7 +84,9 @@ async def save_data(request: Request):
 
 @app.get("/report_card", response_model=None)
 async def report_card(request: Request):
-    """Страница формирования табеля сотрудников"""
+    """
+    Страница формирования табеля сотрудников
+    """
     return templates.TemplateResponse("report_card.html", {"request": request})
 
 
@@ -140,7 +142,10 @@ async def get_employees():
     ]
 
 
-@app.get("/")
+
+
+
+@app.get("/index")
 async def index(request: Request):
     # Передаем контекст в шаблон
     writing_employee_database()
