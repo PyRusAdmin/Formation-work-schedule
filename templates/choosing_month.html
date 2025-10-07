@@ -5,37 +5,14 @@
     <title>Выбор месяца</title>
 
     <style>
-        /*        *//* Месяца */
-        /*        .row { *//* контейнер для строк */
-        /*            display: flex; *//* флексовый контейнер */
-        /*            gap : 11px; *//* отступы между элементами */
-        /*            margin-bottom: 10px; *//* отступы между строками */
-        /*        }*/
-
-        /*        .item { *//* элемент */
-        /*            flex : 1; *//* равномерное распределение по ширине */
-        /*            padding: 10px; *//* внутренние отступы */
-        /*            background-color: #f0f0f0; *//* цвет фона */
-        /*            text-align: center; *//* центрирование текста */
-        /*            border: 1px solid #ccc; *//* граница */
-        /*        }*/
-
-        .body {
-
-            h1: center;
-
-        }
-
         h1 {
             text-align: center;
             color: #FF0000 ;
 
-
         }/* Дни */
         .deays {
             display: flex;
-            padding: 5px; /* внутренние отступы */
-            gap : 11px; /* отступы между элементами */
+            padding: 30px; /* внутренние отступы */
             justify-content: center;
             align-items: center;
             height: 140px;
@@ -46,156 +23,764 @@
             color: red;
         }
 
+        .table {
+            border-collapse: separate; /* Отделяем границы */
+            border-spacing: 58px 0; /* Горизонтальный отступ 10px, вертикальный 0 */
+        }
+
+        th {
+            text-align: center; /* центрирование текста */
+            font-size: 22px; /* Базовый размер */
+        }
+
+        .divider {
+            width: 100%;
+            height: 2px;
+            background-color: #00000010;
+            margin: 20px 0;
+        }
+
     </style>
 </head>
 
 <body>
 
 <div class="body">
+    <h1>Календарь на 2025 год</h1>
+    
+    <div class="divider"></div>
 
+    <div class="deays">
+        <table class="table">
+            <tr>
+                <th>Январь
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
 
-<h1>Выбор месяца</h1>
+                <th>Февраль
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+                <th>Март
 
-<div class="deays">
-    <table>
-        <tr>
-            <th>Январь
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th class="red-cell">1</th><th class="red-cell">2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th class="red-cell">8</th><th class="red-cell">9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th class="red-cell">15</th><th class="red-cell">16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th class="red-cell">22</th><th class="red-cell">23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th class="red-cell">-</th><th class="red-cell">-</th></tr>
-                </table>
-            </th>
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </table>
+    </div>
 
-            <th>Февраль
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-            <th>Март
+    <div class="divider"></div>
 
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table>
-            </th>
-        </tr>
-    </table>
-</div>
+    <div class="deays">
+        <table class="table">
+            <tr>
+                <th>Апрель
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+                <th>Май
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+                <th>Июнь
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </table>
+    </div>
 
-<div class="deays">
-    <table>
-        <tr>
-            <th>Апрель
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-            <th>Май
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-            <th>Июнь
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-        </tr>
-    </table>
-</div>
+    <div class="divider"></div>
 
+    <div class="deays">
+        <table class="table">
+            <tr>
+                <th>Июль
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+                <th>Август
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+                <th>Сентябрь
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </table>
+    </div>
 
-<div class="deays">
-    <table>
-        <tr>
-            <th>Июль
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-            <th>Август
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-            <th>Сентябрь
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-        </tr>
-    </table>
-</div>
+    <div class="divider"></div>
 
-<div class="deays">
-    <table>
-        <tr>
-            <th>Октябрь
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-            <th>Ноябрь
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-            <th>Декабрь
-                <table>
-                    <tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="red-cell">Сб</th><th class="red-cell">Вс</th></tr>
-                    <tr><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>1</th><th>2</th></tr>
-                    <tr><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                    <tr><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr>
-                    <tr><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th></tr>
-                    <tr><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>-</th><th>-</th></tr>
-                </table></th>
-        </tr>
-    </table>
-</div>
+    <div class="deays">
+        <table class="table">
+            <tr>
+                <th>Октябрь
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+                <th>Ноябрь
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+                <th>Декабрь
+                    <table>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th class="red-cell">Сб</th>
+                            <th class="red-cell">Вс</th>
+                        </tr>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th class="red-cell">1</th>
+                            <th class="red-cell">2</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th class="red-cell">8</th>
+                            <th class="red-cell">9</th>
+                        </tr>
+                        <tr>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th class="red-cell">15</th>
+                            <th class="red-cell">16</th>
+                        </tr>
+                        <tr>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th class="red-cell">22</th>
+                            <th class="red-cell">23</th>
+                        </tr>
+                        <tr>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th class="red-cell">-</th>
+                            <th class="red-cell">-</th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>
