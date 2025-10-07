@@ -1,5 +1,4 @@
-<!--        Бургер меню-->
-/* Бургер-меню — улучшенная версия */
+/* Бургер-меню  */
 .menu {
     position: fixed;
     top: 20px;
@@ -114,175 +113,175 @@
     visibility: visible;
 }
 
+/* Основной проект */
 
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
 
-        <!--        Основной проект-->
+.container {
+    width: 100%; /* Ширина страницы */
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                    background-color: #f5f5f5;
-                }
+h1 {
+    text-align: center;
+    color: #333;
+}
 
-                .container {
-                    max-width: 700px; /* Ширина страницы */
-                    margin: 0 auto;
-                    background-color: white;
-                    padding: 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                }
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
-                h1 {
-                    text-align: center;
-                    color: #333;
-                }
+.employee-section {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+}
 
-                .calendar-controls {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 15px;
-                    flex-wrap: wrap;
-                    gap: 10px;
-                }
+.employee-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
-                .employee-section {
-                    margin-bottom: 30px;
-                    padding: 15px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    background-color: #fafafa;
-                }
+.employee-name input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+}
 
-                .employee-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 15px;
-                }
+.vacation-inputs {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
-                .employee-name input {
-                    padding: 8px;
-                    font-size: 16px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                    width: 250px;
-                }
+.vacation-inputs label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
 
-                .vacation-inputs {
-                    display: flex;
-                    gap: 15px;
-                    align-items: center;
-                    flex-wrap: wrap;
-                }
+.vacation-inputs input {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 140px;
+}
 
-                .vacation-inputs label {
-                    display: flex;
-                    flex-direction: column;
-                    font-weight: bold;
-                }
+.custom-weekends {
+    margin-top: 10px;
+}
 
-                .vacation-inputs input {
-                    padding: 6px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                    width: 140px;
-                }
+.weekend-selector {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-                .custom-weekends {
-                    margin-top: 10px;
-                }
+.weekend-selector label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
 
-                .weekend-selector {
-                    display: flex;
-                    gap: 10px;
-                    flex-wrap: wrap;
-                }
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 20px;
+}
 
-                .weekend-selector label {
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    cursor: pointer;
-                }
+.calendar-header {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 5px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+}
 
-                .calendar-grid {
-                    display: grid;
-                    grid-template-columns: repeat(7, 1fr);
-                    gap: 5px;
-                    margin-bottom: 20px;
-                }
+.calendar-day {
+    height: 45px; /* Высота дня */
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+    background-color: #fff;
+    position: relative;
+    border-radius: 4px;
+}
 
-                .calendar-header {
-                    text-align: center;
-                    font-weight: bold;
-                    padding: 10px 5px;
-                    background-color: #4CAF50;
-                    color: white;
-                    border-radius: 4px;
-                }
+.calendar-day.weekend {
+    background-color: #ffebee;
+}
 
-                .calendar-day {
-                    height: 45px; /* Высота дня */
-                    border: 1px solid #ddd;
-                    padding: 5px;
-                    text-align: center;
-                    background-color: #fff;
-                    position: relative;
-                    border-radius: 4px;
-                }
+.calendar-day.vacation {
+    background-color: #ffcdd2;
+}
 
-                .calendar-day.weekend {
-                    background-color: #ffebee;
-                }
+.calendar-day.working {
+    background-color: #c8e6c9;
+}
 
-                .calendar-day.vacation {
-                    background-color: #ffcdd2;
-                }
+.day-number {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
-                .calendar-day.working {
-                    background-color: #c8e6c9;
-                }
+.day-status {
+    font-size: 12px;
+}
 
-                .day-number {
-                    font-weight: bold;
-                    margin-bottom: 5px;
-                }
+.add-employee-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
 
-                .day-status {
-                    font-size: 12px;
-                }
+.add-employee-btn:hover {
+    background-color: #45a049;
+}
 
-                .add-employee-btn {
-                    padding: 10px 20px;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-size: 16px;
-                    margin-bottom: 20px;
-                }
+.employee-list {
+    margin-top: 20px;
+}
 
-                .add-employee-btn:hover {
-                    background-color: #45a049;
-                }
+.summary {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e3f2fd;
+    border-radius: 5px;
+}
 
-                .employee-list {
-                    margin-top: 20px;
-                }
+.summary h3 {
+    margin-top: 0;
+}
 
-                .summary {
-                    margin-top: 20px;
-                    padding: 15px;
-                    background-color: #e3f2fd;
-                    border-radius: 5px;
-                }
+.summary-item {
+    margin-bottom: 10px;
+}
 
-                .summary h3 {
-                    margin-top: 0;
-                }
-
-                .summary-item {
-                    margin-bottom: 10px;
-                }

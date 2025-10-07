@@ -4,51 +4,90 @@
     <meta charset="UTF-8">
     <title>Список сотрудников</title>
     <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        .employees-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+  }
+
+  .employees-table th,
+  .employees-table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+  }
+
+  .employees-table th {
+      background-color: #4CAF50;
+      color: white;
+  }
+
+  .table-wrapper {
+      overflow-x: auto;
+  }
+
+
+                        .container {
+                    width: 100%; /* Ширина страницы */
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                }
+    </style>
+
 </head>
 <body>
 
 <div class="menu">
     <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
     <label for="burger-checkbox" class="burger"></label>
-    <div class="overlay"></div> <!-- Добавлено -->
+    <div class="overlay"></div>
     <ul class="menu-list">
-        <li><a href="/index" class="menu-item">Главная</a></li>
+        <li><a href="/" class="menu-item">🏠 На главную</a></li>
         <li><a href="/entering_vacations" class="menu-item">Ввод отпусков</a></li>
         <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
         <li><a href="/report_card" class="menu-item">График выходов</a></li>
     </ul>
 </div>
 
-<div class="container" style="margin-top: 80px;">
-    <h1>Список сотрудников в отпуске</h1>
+<div class="container" style="margin-top: 20px;">
+    <h1>📋 Список сотрудников</h1>
 
-    <!-- Таблица -->
-    <table class="employees-table">
-        <thead>
-        <tr>
-            <th>Табельный номер</th>
-            <th>Начало отпуска</th>
-            <th>Окончание отпуска</th>
-            <th>Выходные дни</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for emp in employees %}
-        <tr>
-            <td>{{ emp.service_number }}</td>
-            <td>{{ emp.vacation_start }}</td>
-            <td>{{ emp.vacation_end }}</td>
-            <td>
-                {% if emp.weekends %}
-                {{ emp.weekends|length }} дн.
-                {% else %}
-                –
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table class="employees-table">
+            <thead>
+            <tr>
+                <th>КСП</th>
+                <th>ФИО</th>
+                <th>Профессия</th>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th>Табельный №</th>
+                <th>Оклад</th>
+                <th>Дата изменения</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ emp.ksp }}</td>
+                <td>{{ emp.fio }}</td>
+                <td>{{ emp.profession }}</td>
+                <td>{{ emp.category }}</td>
+                <td>{{ emp.status }}</td>
+                <td>{{ emp.tab }}</td>
+                <td>{{ emp.salary }}</td>
+                <td>{{ emp.date_change }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>

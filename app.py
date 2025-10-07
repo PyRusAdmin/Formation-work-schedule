@@ -90,7 +90,7 @@ async def report_card(request: Request):
     return templates.TemplateResponse("report_card.html", {"request": request})
 
 
-@app.get("/list_employees", response_model=None)  # response_model лучше убрать
+@app.get("/list_employees")
 async def list_employees(request: Request):
     """
     Страница списка сотрудников
@@ -98,10 +98,19 @@ async def list_employees(request: Request):
     try:
         employees = []
         for emp in ReportCard.select():
+            date_change = emp.date_change.strftime("%d.%m.%Y %H:%M") if emp.date_change else "—"
             employees.append({
-                "service_number": emp.service_number,
-                "vacation_start": emp.vacation_start,
-                "vacation_end": emp.vacation_end,
+                "ksp": emp.ksp,
+                "name": emp.name,
+                "category": emp.category,
+                "profession": emp.profession,
+                "status": emp.status,
+                "abbreviation": emp.abbreviation,
+                "grade": emp.grade,
+                "tab": emp.tab,
+                "fio": emp.fio,
+                "salary": emp.salary,
+                "date_change": date_change,
             })
 
         return templates.TemplateResponse(
@@ -110,6 +119,8 @@ async def list_employees(request: Request):
         )
     except Exception as e:
         logger.exception(e)
+        return {"error": str(e)}
+
 
 
 # CRUD операции
@@ -142,10 +153,15 @@ async def get_employees():
     ]
 
 
+@app.get("/entering_vacations", response_model=None)
+async def entering_vacations(request: Request):
+    """
+    Страница ввода отпусков
+    """
+    return templates.TemplateResponse("entering_vacations.html", {"request": request})
 
 
-
-@app.get("/index")
+@app.get("/")
 async def index(request: Request):
     # Передаем контекст в шаблон
     writing_employee_database()
