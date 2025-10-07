@@ -3,7 +3,7 @@ from openpyxl import load_workbook  # https://openpyxl.readthedocs.io/en/stable/
 
 def get_data_from_excel():
     # Загружаем существующий файл
-    wb = load_workbook("data/Списочный_состав.xlsx")
+    wb = load_workbook("../data/Списочный_состав.xlsx")
     # Получаем активный лист (тот, который был открыт при сохранении)
     ws = wb.active
     # Читаем данные из ячейки

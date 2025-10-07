@@ -2,7 +2,7 @@ from datetime import datetime
 
 from peewee import SqliteDatabase, Model, CharField, DateField, TextField, DateTimeField
 
-from work_with_excel import get_data_from_excel
+from utilities.work_with_excel import get_data_from_excel
 
 # Инициализация базы данных
 db = SqliteDatabase('data/vacations.db')

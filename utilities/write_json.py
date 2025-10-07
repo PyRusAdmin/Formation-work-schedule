@@ -3,7 +3,7 @@ import json
 
 from database import ReportCard
 
-with open("data/data.json", "r", encoding="utf-8") as f:
+with open("../data/data.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 # Сохраняем в базу
