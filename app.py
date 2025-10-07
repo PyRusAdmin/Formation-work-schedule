@@ -164,5 +164,5 @@ async def entering_vacations(request: Request):
 @app.get("/")
 async def index(request: Request):
     # Передаем контекст в шаблон
-    writing_employee_database()
+    # writing_employee_database()
     return templates.TemplateResponse("index.html", {"request": request})
