@@ -4,6 +4,44 @@
     <meta charset="UTF-8">
     <title>Главная страница</title>
     <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        button {
+        /* Variables */
+            --button_radius: 0.70em;
+            --button_color: #e8e8e8;
+            --button_outline_color: #000000;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: var(--button_radius);
+            background: var(--button_outline_color);
+        }
+
+        .button_top {
+            display: block;
+            box-sizing: border-box;
+            border: 1px solid var(--button_outline_color);
+            border-radius: var(--button_radius);
+            padding: 0.75em 1.5em;
+            background: var(--button_color);
+            color: var(--button_outline_color);
+            transform: translateY(-0.2em);
+            transition: transform 0.1s ease;
+        }
+
+        button:hover .button_top {
+        /* Pull the button upwards when hovered */
+            transform: translateY(-0.33em);
+        }
+
+        button:active .button_top {
+        /* Push the button downwards when pressed */
+            transform: translateY(0);
+        }
+    </style>
+
 </head>
 <body>
 
@@ -16,15 +54,29 @@
         <li><a href="/entering_vacations" class="menu-item">Ввод отпусков</a></li>
         <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
         <li><a href="/report_card" class="menu-item">График выходов</a></li>
+        <li><a href="/choosing_month" class="menu-item">Календарь на 2025 год</a></li>
     </ul>
 </div>
 
 <h1>Главная страница</h1>
 
 <h2>График работы сотрудников</h2>
-Октябрь 2025<br>
-Ноябрь 2025<br>
-Декабрь 2025<br>
+<!--Октябрь 2025<br>-->
+<!--Ноябрь 2025<br>-->
+<!--Декабрь 2025<br>-->
+
+
+<button>
+    <span class="button_top"> Октябрь 2025 </span>
+</button>
+<br>
+<button>
+    <span class="button_top"> Ноябрь 2025 </span>
+</button>
+<br>
+<button>
+    <span class="button_top"> Декабрь 2025 </span>
+</button>
 
 </body>
 </html>
