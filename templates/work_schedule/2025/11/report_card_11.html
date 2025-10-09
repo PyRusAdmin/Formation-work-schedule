@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>График работы сотрудников на ноябрь 2025</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            /*       Ширина выпадающего меню, выбора     */
+            margin-top: 0.25rem;
+
+            width: 15rem;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.375rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 50;
+        }
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            text-align: left;
+            font-size: 0.871rem;
+            line-height: 1.25rem;
+        }
+        .dropdown-item:hover {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background: #f9fafb;
+            z-index: 10;
+        }
+
+
+    </style>
+</head>
+
+<div class="menu">
+    <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
+    <label for="burger-checkbox" class="burger"></label>
+    <div class="overlay"></div> <!-- Добавлено -->
+    <ul class="menu-list">
+        <li><a href="/" class="menu-item">🏠 На главную</a></li>
+        <li><a href="/entering_vacations" class="menu-item">Ввод отпусков</a></li>
+        <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
+        <li><a href="/report_card" class="menu-item">График выходов</a></li>
+    </ul>
+</div>
+
+<body class="p-4 bg-gray-50 min-h-screen">
+<h1 class="text-2xl font-bold mb-6 text-center">График работы сотрудников на ноябрь 2025</h1>
+
+<!-- Filters -->
+<div class="bg-white p-4 rounded-lg shadow-md mb-6">
+    <h2 class="text-lg font-semibold mb-4">Фильтры</h2>
+    <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">КСП</label>
+            <input type="text" id="filter-ksp"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Наименование КСП</label>
+            <input type="text" id="filter-name"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Категория</label>
+            <input type="text" id="filter-category"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Профессия</label>
+            <input type="text" id="filter-profession"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Статус</label>
+            <input type="text" id="filter-status"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <!--        Поле ввода табельного номера-->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Табельный номер</label>
+            <input type="text" id="filter-service-number"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <!--        Поле ввода фамилии-->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Фамилия</label>
+            <input type="text" id="filter-surname"
+                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+    </div>
+</div>
+
+<!-- Главная таблица -->
+<div class="overflow-x-auto overflow-y-auto max-h-[80vh] border rounded-md shadow-sm">
+    <table class="min-w-full border-collapse text-sm text-gray-900">
+        <thead class="bg-gray-200 sticky top-0 z-10">
+        <tr>
+            <th class="px-4 py-2 border text-left">Наименование КСП</th>
+            <th class="px-4 py-2 border text-left">Профессия</th>
+            <th class="px-4 py-2 border text-left">Статус</th>
+            <th class="px-4 py-2 border text-left">Таб №</th>
+            <th class="px-4 py-2 border text-left">Ф.И.О.</th>
+            <th class="px-4 py-2 border text-left">Тариф / Оклад</th>
+            <th class="px-2 py-2 border text-center">1</th>
+            <th class="px-2 py-2 border text-center">2</th>
+            <th class="px-2 py-2 border text-center">3</th>
+            <th class="px-2 py-2 border text-center">4</th>
+            <th class="px-2 py-2 border text-center">5</th>
+            <th class="px-2 py-2 border text-center">6</th>
+            <th class="px-2 py-2 border text-center">7</th>
+            <th class="px-2 py-2 border text-center">8</th>
+            <th class="px-2 py-2 border text-center">9</th>
+            <th class="px-2 py-2 border text-center">10</th>
+            <th class="px-2 py-2 border text-center">11</th>
+            <th class="px-2 py-2 border text-center">12</th>
+            <th class="px-2 py-2 border text-center">13</th>
+            <th class="px-2 py-2 border text-center">14</th>
+            <th class="px-2 py-2 border text-center">15</th>
+            <th class="px-2 py-2 border text-center">16</th>
+            <th class="px-2 py-2 border text-center">17</th>
+            <th class="px-2 py-2 border text-center">18</th>
+            <th class="px-2 py-2 border text-center">19</th>
+            <th class="px-2 py-2 border text-center">20</th>
+            <th class="px-2 py-2 border text-center">21</th>
+            <th class="px-2 py-2 border text-center">22</th>
+            <th class="px-2 py-2 border text-center">23</th>
+            <th class="px-2 py-2 border text-center">24</th>
+            <th class="px-2 py-2 border text-center">25</th>
+            <th class="px-2 py-2 border text-center">26</th>
+            <th class="px-2 py-2 border text-center">27</th>
+            <th class="px-2 py-2 border text-center">28</th>
+            <th class="px-2 py-2 border text-center">29</th>
+            <th class="px-2 py-2 border text-center">30</th>
+        </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+        <!-- Data will be populated by JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Edit Mode Controls -->
+<div id="edit-controls" class="mt-6 bg-white p-4 rounded-lg shadow-md hidden">
+    <h2 class="text-lg font-semibold mb-4">Редактирование записи</h2>
+    <div class="flex space-x-4">
+        <button id="save-btn"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            Сохранить изменения
+        </button>
+        <button id="cancel-btn"
+                class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+            Отменить
+        </button>
+    </div>
+    <p class="mt-2 text-sm text-gray-600">
+        Кликните по ячейке в таблице для выбора значения из выпадающего списка.
+    </p>
+</div>
+
+<!-- Легенда значений -->
+<div class="mt-6 bg-white p-4 rounded-lg shadow-md">
+    <h2 class="text-lg font-semibold mb-4">Легенда значений</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-red-100 border border-red-300 rounded mr-2"></div>
+            <span>Б - Больничный</span>
+        </div>
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-blue-100 border border-blue-300 rounded mr-2"></div>
+            <span>О - Отпуск</span>
+        </div>
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-green-100 border border-green-300 rounded mr-2"></div>
+            <span>1 - Рабочий день</span>
+        </div>
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-amber-100 border border-amber-300 rounded mr-2"></div>
+            <span>ПС - Простой предприятия</span>
+        </div>
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-purple-100 border border-purple-300 rounded mr-2"></div>
+            <span>ДО - Декретный отпуск</span>
+        </div>
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-indigo-100 border border-indigo-300 rounded mr-2"></div>
+            <span>БД - Бесплатный день</span>
+        </div>
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-cyan-100 border border-cyan-300 rounded mr-2"></div>
+            <span>Г - Служит</span>
+        </div>
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-yellow-100 border border-yellow-300 rounded mr-2"></div>
+            <span>В - Выходной</span>
+        </div>
+        <div class="flex items-center">
+            <div class="w-6 h-6 bg-gray-100 border border-gray-300 rounded mr-2"></div>
+            <span>- - Не работает</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initial data based on the provided table
+    let data = [];
+    let selectedRow = null;
+    let editMode = false;
+    let openDropdown = null;
+
+    // Доступные параметры для выпадающего списка, для каждого дня
+    const dropdownOptions = [
+        { value: '1', label: 'Рабочий день' },
+        { value: 'В', label: 'Выходной' },
+        { value: 'О', label: 'Отпуск' },
+        { value: 'Б', label: 'Больничный' },
+        { value: '-', label: 'Не работает' },
+        { value: 'Г', label: 'Служит' },
+        { value: 'ДО', label: 'Декрет' },
+        { value: 'БД', label: 'Не полная рабочая неделя' },
+        { value: 'ПС', label: 'Простой' },
+    ];
+
+    async function loadData() {
+        try {
+            const response = await fetch("/data"); // путь к JSON файлу
+            if (!response.ok) {
+                throw new Error("Ошибка загрузки JSON");
+            }
+            const jsonData = await response.json();
+            data = jsonData;   // сохраняем в массив data
+            renderTable();     // отрисовываем таблицу
+        } catch (error) {
+            console.error("Ошибка при загрузке данных:", error);
+        }
+    }
+
+    // Получить цвет ячейки на основе значения
+    function getCellColor(value) {
+        switch(value) {
+            case 'Б':  return 'bg-red-100 text-red-800 border border-red-300';      // Больничный
+            case 'О':  return 'bg-blue-100 text-blue-800 border border-blue-300';   // Отпуск
+            case '1':  return 'bg-green-100 text-green-800 border border-green-300'; // Рабочий день
+            case 'ПС': return 'bg-amber-100 text-amber-800 border border-amber-300'; // Простой
+            case 'ДО': return 'bg-purple-100 text-purple-800 border border-purple-300'; // Декрет
+            case 'БД': return 'bg-indigo-100 text-indigo-800 border border-indigo-300'; // Бесплатный/неполный день
+            case 'Г':  return 'bg-cyan-100 text-cyan-800 border border-cyan-300';   // Служит
+            case 'В':  return 'bg-yellow-100 text-yellow-800 border border-yellow-300'; // Выходной
+            case 'в':  return 'bg-yellow-100 text-yellow-800 border border-yellow-300'; // Маленькая "в" (на всякий)
+            case '-':  return 'bg-gray-100 text-gray-800 border border-gray-300';   // Не работает
+            default:   return 'bg-white text-black border border-gray-200';
+        }
+    }
+
+    // Рендеринг таблица
+    function renderTable() {
+        const tbody = document.getElementById('table-body');
+        const filterKsp = document.getElementById('filter-ksp').value;
+        const filterName = document.getElementById('filter-name').value;
+        const filterCategory = document.getElementById('filter-category').value;
+        const filterProfession = document.getElementById('filter-profession').value;
+        const filterStatus = document.getElementById('filter-status').value;
+        // Поиск по табельному номеру
+        const filterServiceNumber = document.getElementById('filter-service-number').value;
+        // Поиск по фамилии
+        const filterSurname = document.getElementById('filter-surname').value;
+
+        // Filter data
+        const filteredData = data.filter(row => {
+            return (
+            (!filterKsp || row.КСП.includes(filterKsp)) &&
+            (!filterName || row.Наименование.toLowerCase().includes(filterName.toLowerCase())) &&
+            (!filterCategory || row.Категория.toLowerCase().includes(filterCategory.toLowerCase())) &&
+            (!filterProfession || row.Профессия.toLowerCase().includes(filterProfession.toLowerCase())) &&
+            (!filterStatus || row.Статус.toLowerCase().includes(filterStatus.toLowerCase())) &&
+            (!filterServiceNumber || row.Таб.includes(filterServiceNumber)) &&
+            (!filterSurname || row.ФИО.toLowerCase().includes(filterSurname.toLowerCase()))
+            );
+        });
+
+        tbody.innerHTML = '';
+
+        filteredData.forEach((row, rowIndex) => {
+            const tr = document.createElement('tr');
+            if (selectedRow === rowIndex) {
+                tr.classList.add('bg-blue-50');
+            }
+
+            tr.innerHTML = `
+                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Наименование}</td>
+                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Профессия}</td>
+                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Статус}</td>
+                <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Таб}</td>
+                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.ФИО}</td>
+                <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Тариф}</td>
+            `;
+
+            row.days.forEach((day, dayIndex) => {
+                const td = document.createElement('td');
+                td.className = `w-2 py-2 whitespace-nowrap text-sm ${getCellColor(day)} cursor-pointer relative border-2 ${openDropdown?.row === rowIndex && openDropdown?.day === dayIndex ? 'border-blue-500' : 'border-transparent'}`;
+                td.innerHTML = `
+                    <div class="flex items-center justify-center">
+                        <span>${day}</span>
+                        <svg class="w-3 h-3 ml-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                `;
+                td.onclick = () => handleCellClick(rowIndex, dayIndex);
+                tr.appendChild(td);
+            });
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Handle cell click
+    function handleCellClick(rowIndex, dayIndex) {
+        if (!editMode) {
+            selectedRow = rowIndex;
+            editMode = true;
+            document.getElementById('edit-controls').classList.remove('hidden');
+        }
+
+        // Close any existing dropdown
+        if (openDropdown) {
+            const existingDropdown = document.querySelector('.dropdown-menu');
+            if (existingDropdown) {
+                existingDropdown.remove();
+            }
+        }
+
+        // Toggle dropdown for this cell
+        if (openDropdown?.row === rowIndex && openDropdown?.day === dayIndex) {
+            openDropdown = null;
+        } else {
+            openDropdown = { row: rowIndex, day: dayIndex };
+            createDropdownMenu(rowIndex, dayIndex);
+        }
+    }
+
+    // Выпадающий список
+    function createDropdownMenu(rowIndex, dayIndex) {
+        const fixedColumns = 6;
+        const cell = document.querySelectorAll('#table-body tr')[rowIndex]?.cells[fixedColumns + dayIndex];
+        if (!cell) return;
+
+        // убираем старое меню
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.remove());
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'dropdown-menu absolute';
+
+        dropdownOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'dropdown-item';
+            button.textContent = `${option.label} (${option.value})`;
+            button.onclick = () => handleOptionSelect(rowIndex, dayIndex, option.value);
+            dropdown.appendChild(button);
+        });
+
+        cell.appendChild(dropdown);
+
+        // позиционирование
+        const rect = cell.getBoundingClientRect();
+        const menuRect = dropdown.getBoundingClientRect();
+
+        // если не помещается справа → сдвигаем влево
+        if (rect.right + menuRect.width > window.innerWidth) {
+            dropdown.style.left = "auto";
+            dropdown.style.right = "0";
+        }
+
+        // если не помещается снизу → открываем вверх
+        if (rect.bottom + menuRect.height > window.innerHeight) {
+            dropdown.style.top = "auto";
+            dropdown.style.bottom = "100%";
+        }
+    }
+
+
+    // Handle option select
+    function handleOptionSelect(rowIndex, dayIndex, value) {
+        data[rowIndex].days[dayIndex] = value;
+        openDropdown = null;
+        renderTable();
+    }
+
+    // Cancel edit mode
+    function handleCancelEdit() {
+        editMode = false;
+        selectedRow = null;
+        openDropdown = null;
+        document.getElementById('edit-controls').classList.add('hidden');
+        renderTable();
+    }
+
+    // сохранение данных на сервере
+    async function handleSave() {
+        try {
+            const response = await fetch("/data", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data) // data = твоя таблица
+            });
+
+            if (!response.ok) {
+                throw new Error("Ошибка при сохранении данных!");
+            }
+
+            alert("Изменения сохранены в базе!");
+        } catch (error) {
+            console.error("Ошибка сохранения:", error);
+            alert("Не удалось сохранить изменения!");
+        }
+    }
+
+    // Event listeners
+    document.getElementById('save-btn').onclick = handleSave;
+    document.getElementById('cancel-btn').onclick = handleCancelEdit;
+
+    // Filter inputs
+    document.getElementById('filter-ksp').oninput = renderTable;
+    document.getElementById('filter-name').oninput = renderTable;
+    document.getElementById('filter-category').oninput = renderTable;
+    document.getElementById('filter-profession').oninput = renderTable;
+    document.getElementById('filter-status').oninput = renderTable;
+    // Фильтр по табельному номеру
+    document.getElementById('filter-service-number').oninput = renderTable;
+    // Фильтр по фамилии
+    document.getElementById('filter-surname').oninput = renderTable;
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown-menu') && !e.target.closest('td')) {
+            if (openDropdown) {
+                const existingDropdown = document.querySelector('.dropdown-menu');
+                if (existingDropdown) {
+                    existingDropdown.remove();
+                }
+                openDropdown = null;
+            }
+        }
+    });
+
+    // Initial render
+    loadData();
+</script>
+</body>
+</html>

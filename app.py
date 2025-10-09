@@ -10,7 +10,7 @@ from fastapi.templating import Jinja2Templates
 from loguru import logger
 from pydantic import BaseModel
 
-from database import ReportCard, initialize_db, writing_employee_database
+from database import ReportCard, initialize_db
 
 app = FastAPI()  # Создаем экземпляр FastAPI
 # Монтируем статические файлы
@@ -82,12 +82,28 @@ async def save_data(request: Request):
     return {"status": "ok"}
 
 
-@app.get("/report_card", response_model=None)
-async def report_card(request: Request):
+@app.get("/report_card_10", response_model=None)
+async def report_card_10(request: Request):
     """
-    Страница формирования табеля сотрудников
+    Страница формирования табеля сотрудников октябрь 2025 года
     """
-    return templates.TemplateResponse("report_card.html", {"request": request})
+    return templates.TemplateResponse("work_schedule/2025/10/report_card_10.html", {"request": request})
+
+
+@app.get("/report_card_11", response_model=None)
+async def report_card_11(request: Request):
+    """
+    Страница формирования табеля сотрудников ноябрь 2025 года
+    """
+    return templates.TemplateResponse("work_schedule/2025/11/report_card_11.html", {"request": request})
+
+
+@app.get("/report_card_12", response_model=None)
+async def report_card_12(request: Request):
+    """
+    Страница формирования табеля сотрудников декабрь 2025 года
+    """
+    return templates.TemplateResponse("work_schedule/2025/12/report_card_12.html", {"request": request})
 
 
 @app.get("/list_employees")
@@ -120,7 +136,6 @@ async def list_employees(request: Request):
     except Exception as e:
         logger.exception(e)
         return {"error": str(e)}
-
 
 
 # CRUD операции
