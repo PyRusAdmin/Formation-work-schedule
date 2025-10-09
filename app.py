@@ -10,7 +10,7 @@ from fastapi.templating import Jinja2Templates
 from loguru import logger
 from pydantic import BaseModel
 
-from database import ReportCard, initialize_db
+from database import initialize_db, ReportCard10
 
 app = FastAPI()  # Создаем экземпляр FastAPI
 # Монтируем статические файлы
@@ -42,7 +42,7 @@ DATA_FILE = Path("data/data.json")
 @app.get("/data")
 async def get_data():
     employees = []
-    for emp in ReportCard.select():
+    for emp in ReportCard10.select():
         employees.append({
             "КСП": emp.ksp,
             "Наименование": emp.name,
@@ -66,7 +66,7 @@ async def save_data(request: Request):
     now = datetime.now()  # текущее время
 
     for row in new_data:
-        emp, created = ReportCard.get_or_create(tab=row["Таб"])
+        emp, created = ReportCard10.get_or_create(tab=row["Таб"])
         emp.ksp = row["КСП"]
         emp.name = row["Наименование"]
         emp.category = row["Категория"]
@@ -113,7 +113,7 @@ async def list_employees(request: Request):
     """
     try:
         employees = []
-        for emp in ReportCard.select():
+        for emp in ReportCard10.select():
             date_change = emp.date_change.strftime("%d.%m.%Y %H:%M") if emp.date_change else "—"
             employees.append({
                 "ksp": emp.ksp,
@@ -141,7 +141,7 @@ async def list_employees(request: Request):
 # CRUD операции
 @app.post("/employees/", response_model=EmployeeResponse)
 async def create_employee(employee: EmployeeCreate):
-    new_employee = ReportCard.create(
+    new_employee = ReportCard10.create(
         name=employee.service_number,
         vacation_start=employee.vacation_start,
         vacation_end=employee.vacation_end,
@@ -156,7 +156,7 @@ async def create_employee(employee: EmployeeCreate):
 
 @app.get("/employees/", response_model=List[EmployeeResponse])
 async def get_employees():
-    employees = ReportCard.select()
+    employees = ReportCard10.select()
     return [
         EmployeeResponse(
             id=emp.id,

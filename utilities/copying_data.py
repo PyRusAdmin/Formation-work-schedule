@@ -1,11 +1,16 @@
+# -*- coding: utf-8 -*-
+import json
 from datetime import datetime
 
-from peewee import SqliteDatabase, Model, CharField, DateField, TextField, DateTimeField
+from peewee import SqliteDatabase, Model, CharField, TextField, DateTimeField
+from loguru import logger
 
-from utilities.work_with_excel import get_data_from_excel
+
+"""Запись данных из таблицы ReportCard10 в ReportCard12"""
+
 
 # Инициализация базы данных
-db = SqliteDatabase('data/vacations.db')
+db = SqliteDatabase('vacations.db')
 
 
 class BaseModel(Model):
@@ -44,7 +49,6 @@ class ReportCard11(BaseModel):
     days = TextField()  # Храним JSON как текст
     date_change = DateTimeField(default=datetime.now)  # Дата изменения графика 🆕 Новая колонка
 
-
 class ReportCard12(BaseModel):
     """График выходов сотрудников на декабрь 2025"""
     ksp = CharField()
@@ -60,41 +64,37 @@ class ReportCard12(BaseModel):
     days = TextField()  # Храним JSON как текст
     date_change = DateTimeField(default=datetime.now)  # Дата изменения графика 🆕 Новая колонка
 
+# def copy_data():
+employees = []
+for emp in ReportCard10.select():
+    employees.append({
+        "КСП": emp.ksp,
+        "Наименование": emp.name,
+        "Категория": emp.category,
+        "Профессия": emp.profession,
+        "Статус": emp.status,
+        "Сокращение": emp.abbreviation,
+        "Разряд": emp.grade,
+        "Таб": emp.tab,
+        "ФИО": emp.fio,
+        "Тариф": emp.salary,
+        "days": json.loads(emp.days)
+    })
 
-class Employee(BaseModel):
-    service_number = CharField()  # Имя сотрудника
-    vacation_start = DateField()  # Дата начала отпуска
-    vacation_end = DateField()  # Дата окончания отпуска
+for data in employees:
+    logger.info(data)
 
-
-def initialize_db():
-    """Инициализация БД и создание таблиц"""
-
-    db.connect()
-    db.create_tables([Employee])
-    db.create_tables([ReportCard10])  # График выходов сотрудников на октябрь 2025
-    db.create_tables([ReportCard11])  # График выходов сотрудников на ноябрь 2025
-    db.create_tables([ReportCard12])  # График выходов сотрудников на декабрь 2025
-    db.create_tables([DataStaff])
-
-
-class DataStaff(BaseModel):
-    """Данные о сотрудниках"""
-    service_number = CharField(unique=True)  # Табельный номер
-    person = CharField()  # ФИО
-    profession = CharField()  # Должность
-
-
-def writing_employee_database():
-    """Запись данных в БД данных о сотрудниках (без дубликатов)"""
-    data_list = get_data_from_excel()
-
-    with db.atomic():
-        for data in data_list:
-            DataStaff.get_or_create(
-                service_number=data[5],
-                defaults={
-                    "person": data[6],
-                    "profession": data[3]
-                }
-            )
+for row in employees:
+    ReportCard12.create(
+        ksp=row["КСП"],
+        name=row["Наименование"],
+        category=row["Категория"],
+        profession=row["Профессия"],
+        status=row["Статус"],
+        abbreviation=row.get("Сокращение", ""),
+        grade=row.get("Разряд", ""),
+        tab=row["Таб"],
+        fio=row["ФИО"],
+        salary=row["Тариф"],
+        days=json.dumps(row["days"], ensure_ascii=False)
+    )

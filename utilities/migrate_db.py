@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from peewee import DateField
 from playhouse.migrate import SqliteMigrator, migrate
 

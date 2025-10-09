@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Загружаем JSON из файла
 import json
 
