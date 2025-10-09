@@ -1,19 +1,25 @@
-/* Бургер-меню  */
+/* Общий контейнер меню — оставляем, но он больше не позиционирует кнопку */
 .menu {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
+    pointer-events: none; /* чтобы не мешать контенту */
 }
 
+/* Чекбокс скрыт */
 .burger-checkbox {
     position: absolute;
     visibility: hidden;
 }
 
+/* Кнопка бургера — слева */
 .burger {
-    position: relative;
-    z-index: 1;
+    position: absolute;
+    top: 20px;
+    left: 20px; /* ← слева! */
+    z-index: 1002;
     cursor: pointer;
     display: block;
     width: 36px;
@@ -21,6 +27,7 @@
     background: transparent;
     border: none;
     padding: 0;
+    pointer-events: auto; /* чтобы реагировала на клик */
 }
 
 .burger::before,
@@ -30,7 +37,7 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background: #4CAF50; /* Зелёный, как кнопки */
+    background: #4CAF50;
     border-radius: 3px;
     transition: all 0.3s ease;
 }
@@ -55,19 +62,21 @@
     transform: rotate(-45deg);
 }
 
+/* Панель меню — выезжает СПРАВА */
 .menu-list {
     position: fixed;
     top: 0;
-    right: -300px; /* Скрываем за пределами экрана */
+    right: -300px; /* спрятана справа */
     width: 250px;
     height: 100vh;
-    background: #4CAF50; /* Зелёный фон */
+    background: #4CAF50;
     padding: 80px 20px 30px;
     margin: 0;
     list-style: none;
     transition: right 0.3s ease;
     box-shadow: -2px 0 10px rgba(0,0,0,0.1);
     z-index: 999;
+    pointer-events: auto;
 }
 
 .menu-list li {
@@ -89,9 +98,30 @@
     background: rgba(255,255,255,0.2);
 }
 
-/* Плавное появление меню */
+/* При checked — панель выезжает */
 .burger-checkbox:checked ~ .menu-list {
     right: 0;
+}
+
+/* Overlay — затемнение всего фона */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    pointer-events: none;
+}
+
+.burger-checkbox:checked ~ .overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 /* Затемнение фона при открытом меню */
