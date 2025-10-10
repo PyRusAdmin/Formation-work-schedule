@@ -201,7 +201,7 @@
 
     async function loadData() {
         try {
-            const response = await fetch("/data"); // путь к JSON файлу
+            const response = await fetch("/data_12"); // путь к JSON файлу
             if (!response.ok) {
                 throw new Error("Ошибка загрузки JSON");
             }
@@ -376,7 +376,7 @@
     // сохранение данных на сервере
     async function handleSave() {
         try {
-            const response = await fetch("/data", {
+            const response = await fetch("/data_12", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data) // data = твоя таблица

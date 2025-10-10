@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 from datetime import date, datetime
-from pathlib import Path
+# from pathlib import Path
 from typing import List
 
 from fastapi import FastAPI, Request
@@ -10,7 +10,7 @@ from fastapi.templating import Jinja2Templates
 from loguru import logger
 from pydantic import BaseModel
 
-from database import initialize_db, ReportCard10
+from database import initialize_db, ReportCard10, ReportCard11
 
 app = FastAPI()  # Создаем экземпляр FastAPI
 # Монтируем статические файлы
@@ -36,11 +36,12 @@ class EmployeeResponse(BaseModel):
     vacation_end: date
 
 
-DATA_FILE = Path("data/data.json")
+# DATA_FILE = Path("data/data.json")
 
 
-@app.get("/data")
+@app.get("/data_10")
 async def get_data():
+    """Получение данных из БД октябрь 2025 года"""
     employees = []
     for emp in ReportCard10.select():
         employees.append({
@@ -59,14 +60,103 @@ async def get_data():
     return employees
 
 
-@app.post("/data")
+@app.post("/data_10")
 async def save_data(request: Request):
-    """Сохранение данных в БД и запись даты изменения"""
+    """Сохранение данных в БД и запись даты изменения октябрь 2025 года"""
     new_data = await request.json()
     now = datetime.now()  # текущее время
 
     for row in new_data:
         emp, created = ReportCard10.get_or_create(tab=row["Таб"])
+        emp.ksp = row["КСП"]
+        emp.name = row["Наименование"]
+        emp.category = row["Категория"]
+        emp.profession = row["Профессия"]
+        emp.status = row["Статус"]
+        emp.abbreviation = row.get("Сокращение", "")
+        emp.grade = row.get("Разряд", "")
+        emp.fio = row["ФИО"]
+        emp.salary = row["Тариф"]
+        emp.days = json.dumps(row["days"], ensure_ascii=False)
+        emp.date_change = now  # 🕒 записываем текущие дату и время
+        emp.save()
+    return {"status": "ok"}
+
+
+
+@app.get("/data_11")
+async def get_data():
+    """Получение данных из БД ноябрь 2025 года"""
+    employees = []
+    for emp in ReportCard11.select():
+        employees.append({
+            "КСП": emp.ksp,
+            "Наименование": emp.name,
+            "Категория": emp.category,
+            "Профессия": emp.profession,
+            "Статус": emp.status,
+            "Сокращение": emp.abbreviation,
+            "Разряд": emp.grade,
+            "Таб": emp.tab,
+            "ФИО": emp.fio,
+            "Тариф": emp.salary,
+            "days": json.loads(emp.days)
+        })
+    return employees
+
+
+@app.post("/data_11")
+async def save_data(request: Request):
+    """Сохранение данных в БД и запись даты изменения ноябрь 2025 года"""
+    new_data = await request.json()
+    now = datetime.now()  # текущее время
+
+    for row in new_data:
+        emp, created = ReportCard11.get_or_create(tab=row["Таб"])
+        emp.ksp = row["КСП"]
+        emp.name = row["Наименование"]
+        emp.category = row["Категория"]
+        emp.profession = row["Профессия"]
+        emp.status = row["Статус"]
+        emp.abbreviation = row.get("Сокращение", "")
+        emp.grade = row.get("Разряд", "")
+        emp.fio = row["ФИО"]
+        emp.salary = row["Тариф"]
+        emp.days = json.dumps(row["days"], ensure_ascii=False)
+        emp.date_change = now  # 🕒 записываем текущие дату и время
+        emp.save()
+    return {"status": "ok"}
+
+
+@app.get("/data_12")
+async def get_data():
+    """Получение данных из БД декабрь 2025 года"""
+    employees = []
+    for emp in ReportCard11.select():
+        employees.append({
+            "КСП": emp.ksp,
+            "Наименование": emp.name,
+            "Категория": emp.category,
+            "Профессия": emp.profession,
+            "Статус": emp.status,
+            "Сокращение": emp.abbreviation,
+            "Разряд": emp.grade,
+            "Таб": emp.tab,
+            "ФИО": emp.fio,
+            "Тариф": emp.salary,
+            "days": json.loads(emp.days)
+        })
+    return employees
+
+
+@app.post("/data_12")
+async def save_data(request: Request):
+    """Сохранение данных в БД и запись даты изменения декабрь 2025 года"""
+    new_data = await request.json()
+    now = datetime.now()  # текущее время
+
+    for row in new_data:
+        emp, created = ReportCard11.get_or_create(tab=row["Таб"])
         emp.ksp = row["КСП"]
         emp.name = row["Наименование"]
         emp.category = row["Категория"]
