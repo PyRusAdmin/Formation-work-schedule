@@ -1,27 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
+{% extends "base.html" %}
 
-<div class="menu">
-    <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
-    <label for="burger-checkbox" class="burger"></label>
-    <div class="overlay"></div>
-    <ul class="menu-list">
-        <li><a href="/" class="menu-item">🏠 На главную</a></li>
-        <li><a href="/entering_vacations" class="menu-item">Ввод отпусков</a></li>
-        <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
-        <li><a href="/report_card" class="menu-item">График выходов</a></li>
-        <li><a href="/choosing_month" class="menu-item">Календарь на 2025 год</a></li>
-    </ul>
-</div>
+{% block title %}Главная страница{% endblock %}
 
-<h1>Главная страница</h1>
+{% block content %}
+
+<h1 class="text-2xl font-bold mb-6 text-center">Главная страница</h1>
+<!--<h1>Главная страница</h1>-->
 <h2>График работы сотрудников</h2>
 
 <div class="buttons-container">
@@ -30,5 +14,4 @@
     <a href="/report_card_12" class="btn">Декабрь 2025</a>
 </div>
 
-</body>
-</html>
+{% endblock %}
