@@ -1,29 +1,9 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>График работы сотрудников на ноябрь 2025</title>
-    <link rel="stylesheet" href="/static/css/style.css"> <!--   стиль общий  -->
-    <link rel="stylesheet" href="/static/css/report_card_style.css"> <!--   стиль для графика  -->
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+{% extends "base.html" %}
 
-<div class="menu">
-    <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
-    <label for="burger-checkbox" class="burger"></label>
-    <div class="overlay"></div> <!-- Добавлено -->
-    <ul class="menu-list">
-        <li><a href="/" class="menu-item">🏠 На главную</a></li>
-        <li><a href="/entering_vacations" class="menu-item">Ввод отпусков</a></li>
-        <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
-        <li><a href="/report_card" class="menu-item">График выходов</a></li>
-        <li><a href="/calendar_2025" class="menu-item">Календарь 2025</a></li>
-        <li><a href="/forming_employee_report_card" class="menu-item">Формирование графика по сотруднику</a></li>
-    </ul>
-</div>
+{% block title %}График работы сотрудников на ноябрь 2025{% endblock %}
 
-<body class="p-4 bg-gray-50 min-h-screen">
+{% block content %}
+
 <h1 class="text-2xl font-bold mb-6 text-center">График работы сотрудников на ноябрь 2025</h1>
 
 <!-- Filters -->
@@ -162,6 +142,9 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
 <script>
     let data = [];
 
@@ -256,5 +239,5 @@
     // Загрузка при старте
     loadData();
 </script>
-</body>
-</html>
+
+{% endblock %}
