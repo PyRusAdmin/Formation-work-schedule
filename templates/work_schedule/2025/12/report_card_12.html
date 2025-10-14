@@ -1,27 +1,34 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>График работы сотрудников на декабрь 2025</title>
-    <link rel="stylesheet" href="/static/css/style.css"> <!--   стиль общий  -->
-    <link rel="stylesheet" href="/static/css/report_card_style.css"> <!--   стиль для графика  -->
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>График работы сотрудников на декабрь 2025</title>-->
+<!--    <link rel="stylesheet" href="/static/css/style.css"> &lt;!&ndash;   стиль общий  &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="/static/css/report_card_style.css"> &lt;!&ndash;   стиль для графика  &ndash;&gt;-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--</head>-->
 
-<div class="menu">
-    <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
-    <label for="burger-checkbox" class="burger"></label>
-    <div class="overlay"></div> <!-- Добавлено -->
-    <ul class="menu-list">
-        <li><a href="/" class="menu-item">🏠 На главную</a></li>
-        <li><a href="/entering_vacations" class="menu-item">Ввод отпусков</a></li>
-        <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
-        <li><a href="/report_card" class="menu-item">График выходов</a></li>
-    </ul>
-</div>
+<!--<div class="menu">-->
+<!--    <input type="checkbox" id="burger-checkbox" class="burger-checkbox">-->
+<!--    <label for="burger-checkbox" class="burger"></label>-->
+<!--    <div class="overlay"></div> &lt;!&ndash; Добавлено &ndash;&gt;-->
+<!--    <ul class="menu-list">-->
+<!--        <li><a href="/" class="menu-item">🏠 На главную</a></li>-->
+<!--        <li><a href="/entering_vacations" class="menu-item">Ввод отпусков</a></li>-->
+<!--        <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>-->
+<!--        <li><a href="/report_card" class="menu-item">График выходов</a></li>-->
+<!--    </ul>-->
+<!--</div>-->
 
-<body class="p-4 bg-gray-50 min-h-screen">
+<!--<body class="p-4 bg-gray-50 min-h-screen">-->
+
+{% extends "base.html" %}
+
+{% block title %}График работы сотрудников на декабрь 2025{% endblock %}
+
+{% block content %}
+
 <h1 class="text-2xl font-bold mb-6 text-center">График работы сотрудников на декабрь 2025</h1>
 
 <!-- Filters -->
@@ -179,58 +186,31 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+
 <script>
-    // Initial data based on the provided table
     let data = [];
-    let selectedRow = null;
-    let editMode = false;
-    let openDropdown = null;
-
-    // Доступные параметры для выпадающего списка, для каждого дня
-    const dropdownOptions = [
-        { value: '1', label: 'Рабочий день' },
-        { value: 'В', label: 'Выходной' },
-        { value: 'О', label: 'Отпуск' },
-        { value: 'Б', label: 'Больничный' },
-        { value: '-', label: 'Не работает' },
-        { value: 'Г', label: 'Служит' },
-        { value: 'ДО', label: 'Декрет' },
-        { value: 'БД', label: 'Не полная рабочая неделя' },
-        { value: 'ПС', label: 'Простой' },
-    ];
-
-    async function loadData() {
-        try {
-            const response = await fetch("/data_12"); // путь к JSON файлу
-            if (!response.ok) {
-                throw new Error("Ошибка загрузки JSON");
-            }
-            const jsonData = await response.json();
-            data = jsonData;   // сохраняем в массив data
-            renderTable();     // отрисовываем таблицу
-        } catch (error) {
-            console.error("Ошибка при загрузке данных:", error);
-        }
-    }
 
     // Получить цвет ячейки на основе значения
     function getCellColor(value) {
         switch(value) {
-            case 'Б':  return 'bg-red-100 text-red-800 border border-red-300';      // Больничный
-            case 'О':  return 'bg-blue-100 text-blue-800 border border-blue-300';   // Отпуск
-            case '1':  return 'bg-green-100 text-green-800 border border-green-300'; // Рабочий день
-            case 'ПС': return 'bg-amber-100 text-amber-800 border border-amber-300'; // Простой
-            case 'ДО': return 'bg-purple-100 text-purple-800 border border-purple-300'; // Декрет
-            case 'БД': return 'bg-indigo-100 text-indigo-800 border border-indigo-300'; // Бесплатный/неполный день
-            case 'Г':  return 'bg-cyan-100 text-cyan-800 border border-cyan-300';   // Служит
-            case 'В':  return 'bg-yellow-100 text-yellow-800 border border-yellow-300'; // Выходной
-            case 'в':  return 'bg-yellow-100 text-yellow-800 border border-yellow-300'; // Маленькая "в" (на всякий)
-            case '-':  return 'bg-gray-100 text-gray-800 border border-gray-300';   // Не работает
+            case 'Б':  return 'bg-red-100 text-red-800 border border-red-300';
+            case 'О':  return 'bg-blue-100 text-blue-800 border border-blue-300';
+            case '1':  return 'bg-green-100 text-green-800 border border-green-300';
+            case 'ПС': return 'bg-amber-100 text-amber-800 border border-amber-300';
+            case 'ДО': return 'bg-purple-100 text-purple-800 border border-purple-300';
+            case 'БД': return 'bg-indigo-100 text-indigo-800 border border-indigo-300';
+            case 'Г':  return 'bg-cyan-100 text-cyan-800 border border-cyan-300';
+            case 'В':  return 'bg-yellow-100 text-yellow-800 border border-yellow-300';
+            case 'в':  return 'bg-yellow-100 text-yellow-800 border border-yellow-300';
+            case '-':  return 'bg-gray-100 text-gray-800 border border-gray-300';
             default:   return 'bg-white text-black border border-gray-200';
         }
     }
 
-    // Рендеринг таблица
+    // Рендеринг таблицы
     function renderTable() {
         const tbody = document.getElementById('table-body');
         const filterKsp = document.getElementById('filter-ksp').value;
@@ -238,12 +218,9 @@
         const filterCategory = document.getElementById('filter-category').value;
         const filterProfession = document.getElementById('filter-profession').value;
         const filterStatus = document.getElementById('filter-status').value;
-        // Поиск по табельному номеру
         const filterServiceNumber = document.getElementById('filter-service-number').value;
-        // Поиск по фамилии
         const filterSurname = document.getElementById('filter-surname').value;
 
-        // Filter data
         const filteredData = data.filter(row => {
             return (
             (!filterKsp || row.КСП.includes(filterKsp)) &&
@@ -258,12 +235,8 @@
 
         tbody.innerHTML = '';
 
-        filteredData.forEach((row, rowIndex) => {
+        filteredData.forEach(row => {
             const tr = document.createElement('tr');
-            if (selectedRow === rowIndex) {
-                tr.classList.add('bg-blue-50');
-            }
-
             tr.innerHTML = `
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Наименование}</td>
                 <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Профессия}</td>
@@ -273,18 +246,10 @@
                 <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Тариф}</td>
             `;
 
-            row.days.forEach((day, dayIndex) => {
+            row.days.forEach(day => {
                 const td = document.createElement('td');
-                td.className = `w-2 py-2 whitespace-nowrap text-sm ${getCellColor(day)} cursor-pointer relative border-2 ${openDropdown?.row === rowIndex && openDropdown?.day === dayIndex ? 'border-blue-500' : 'border-transparent'}`;
-                td.innerHTML = `
-                    <div class="flex items-center justify-center">
-                        <span>${day}</span>
-                        <svg class="w-3 h-3 ml-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
-                `;
-                td.onclick = () => handleCellClick(rowIndex, dayIndex);
+                td.className = `w-2 py-2 whitespace-nowrap text-sm ${getCellColor(day)} text-center`;
+                td.textContent = day;
                 tr.appendChild(td);
             });
 
@@ -292,137 +257,35 @@
         });
     }
 
-    // Handle cell click
-    function handleCellClick(rowIndex, dayIndex) {
-        if (!editMode) {
-            selectedRow = rowIndex;
-            editMode = true;
-            document.getElementById('edit-controls').classList.remove('hidden');
-        }
-
-        // Close any existing dropdown
-        if (openDropdown) {
-            const existingDropdown = document.querySelector('.dropdown-menu');
-            if (existingDropdown) {
-                existingDropdown.remove();
-            }
-        }
-
-        // Toggle dropdown for this cell
-        if (openDropdown?.row === rowIndex && openDropdown?.day === dayIndex) {
-            openDropdown = null;
-        } else {
-            openDropdown = { row: rowIndex, day: dayIndex };
-            createDropdownMenu(rowIndex, dayIndex);
-        }
-    }
-
-    // Выпадающий список
-    function createDropdownMenu(rowIndex, dayIndex) {
-        const fixedColumns = 6;
-        const cell = document.querySelectorAll('#table-body tr')[rowIndex]?.cells[fixedColumns + dayIndex];
-        if (!cell) return;
-
-        // убираем старое меню
-        document.querySelectorAll('.dropdown-menu').forEach(m => m.remove());
-
-        const dropdown = document.createElement('div');
-        dropdown.className = 'dropdown-menu absolute';
-
-        dropdownOptions.forEach(option => {
-            const button = document.createElement('button');
-            button.className = 'dropdown-item';
-            button.textContent = `${option.label} (${option.value})`;
-            button.onclick = () => handleOptionSelect(rowIndex, dayIndex, option.value);
-            dropdown.appendChild(button);
-        });
-
-        cell.appendChild(dropdown);
-
-        // позиционирование
-        const rect = cell.getBoundingClientRect();
-        const menuRect = dropdown.getBoundingClientRect();
-
-        // если не помещается справа → сдвигаем влево
-        if (rect.right + menuRect.width > window.innerWidth) {
-            dropdown.style.left = "auto";
-            dropdown.style.right = "0";
-        }
-
-        // если не помещается снизу → открываем вверх
-        if (rect.bottom + menuRect.height > window.innerHeight) {
-            dropdown.style.top = "auto";
-            dropdown.style.bottom = "100%";
-        }
-    }
-
-
-    // Handle option select
-    function handleOptionSelect(rowIndex, dayIndex, value) {
-        data[rowIndex].days[dayIndex] = value;
-        openDropdown = null;
-        renderTable();
-    }
-
-    // Cancel edit mode
-    function handleCancelEdit() {
-        editMode = false;
-        selectedRow = null;
-        openDropdown = null;
-        document.getElementById('edit-controls').classList.add('hidden');
-        renderTable();
-    }
-
-    // сохранение данных на сервере
-    async function handleSave() {
+    // Загрузка данных
+    async function loadData() {
         try {
-            const response = await fetch("/data_12", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data) // data = твоя таблица
-            });
-
-            if (!response.ok) {
-                throw new Error("Ошибка при сохранении данных!");
-            }
-
-            alert("Изменения сохранены в базе!");
+            const response = await fetch("/data_11");
+            if (!response.ok) throw new Error("Ошибка загрузки данных");
+            data = await response.json();
+            renderTable();
         } catch (error) {
-            console.error("Ошибка сохранения:", error);
-            alert("Не удалось сохранить изменения!");
+            console.error("Ошибка при загрузке данных:", error);
+            document.getElementById('table-body').innerHTML = `
+                <tr><td colspan="36" class="text-center py-4 text-red-600">Ошибка загрузки данных</td></tr>
+            `;
         }
     }
 
-    // Event listeners
-    document.getElementById('save-btn').onclick = handleSave;
-    document.getElementById('cancel-btn').onclick = handleCancelEdit;
-
-    // Filter inputs
+    // Фильтрация
     document.getElementById('filter-ksp').oninput = renderTable;
     document.getElementById('filter-name').oninput = renderTable;
     document.getElementById('filter-category').oninput = renderTable;
     document.getElementById('filter-profession').oninput = renderTable;
     document.getElementById('filter-status').oninput = renderTable;
-    // Фильтр по табельному номеру
     document.getElementById('filter-service-number').oninput = renderTable;
-    // Фильтр по фамилии
     document.getElementById('filter-surname').oninput = renderTable;
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.dropdown-menu') && !e.target.closest('td')) {
-            if (openDropdown) {
-                const existingDropdown = document.querySelector('.dropdown-menu');
-                if (existingDropdown) {
-                    existingDropdown.remove();
-                }
-                openDropdown = null;
-            }
-        }
-    });
-
-    // Initial render
+    // Загрузка при старте
     loadData();
 </script>
-</body>
-</html>
+
+{% endblock %}
+
+<!--</body>-->
+<!--</html>-->
