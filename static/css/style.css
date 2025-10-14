@@ -260,18 +260,6 @@ h1 {
     border-radius: 4px;
 }
 
-/*.calendar-day.weekend {*/
-/*    background-color: #ffebee;*/
-/*}*/
-
-/*.calendar-day.vacation {*/
-/*    background-color: #ffcdd2;*/
-/*}*/
-
-/*.calendar-day.working {*/
-/*    background-color: #c8e6c9;*/
-/*}*/
-
 .day-number {
     font-weight: bold;
     margin-bottom: 5px;
@@ -292,13 +280,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/*.add-employee-btn:hover {*/
-/*    background-color: #45a049;*/
-/*}*/
-
-/*.employee-list {*/
-/*    margin-top: 20px;*/
-/*}*/
 
 .summary {
     margin-top: 20px;
