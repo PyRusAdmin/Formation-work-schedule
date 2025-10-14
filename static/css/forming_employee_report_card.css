@@ -1,10 +1,10 @@
 /* ======= БУРГЕР-МЕНЮ ======= */
-.menu {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    pointer-events: none;
-}
+/*.menu {*/
+/*    position: fixed;*/
+/*    top: 0; left: 0; right: 0;*/
+/*    z-index: 1000;*/
+/*    pointer-events: none;*/
+/*}*/
 
 .burger-checkbox {
     position: absolute;
