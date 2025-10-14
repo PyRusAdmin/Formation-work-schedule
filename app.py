@@ -2,6 +2,8 @@
 import json
 from datetime import date, datetime
 from typing import List
+from fastapi import HTTPException
+from typing import Optional
 
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -269,6 +271,74 @@ async def calendar_2025(request: Request):
     :return: templates.TemplateResponse
     """
     return templates.TemplateResponse("choosing_month.html", {"request": request})
+
+
+@app.get("/forming_employee_report_card", response_model=None)
+async def forming_employee_report_card(request: Request):
+    """
+    Формирование графика сотрудника
+    :param request: FastAPI request
+    :return: templates.TemplateResponse
+    """
+    return templates.TemplateResponse("work_schedule/forming_employee_report_card.html", {"request": request})
+
+
+# === Эндпоинты для формирования графика по табельному номеру (ноябрь 2025 → ReportCard11) ===
+
+
+@app.get("/api/employee/{tab}")
+async def get_employee_by_tab(tab: str):
+    """Получить сотрудника по табельному номеру из ноября 2025 (ReportCard11)"""
+    try:
+        emp = ReportCard11.get(ReportCard11.tab == tab)
+        return {
+            "id": emp.id,
+            "tab": emp.tab,
+            "fio": emp.fio,
+            "ksp": emp.ksp,
+            "name": emp.name,
+            "category": emp.category,
+            "profession": emp.profession,
+            "status": emp.status,
+            "abbreviation": emp.abbreviation,
+            "grade": emp.grade,
+            "salary": emp.salary,
+            "days": json.loads(emp.days)
+        }
+    except ReportCard11.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Сотрудник с таким табельным номером не найден в ноябре 2025")
+
+
+@app.put("/api/employee/{tab}")
+async def update_employee_days(tab: str, request: Request):
+    """Обновить график сотрудника (только days и date_change)"""
+    try:
+        emp = ReportCard11.get(ReportCard11.tab == tab)
+    except ReportCard11.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Сотрудник не найден")
+
+    try:
+        data = await request.json()
+        new_days = data.get("days")
+
+        if not isinstance(new_days, list):
+            raise HTTPException(status_code=400, detail="Поле 'days' должно быть списком")
+
+        if len(new_days) != 30:
+            raise HTTPException(status_code=400,
+                                detail="Ноябрь 2025 имеет 30 дней. Передано: {} дней".format(len(new_days)))
+
+        # Обновляем только days и date_change
+        emp.days = json.dumps(new_days, ensure_ascii=False)
+        emp.date_change = datetime.now()
+        emp.save()
+
+        return {"status": "ok", "message": "График успешно обновлён"}
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Некорректный JSON")
+    except Exception as e:
+        logger.exception(e)
+        raise HTTPException(status_code=500, detail="Ошибка при сохранении")
 
 
 @app.get("/")

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Формирование графика по сотруднику</title>
+    <style>
+        /* ======= БУРГЕР-МЕНЮ ======= */
+        .menu {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .burger-checkbox {
+            position: absolute;
+            visibility: hidden;
+        }
+
+        .burger {
+            position: absolute;
+            top: 20px; left: 20px;
+            width: 36px; height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1002;
+            pointer-events: auto;
+        }
+
+        .burger::before,
+        .burger::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #4CAF50;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .burger::before {
+            top: 0;
+            box-shadow: 0 8px 0 #4CAF50;
+        }
+
+        .burger::after {
+            bottom: 0;
+        }
+
+        .burger-checkbox:checked + .burger::before {
+            top: 10px;
+            transform: rotate(45deg);
+            box-shadow: none;
+        }
+
+        .burger-checkbox:checked + .burger::after {
+            bottom: 10px;
+            transform: rotate(-45deg);
+        }
+
+        .menu-list {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 250px;
+            height: 100vh;
+            background: #4CAF50;
+            padding: 80px 20px;
+            list-style: none;
+            transition: right 0.3s ease;
+            z-index: 999;
+            pointer-events: auto;
+        }
+
+        .menu-list li {
+            margin-bottom: 15px;
+        }
+
+        .menu-item {
+            display: block;
+            padding: 12px 15px;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .burger-checkbox:checked ~ .menu-list {
+            right: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .burger-checkbox:checked ~ .overlay {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* ======= ОСНОВНОЙ СТИЛЬ ======= */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 { text-align: center; color: #333; }
+
+        .employee-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+
+        .employee-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        input[type="text"], input[type="date"] {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 15px;
+        }
+
+        .calendar-header {
+            background: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .calendar-day {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            height: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* ======= СТАТУСЫ ДНЕЙ ======= */
+        .legend-color.red { background: #fde2e2; } /* Б */
+        .legend-color.blue { background: #dceeff; }/* О */
+        .legend-color.green { background: #c8e6c9; }
+        .legend-color.amber { background: #ffecb3; }
+        .legend-color.purple { background: #f3e5f5; }
+        .legend-color.indigo { background: #e0e7ff; }
+        .legend-color.cyan { background: #e0f7fa; }
+        .legend-color.yellow { background: #fff9c4; }
+        .legend-color.gray { background: #f0f0f0; }
+
+
+        .calendar-day.working { background: #c8e6c9; }
+        .calendar-day.weekend { background: #fff0d6; }
+        .calendar-day.vacation { background: #dceeff; }
+        .calendar-day.simple { background: #f8e1ff; }
+        .calendar-day.decret { background: #f3e5f5; }      /* ДО — Декретный отпуск */
+        .calendar-day.free { background: #e0e7ff; }        /* БД — Бесплатный день */
+        .calendar-day.service { background: #e0f7fa; }     /* Г — Служит */
+        .calendar-day.notworking { background: #f0f0f0; }  /* – — Не работает */
+        .calendar-day.sick { background: #fde2e2; }        /* Б — Больничный */
+
+        .summary {
+            margin-top: 20px;
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .summary-item { margin-bottom: 10px; }
+
+        /* ======= ЛЕГЕНДА ======= */
+        .legend-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .legend-container h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            color: #444;
+        }
+
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="menu">
+    <input type="checkbox" id="burger-checkbox" class="burger-checkbox">
+    <label for="burger-checkbox" class="burger"></label>
+    <div class="overlay"></div> <!-- Добавлено -->
+    <ul class="menu-list">
+        <li><a href="/" class="menu-item">🏠 На главную</a></li>
+        <li><a href="/entering_vacations" class="menu-item">Ввод отпусков</a></li>
+        <li><a href="/list_employees" class="menu-item">Список сотрудников</a></li>
+        <li><a href="/report_card" class="menu-item">График выходов</a></li>
+        <li><a href="/calendar_2025" class="menu-item">Календарь 2025</a></li>
+        <li><a href="/forming_employee_report_card" class="menu-item">Формирование графика по сотруднику</a></li>
+    </ul>
+</div>
+<div class="container">
+    <h1>Формирование графика по сотруднику (ноябрь 2025)</h1>
+
+    <div style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+        <label>Табельный номер:</label>
+        <input type="text" id="tab-input" placeholder="Введите табельный номер">
+        <button onclick="loadEmployeeByTab()">🔍 Загрузить</button>
+    </div>
+
+    <div id="employees-container"></div>
+
+    <div class="summary">
+        <h3>Сводная информация</h3>
+        <div id="summary-content"></div>
+    </div>
+</div>
+
+<!-- Легенда значений -->
+<div class="legend-container">
+    <h2>Легенда значений</h2>
+    <div class="legend-grid">
+        <div class="legend-item"><span class="legend-color red"></span>Б — Больничный</div>
+        <div class="legend-item"><span class="legend-color blue"></span>О — Отпуск</div>
+        <div class="legend-item"><span class="legend-color green"></span>1 — Рабочий день</div>
+        <div class="legend-item"><span class="legend-color amber"></span>ПС — Простой предприятия</div>
+        <div class="legend-item"><span class="legend-color purple"></span>ДО — Декретный отпуск</div>
+        <div class="legend-item"><span class="legend-color indigo"></span>БД — Бесплатный день</div>
+        <div class="legend-item"><span class="legend-color cyan"></span>Г — Служит</div>
+        <div class="legend-item"><span class="legend-color yellow"></span>В — Выходной</div>
+        <div class="legend-item"><span class="legend-color gray"></span>– — Не работает</div>
+    </div>
+</div>
+
+<script>
+    const month = 10; // ноябрь (0-индекс)
+    const year = 2025;
+    const weekdays = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+    const cycle = ['1', 'В', 'О', 'Б', 'ПС', 'ДО', 'БД', 'Г', '–'];
+    const tooltips = {
+        '1': 'Рабочий день', 'В': 'Выходной', 'О': 'Отпуск', 'Б': 'Больничный',
+        'ПС': 'Простой предприятия', 'ДО': 'Декретный отпуск', 'БД': 'Бесплатный день',
+        'Г': 'Служит', '–': 'Не работает'
+    };
+
+    let currentEmployee = null;
+
+    async function loadEmployeeByTab() {
+        const tabInput = document.getElementById('tab-input');
+        const tab = tabInput.value.trim();
+        if (!tab) {
+            alert("⚠️ Введите табельный номер");
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/employee/${encodeURIComponent(tab)}`);
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                alert(`❌ ${err.detail || 'Сотрудник не найден'}`);
+                return;
+            }
+            currentEmployee = await res.json();
+            renderEmployee();
+        } catch (e) {
+            console.error(e);
+            alert("❌ Ошибка сети");
+        }
+    }
+
+    function renderEmployee() {
+        const container = document.getElementById('employees-container');
+        container.innerHTML = '';
+
+        const minDate = `${year}-${String(month+1).padStart(2,'0')}-01`;
+        const maxDate = `${year}-${String(month+1).padStart(2,'0')}-30`;
+
+        const html = `
+    <div class="employee-section">
+      <div class="employee-header">
+        <strong>Таб: ${currentEmployee.tab} | ФИО: ${currentEmployee.fio}</strong>
+        <button onclick="saveEmployee()">💾 Сохранить</button>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+      <div class="mass-apply">
+        <h4>Массовое назначение:</h4>
+        <label>Статус:
+          <select id="status-select">
+            <option value="1">1 — Рабочий день</option>
+            <option value="В">В — Выходной</option>
+            <option value="О">О — Отпуск</option>
+            <option value="Б">Б — Больничный</option>
+            <option value="ПС">ПС — Простой</option>
+            <option value="ДО">ДО — Декрет</option>
+            <option value="БД">БД — Бесплатный</option>
+            <option value="Г">Г — Служит</option>
+            <option value="–">– — Не работает</option>
+          </select>
+        </label>
+        <label>С: <input type="date" id="from-date" min="${minDate}" max="${maxDate}"></label>
+        <label>По: <input type="date" id="to-date" min="${minDate}" max="${maxDate}"></label>
+        <button onclick="applyRange()">✅ Применить</button>
+      </div>
+    </div>
+  `;
+        container.innerHTML = html;
+        renderCalendar();
+        updateSummary();
+    }
+
+    function renderCalendar() {
+        const grid = document.getElementById('calendar-grid');
+        grid.innerHTML = '';
+
+        // Заголовки дней недели
+        weekdays.forEach(day => {
+            const el = document.createElement('div');
+            el.className = 'calendar-header';
+            el.textContent = day;
+            grid.appendChild(el);
+        });
+
+        // Пустые ячейки до 1-го числа
+        const firstDay = new Date(year, month, 1);
+        const offset = (firstDay.getDay() + 6) % 7; // Пн = 0
+        for (let i = 0; i < offset; i++) {
+            grid.appendChild(document.createElement('div'));
+        }
+
+        // Дни месяца
+        const daysInMonth = 30; // ноябрь 2025
+        for (let d = 1; d <= daysInMonth; d++) {
+            const div = document.createElement('div');
+            const status = currentEmployee.days[d - 1] || '–';
+            div.className = `calendar-day ${statusClass(status)}`;
+            div.innerHTML = `<div class="day-number">${d}</div><div class="day-status">${status}</div>`;
+            div.title = tooltips[status] || '';
+
+            div.addEventListener('click', () => {
+                const newStatus = cycleNextStatus(status);
+                currentEmployee.days[d - 1] = newStatus;
+                div.querySelector('.day-status').textContent = newStatus;
+                div.className = `calendar-day ${statusClass(newStatus)}`;
+                div.title = tooltips[newStatus];
+                updateSummary();
+            });
+            grid.appendChild(div);
+        }
+    }
+
+    async function saveEmployee() {
+        if (!currentEmployee) return;
+        try {
+            const res = await fetch(`/api/employee/${currentEmployee.tab}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ days: currentEmployee.days })
+            });
+            if (res.ok) {
+                alert('✅ График сохранён');
+            } else {
+                const err = await res.json().catch(() => ({}));
+                alert(`❌ ${err.detail || 'Ошибка сохранения'}`);
+            }
+        } catch (e) {
+            console.error(e);
+            alert('❌ Ошибка сети');
+        }
+    }
+
+    function applyRange() {
+        const from = document.getElementById('from-date').value;
+        const to = document.getElementById('to-date').value;
+        const status = document.getElementById('status-select').value;
+
+        if (!from || !to) {
+            alert("⚠️ Укажите обе даты");
+            return;
+        }
+
+        const fromDay = new Date(from).getDate();
+        const toDay = new Date(to).getDate();
+
+        if (fromDay > toDay) {
+            alert("⚠️ Начало не может быть позже конца");
+            return;
+        }
+
+        for (let d = fromDay; d <= toDay; d++) {
+            currentEmployee.days[d - 1] = status;
+        }
+
+        renderCalendar();
+        updateSummary();
+    }
+
+    // Вспомогательные функции
+    function statusClass(s) {
+        const map = {
+            'Б': 'sick', 'О': 'vacation', '1': 'working', 'ПС': 'simple',
+            'ДО': 'decret', 'БД': 'free', 'Г': 'service', 'В': 'weekend', '–': 'notworking'
+        };
+        return map[s] || '';
+    }
+
+    function cycleNextStatus(cur) {
+        const idx = cycle.indexOf(cur);
+        return idx === -1 ? '–' : cycle[(idx + 1) % cycle.length];
+    }
+
+    function updateSummary() {
+        const s = calcStats();
+        document.getElementById('summary-content').innerHTML = `
+    <div class="summary-item">
+      <strong>${currentEmployee.fio} (Таб: ${currentEmployee.tab})</strong>:
+      Рабочих: ${s.working}, Отпуск: ${s.vacation}, Выходных: ${s.weekend}
+    </div>
+  `;
+    }
+
+    function calcStats() {
+        let working = 0, vacation = 0, weekend = 0;
+        for (const d of currentEmployee.days) {
+            if (d === '1') working++;
+            else if (d === 'О') vacation++;
+            else if (d === 'В') weekend++;
+        }
+        return { working, vacation, weekend };
+    }
+
+    // Закрытие бургер-меню при клике на оверлей
+    document.querySelector('.overlay')?.addEventListener('click', () => {
+        document.getElementById('burger-checkbox').checked = false;
+    });
+</script>
+
+</body>
+</html>

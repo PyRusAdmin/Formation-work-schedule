@@ -31,16 +31,16 @@ class ReportCard10(BaseModel):
 
 class ReportCard11(BaseModel):
     """График выходов сотрудников на ноябрь 2025"""
-    ksp = CharField()
-    name = CharField()
-    category = CharField()
-    profession = CharField()
-    status = CharField()
-    abbreviation = CharField(null=True)
-    grade = CharField(null=True)
-    tab = CharField()
-    fio = CharField()
-    salary = CharField()
+    ksp = CharField()  # Код подразделения
+    name = CharField()  # Наименование подразделения
+    category = CharField()  # Категория
+    profession = CharField()  # Должность
+    status = CharField()  # Статус
+    abbreviation = CharField(null=True)  # Аббревиатура
+    grade = CharField(null=True)  # Класс
+    tab = CharField()  # Табельный номер
+    fio = CharField()  # ФИО
+    salary = CharField()  # Зарплата
     days = TextField()  # Храним JSON как текст
     date_change = DateTimeField(default=datetime.now)  # Дата изменения графика 🆕 Новая колонка
 
