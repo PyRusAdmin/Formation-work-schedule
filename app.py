@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 from datetime import date, datetime
-# from pathlib import Path
 from typing import List
 
 from fastapi import FastAPI, Request
@@ -34,9 +33,6 @@ class EmployeeResponse(BaseModel):
     service_number: str
     vacation_start: date
     vacation_end: date
-
-
-# DATA_FILE = Path("data/data.json")
 
 
 @app.get("/data_10")
@@ -81,7 +77,6 @@ async def save_data(request: Request):
         emp.date_change = now  # 🕒 записываем текущие дату и время
         emp.save()
     return {"status": "ok"}
-
 
 
 @app.get("/data_11")
@@ -266,8 +261,17 @@ async def entering_vacations(request: Request):
     return templates.TemplateResponse("entering_vacations.html", {"request": request})
 
 
+@app.get("/calendar_2025", response_model=None)
+async def calendar_2025(request: Request):
+    """
+    Страница календаря 2025 года
+    :param request: FastAPI request
+    :return: templates.TemplateResponse
+    """
+    return templates.TemplateResponse("choosing_month.html", {"request": request})
+
+
 @app.get("/")
 async def index(request: Request):
     # Передаем контекст в шаблон
-    # writing_employee_database()
     return templates.TemplateResponse("index.html", {"request": request})
