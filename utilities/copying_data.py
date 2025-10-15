@@ -5,9 +5,7 @@ from datetime import datetime
 from peewee import SqliteDatabase, Model, CharField, TextField, DateTimeField
 from loguru import logger
 
-
 """Запись данных из таблицы ReportCard10 в ReportCard12"""
-
 
 # Инициализация базы данных
 db = SqliteDatabase('vacations.db')
@@ -49,6 +47,7 @@ class ReportCard11(BaseModel):
     days = TextField()  # Храним JSON как текст
     date_change = DateTimeField(default=datetime.now)  # Дата изменения графика 🆕 Новая колонка
 
+
 class ReportCard12(BaseModel):
     """График выходов сотрудников на декабрь 2025"""
     ksp = CharField()
@@ -63,6 +62,7 @@ class ReportCard12(BaseModel):
     salary = CharField()
     days = TextField()  # Храним JSON как текст
     date_change = DateTimeField(default=datetime.now)  # Дата изменения графика 🆕 Новая колонка
+
 
 # def copy_data():
 employees = []

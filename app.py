@@ -2,10 +2,9 @@
 import json
 from datetime import date, datetime
 from typing import List
-from fastapi import HTTPException
-from typing import Optional
 
 from fastapi import FastAPI, Request
+from fastapi import HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from loguru import logger
