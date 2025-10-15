@@ -146,26 +146,11 @@
 
 /* Основной проект */
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f5f5f5;
-}
 
-.container {
-    width: 100%; /* Ширина страницы */
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
 
-h1 {
-    text-align: center;
-    color: #333;
-}
+
+
+
 
 .calendar-controls {
     display: flex;
@@ -183,12 +168,7 @@ h1 {
     background-color: #fafafa;
 }
 
-.employee-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
+
 
 .employee-name input {
     padding: 8px;
@@ -235,12 +215,7 @@ h1 {
     cursor: pointer;
 }
 
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-bottom: 20px;
-}
+
 
 .calendar-header {
     text-align: center;
@@ -281,7 +256,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-
 .summary {
     margin-top: 20px;
     padding: 15px;
@@ -319,7 +293,6 @@ h1 {
     overflow-x: auto;
 }
 
-
 .container {
     width: 100%; /* Ширина страницы */
     max-width: 1200px;
@@ -330,11 +303,7 @@ h1 {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    text-align: center;
-    color: #FF0000 ;
-
-}/* Дни */
+/* Дни */
 .deays {
     display: flex;
     padding: 30px; /* внутренние отступы */
@@ -367,14 +336,7 @@ th {
     margin: 20px 0;
 }
 
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 20px;
-    color: #333;
-}
+h1 { text-align: center; color: #333; }
 
 h1, h2 {
     text-align: center;
@@ -425,4 +387,191 @@ h1, h2 {
 /* Стили меню (оставлены без изменений, но можно улучшить при необходимости) */
 .menu {
     margin-bottom: 30px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    /*       Ширина выпадающего меню, выбора     */
+    margin-top: 0.25rem;
+
+    width: 15rem;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 50;
+}
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    font-size: 0.871rem;
+    line-height: 1.25rem;
+}
+
+.dropdown-item:hover {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    background: #f9fafb;
+    z-index: 10;
+}
+
+/* ======= ОСНОВНОЙ СТИЛЬ ======= */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    width: 100%; /* Ширина страницы */
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.employee-section {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fafafa;
+}
+
+.employee-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+input[type="text"], input[type="date"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    background: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 15px;
+}
+
+.calendar-header {
+    background: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.calendar-day {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* ======= СТАТУСЫ ДНЕЙ ======= */
+.legend-color.red { background: #fde2e2; } /* Б */
+.legend-color.blue { background: #dceeff; }/* О */
+.legend-color.green { background: #c8e6c9; }
+.legend-color.amber { background: #ffecb3; }
+.legend-color.purple { background: #f3e5f5; }
+.legend-color.indigo { background: #e0e7ff; }
+.legend-color.cyan { background: #e0f7fa; }
+.legend-color.yellow { background: #fff9c4; }
+.legend-color.gray { background: #f0f0f0; }
+
+
+.calendar-day.working { background: #c8e6c9; }
+.calendar-day.weekend { background: #fff0d6; }
+.calendar-day.vacation { background: #dceeff; }
+.calendar-day.simple { background: #f8e1ff; }
+.calendar-day.decret { background: #f3e5f5; }      /* ДО — Декретный отпуск */
+.calendar-day.free { background: #e0e7ff; }        /* БД — Бесплатный день */
+.calendar-day.service { background: #e0f7fa; }     /* Г — Служит */
+.calendar-day.notworking { background: #f0f0f0; }  /* – — Не работает */
+.calendar-day.sick { background: #fde2e2; }        /* Б — Больничный */
+
+.summary {
+    margin-top: 20px;
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.summary-item { margin-bottom: 10px; }
+
+/* ======= ЛЕГЕНДА ======= */
+.legend-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.legend-container h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 20px;
+    text-align: center;
+}
+
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #444;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
 }
