@@ -7,47 +7,26 @@
 <h1 class="text-2xl font-bold mb-6 text-center">График работы сотрудников на ноябрь 2025</h1>
 
 <!-- Фильтры -->
-<div class="bg-white p-4 rounded-lg shadow-md mb-6">
-    <h2 class="text-lg font-semibold mb-4">Фильтры</h2>
-    <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
-        <div>
-            <label class="block text-sm font-medium text-gray-700">КСП</label>
-            <input type="text" id="filter-ksp"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Наименование КСП</label>
-            <input type="text" id="filter-name"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Категория</label>
-            <input type="text" id="filter-category"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Профессия</label>
-            <input type="text" id="filter-profession"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Статус</label>
-            <input type="text" id="filter-status"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <!--        Поле ввода табельного номера-->
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Табельный номер</label>
-            <input type="text" id="filter-service-number"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <!--        Поле ввода фамилии-->
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Фамилия</label>
-            <input type="text" id="filter-surname"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-    </div>
+<div class="filter-section mb-6">
+    <h2>Фильтры</h2>
+    <table>
+        <tr>
+            <th><label>КСП</label><input type="text" id="filter-ksp"></th>
+            <th><label>Наименование КСП</label><input type="text" id="filter-name"></th>
+            <th><label>Категория</label><input type="text" id="filter-category"></th>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th><label>Профессия</label><input type="text" id="filter-profession"></th>
+            <th><label>Статус</label><input type="text" id="filter-status"></th>
+            <th><label>Табельный номер</label><input type="text" id="filter-service-number"></th>
+        </tr>
+    </table>
+
+
+    <label>Фамилия</label><input type="text" id="filter-surname">
 </div>
 
 <!-- Главная таблица -->
@@ -98,44 +77,44 @@
 </div>
 
 <!-- Легенда значений -->
-<div class="mt-6 bg-white p-4 rounded-lg shadow-md">
-    <h2 class="text-lg font-semibold mb-4">Легенда значений</h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-red-100 border border-red-300 rounded mr-2"></div>
-            <span>Б - Больничный</span>
+<div class="legend-container">
+    <h2>Легенда значений</h2>
+    <div class="legend-grid">
+        <div class="legend-item">
+            <div class="legend-color red"></div>
+            Б - Больничный
         </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-blue-100 border border-blue-300 rounded mr-2"></div>
-            <span>О - Отпуск</span>
+        <div class="legend-item">
+            <div class="legend-color blue"></div>
+            О - Отпуск
         </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-green-100 border border-green-300 rounded mr-2"></div>
-            <span>1 - Рабочий день</span>
+        <div class="legend-item">
+            <div class="legend-color green"></div>
+            1 - Рабочий день
         </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-amber-100 border border-amber-300 rounded mr-2"></div>
-            <span>ПС - Простой предприятия</span>
+        <div class="legend-item">
+            <div class="legend-color amber"></div>
+            ПС - Простой предприятия
         </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-purple-100 border border-purple-300 rounded mr-2"></div>
-            <span>ДО - Декретный отпуск</span>
+        <div class="legend-item">
+            <div class="legend-color purple"></div>
+            ДО - Декретный отпуск
         </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-indigo-100 border border-indigo-300 rounded mr-2"></div>
-            <span>БД - Бесплатный день</span>
+        <div class="legend-item">
+            <div class="legend-color indigo"></div>
+            БД - Бесплатный день
         </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-cyan-100 border border-cyan-300 rounded mr-2"></div>
-            <span>Г - Служит</span>
+        <div class="legend-item">
+            <div class="legend-color cyan"></div>
+            Г - Служит
         </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-yellow-100 border border-yellow-300 rounded mr-2"></div>
-            <span>В - Выходной</span>
+        <div class="legend-item">
+            <div class="legend-color yellow"></div>
+            В - Выходной
         </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-gray-100 border border-gray-300 rounded mr-2"></div>
-            <span>- - Не работает</span>
+        <div class="legend-item">
+            <div class="legend-color gray"></div>
+            - - Не работает
         </div>
     </div>
 </div>
@@ -148,18 +127,29 @@
 
     // Получить цвет ячейки на основе значения
     function getCellColor(value) {
-        switch(value) {
-            case 'Б':  return 'bg-red-100 text-red-800 border border-red-300';
-            case 'О':  return 'bg-blue-100 text-blue-800 border border-blue-300';
-            case '1':  return 'bg-green-100 text-green-800 border border-green-300';
-            case 'ПС': return 'bg-amber-100 text-amber-800 border border-amber-300';
-            case 'ДО': return 'bg-purple-100 text-purple-800 border border-purple-300';
-            case 'БД': return 'bg-indigo-100 text-indigo-800 border border-indigo-300';
-            case 'Г':  return 'bg-cyan-100 text-cyan-800 border border-cyan-300';
-            case 'В':  return 'bg-yellow-100 text-yellow-800 border border-yellow-300';
-            case 'в':  return 'bg-yellow-100 text-yellow-800 border border-yellow-300';
-            case '-':  return 'bg-gray-100 text-gray-800 border border-gray-300';
-            default:   return 'bg-white text-black border border-gray-200';
+        switch (value) {
+            case 'Б':
+                return 'bg-red-100 text-red-800 border border-red-300';
+            case 'О':
+                return 'bg-blue-100 text-blue-800 border border-blue-300';
+            case '1':
+                return 'bg-green-100 text-green-800 border border-green-300';
+            case 'ПС':
+                return 'bg-amber-100 text-amber-800 border border-amber-300';
+            case 'ДО':
+                return 'bg-purple-100 text-purple-800 border border-purple-300';
+            case 'БД':
+                return 'bg-indigo-100 text-indigo-800 border border-indigo-300';
+            case 'Г':
+                return 'bg-cyan-100 text-cyan-800 border border-cyan-300';
+            case 'В':
+                return 'bg-yellow-100 text-yellow-800 border border-yellow-300';
+            case 'в':
+                return 'bg-yellow-100 text-yellow-800 border border-yellow-300';
+            case '-':
+                return 'bg-gray-100 text-gray-800 border border-gray-300';
+            default:
+                return 'bg-white text-black border border-gray-200';
         }
     }
 
@@ -176,13 +166,13 @@
 
         const filteredData = data.filter(row => {
             return (
-            (!filterKsp || row.КСП.includes(filterKsp)) &&
-            (!filterName || row.Наименование.toLowerCase().includes(filterName.toLowerCase())) &&
-            (!filterCategory || row.Категория.toLowerCase().includes(filterCategory.toLowerCase())) &&
-            (!filterProfession || row.Профессия.toLowerCase().includes(filterProfession.toLowerCase())) &&
-            (!filterStatus || row.Статус.toLowerCase().includes(filterStatus.toLowerCase())) &&
-            (!filterServiceNumber || row.Таб.includes(filterServiceNumber)) &&
-            (!filterSurname || row.ФИО.toLowerCase().includes(filterSurname.toLowerCase()))
+                (!filterKsp || row.КСП.includes(filterKsp)) &&
+                (!filterName || row.Наименование.toLowerCase().includes(filterName.toLowerCase())) &&
+                (!filterCategory || row.Категория.toLowerCase().includes(filterCategory.toLowerCase())) &&
+                (!filterProfession || row.Профессия.toLowerCase().includes(filterProfession.toLowerCase())) &&
+                (!filterStatus || row.Статус.toLowerCase().includes(filterStatus.toLowerCase())) &&
+                (!filterServiceNumber || row.Таб.includes(filterServiceNumber)) &&
+                (!filterSurname || row.ФИО.toLowerCase().includes(filterSurname.toLowerCase()))
             );
         });
 
@@ -191,12 +181,12 @@
         filteredData.forEach(row => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Наименование}</td>
-                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Профессия}</td>
-                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.Статус}</td>
-                <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Таб}</td>
-                <td class="w-2 py-3 whitespace-normal break-words text-sm text-gray-900">${row.ФИО}</td>
-                <td class="w-2 py-3 whitespace-nowrap text-sm text-gray-900">${row.Тариф}</td>
+                <td>${row.Наименование}</td>
+                <td>${row.Профессия}</td>
+                <td>${row.Статус}</td>
+                <td>${row.Таб}</td>
+                <td>${row.ФИО}</td>
+                <td>${row.Тариф}</td>
             `;
 
             row.days.forEach(day => {

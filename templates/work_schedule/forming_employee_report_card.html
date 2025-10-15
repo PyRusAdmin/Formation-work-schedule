@@ -59,7 +59,7 @@
 <script>
     const month = 10; // ноябрь (0-индекс)
     const year = 2025;
-    const weekdays = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+    const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     const cycle = ['1', 'В', 'О', 'Б', 'ПС', 'ДО', 'БД', 'Г', '–'];
     const tooltips = {
         '1': 'Рабочий день', 'В': 'Выходной', 'О': 'Отпуск', 'Б': 'Больничный',
@@ -96,8 +96,8 @@
         const container = document.getElementById('employees-container');
         container.innerHTML = '';
 
-        const minDate = `${year}-${String(month+1).padStart(2,'0')}-01`;
-        const maxDate = `${year}-${String(month+1).padStart(2,'0')}-30`;
+        const minDate = `${year}-${String(month + 1).padStart(2, '0')}-01`;
+        const maxDate = `${year}-${String(month + 1).padStart(2, '0')}-30`;
 
         const html = `
     <div class="employee-section">
@@ -177,8 +177,8 @@
         try {
             const res = await fetch(`/api/employee/${currentEmployee.tab}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ days: currentEmployee.days })
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({days: currentEmployee.days})
             });
             if (res.ok) {
                 alert('✅ График сохранён');
@@ -249,7 +249,7 @@
             else if (d === 'О') vacation++;
             else if (d === 'В') weekend++;
         }
-        return { working, vacation, weekend };
+        return {working, vacation, weekend};
     }
 
     // Закрытие бургер-меню при клике на оверлей

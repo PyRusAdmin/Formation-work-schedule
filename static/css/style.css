@@ -37,7 +37,8 @@
     content: '';
     position: absolute;
     left: 0;
-    width: 100%; height: 3px;
+    width: 100%;
+    height: 3px;
     background: #4CAF50;
     border-radius: 3px;
     transition: all 0.3s ease;
@@ -75,7 +76,7 @@
     margin: 0;
     list-style: none;
     transition: right 0.3s ease;
-    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
     z-index: 999;
     pointer-events: auto;
 }
@@ -96,7 +97,7 @@
 }
 
 .menu-item:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* При checked — панель выезжает */
@@ -111,7 +112,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 998;
     opacity: 0;
     visibility: hidden;
@@ -234,9 +235,13 @@
     border-radius: 5px;
 }
 
-.summary h3 { margin-top: 0; }
+.summary h3 {
+    margin-top: 0;
+}
 
-.summary-item { margin-bottom: 10px; }
+.summary-item {
+    margin-bottom: 10px;
+}
 
 .employees-table {
     width: 100%;
@@ -261,12 +266,12 @@
 }
 
 .container {
-    width: 100%; /* Ширина страницы */
-    max-width: 1200px;
+    /*    width: 100%; *//* Ширина страницы */
+    /*    max-width: 1300px;*/
     margin: 0 auto;
     background-color: white;
     padding: 20px;
-    border-radius: 8px;
+    /*    border-radius: 8px;*/
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -291,7 +296,6 @@
 }
 
 
-
 .divider {
     width: 100%;
     height: 2px;
@@ -299,7 +303,10 @@
     margin: 20px 0;
 }
 
-h1 { text-align: center; color: #333; }
+h1 {
+    text-align: center;
+    color: #333;
+}
 
 h1, h2 {
     text-align: center;
@@ -360,6 +367,7 @@ h1, h2 {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     z-index: 50;
 }
+
 .dropdown-item {
     display: block;
     width: 100%;
@@ -382,14 +390,6 @@ thead {
 }
 
 /* ======= ОСНОВНОЙ СТИЛЬ ======= */
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 30px;
-    color: #333;
-}
 
 .employee-header {
     display: flex;
@@ -425,26 +425,86 @@ button:hover {
 }
 
 /* ======= СТАТУСЫ ДНЕЙ ======= */
-.legend-color.red { background: #fde2e2; } /* Б */
-.legend-color.blue { background: #dceeff; }/* О */
-.legend-color.green { background: #c8e6c9; }
-.legend-color.amber { background: #ffecb3; }
-.legend-color.purple { background: #f3e5f5; }
-.legend-color.indigo { background: #e0e7ff; }
-.legend-color.cyan { background: #e0f7fa; }
-.legend-color.yellow { background: #fff9c4; }
-.legend-color.gray { background: #f0f0f0; }
+.legend-color.red {
+    background: #fde2e2;
+}
+
+/* Б */
+.legend-color.blue {
+    background: #dceeff;
+}
+
+/* О */
+.legend-color.green {
+    background: #c8e6c9;
+}
+
+.legend-color.amber {
+    background: #ffecb3;
+}
+
+.legend-color.purple {
+    background: #f3e5f5;
+}
+
+.legend-color.indigo {
+    background: #e0e7ff;
+}
+
+.legend-color.cyan {
+    background: #e0f7fa;
+}
+
+.legend-color.yellow {
+    background: #fff9c4;
+}
+
+.legend-color.gray {
+    background: #f0f0f0;
+}
 
 
-.calendar-day.working { background: #c8e6c9; }
-.calendar-day.weekend { background: #fff0d6; }
-.calendar-day.vacation { background: #dceeff; }
-.calendar-day.simple { background: #f8e1ff; }
-.calendar-day.decret { background: #f3e5f5; }      /* ДО — Декретный отпуск */
-.calendar-day.free { background: #e0e7ff; }        /* БД — Бесплатный день */
-.calendar-day.service { background: #e0f7fa; }     /* Г — Служит */
-.calendar-day.notworking { background: #f0f0f0; }  /* – — Не работает */
-.calendar-day.sick { background: #fde2e2; }        /* Б — Больничный */
+.calendar-day.working {
+    background: #c8e6c9;
+}
+
+.calendar-day.weekend {
+    background: #fff0d6;
+}
+
+.calendar-day.vacation {
+    background: #dceeff;
+}
+
+.calendar-day.simple {
+    background: #f8e1ff;
+}
+
+.calendar-day.decret {
+    background: #f3e5f5;
+}
+
+/* ДО — Декретный отпуск */
+.calendar-day.free {
+    background: #e0e7ff;
+}
+
+/* БД — Бесплатный день */
+.calendar-day.service {
+    background: #e0f7fa;
+}
+
+/* Г — Служит */
+.calendar-day.notworking {
+    background: #f0f0f0;
+}
+
+/* – — Не работает */
+.calendar-day.sick {
+    background: #fde2e2;
+}
+
+/* Б — Больничный */
 
 /* ======= ЛЕГЕНДА ======= */
 .legend-container {
@@ -452,7 +512,7 @@ button:hover {
     margin: 30px auto;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
 
@@ -488,5 +548,356 @@ button:hover {
 .table-report-card th,
 .table-report-card td {
     text-align: center; /* центрирование текста */
-    font-size: 17px;
+    font-size: 17px; /* размер шрифта */
+}
+
+
+/* ======= БУРГЕР-МЕНЮ ======= */
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.burger-checkbox {
+    position: absolute;
+    visibility: hidden;
+}
+
+.burger::before,
+.burger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #4CAF50;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.burger::before {
+    top: 0;
+    box-shadow: 0 8px 0 #4CAF50;
+}
+
+.burger::after {
+    bottom: 0;
+}
+
+.burger-checkbox:checked + .burger::before {
+    top: 10px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 0 transparent;
+}
+
+.burger-checkbox:checked + .burger::after {
+    bottom: 10px;
+    transform: rotate(-45deg);
+}
+
+.menu-list {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 250px;
+    height: 100vh;
+    background: #4CAF50;
+    padding: 80px 20px 30px;
+    margin: 0;
+    list-style: none;
+    transition: right 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    pointer-events: auto;
+}
+
+.menu-list li {
+    margin-bottom: 15px;
+}
+
+.menu-item {
+    display: block;
+    padding: 12px 15px;
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.burger-checkbox:checked ~ .menu-list {
+    right: 0;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    pointer-events: none;
+}
+
+.burger-checkbox:checked ~ .overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Основные стили */
+.container {
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #2c3e50;
+}
+
+.table-report-card {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.table-report-card table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-report-card th,
+.table-report-card td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 16px;
+}
+
+.table-report-card th {
+    background-color: #f9fafb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Фильтры */
+.filter-section table {
+    width: 100%;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+}
+
+.filter-section th {
+    padding: 6px;
+    text-align: left;
+}
+
+.filter-section input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.filter-section label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Легенда */
+.legend-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #444;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+/* Цвета легенды */
+.legend-color.red {
+    background: #fde2e2;
+}
+
+.legend-color.blue {
+    background: #dceeff;
+}
+
+.legend-color.green {
+    background: #c8e6c9;
+}
+
+.legend-color.amber {
+    background: #ffecb3;
+}
+
+.legend-color.purple {
+    background: #f3e5f5;
+}
+
+.legend-color.indigo {
+    background: #e0e7ff;
+}
+
+.legend-color.cyan {
+    background: #e0f7fa;
+}
+
+.legend-color.yellow {
+    background: #fff9c4;
+}
+
+.legend-color.gray {
+    background: #f0f0f0;
+}
+
+/* Стили ячеек по значению (для JS) */
+.bg-red-100 {
+    background: #fde2e2;
+}
+
+.bg-blue-100 {
+    background: #dceeff;
+}
+
+.bg-green-100 {
+    background: #c8e6c9;
+}
+
+.bg-amber-100 {
+    background: #ffecb3;
+}
+
+.bg-purple-100 {
+    background: #f3e5f5;
+}
+
+.bg-indigo-100 {
+    background: #e0e7ff;
+}
+
+.bg-cyan-100 {
+    background: #e0f7fa;
+}
+
+.bg-yellow-100 {
+    background: #fff9c4;
+}
+
+.bg-gray-100 {
+    background: #f0f0f0;
+}
+
+.text-red-800 {
+    color: #b91c1c;
+}
+
+.text-blue-800 {
+    color: #1e40af;
+}
+
+.text-green-800 {
+    color: #166534;
+}
+
+.text-amber-800 {
+    color: #92400e;
+}
+
+.text-purple-800 {
+    color: #7e22ce;
+}
+
+.text-indigo-800 {
+    color: #3730a3;
+}
+
+.text-cyan-800 {
+    color: #0891b2;
+}
+
+.text-yellow-800 {
+    color: #a16207;
+}
+
+.text-gray-800 {
+    color: #374151;
+}
+
+.border-red-300 {
+    border-color: #fca5a5;
+}
+
+.border-blue-300 {
+    border-color: #93c5fd;
+}
+
+.border-green-300 {
+    border-color: #86efac;
+}
+
+.border-amber-300 {
+    border-color: #fcd34d;
+}
+
+.border-purple-300 {
+    border-color: #d8b4fe;
+}
+
+.border-indigo-300 {
+    border-color: #c7d2fe;
+}
+
+.border-cyan-300 {
+    border-color: #99f6e4;
+}
+
+.border-yellow-300 {
+    border-color: #fde047;
+}
+
+.border-gray-300 {
+    border-color: #d1d5db;
 }
