@@ -290,11 +290,7 @@
     border-spacing: 58px 0; /* Горизонтальный отступ 10px, вертикальный 0 */
 }
 
-th {
-    text-align: center; /* центрирование текста */
-    font-size: 22px; /* Базовый размер */
-    background-color: #F5F5F5; /* Цвет фона */
-}
+
 
 .divider {
     width: 100%;
@@ -488,3 +484,15 @@ button:hover {
     border: 1px solid #ccc;
     margin-right: 10px;
 }
+
+.table-report-card th,
+.table-report-card td {
+    text-align: center; /* центрирование текста */
+    font-size: 17px;
+}
+
+/*th {*/
+/*    text-align: center; *//* центрирование текста */
+/*    font-size: 100px; *//* Базовый размер */
+/*    background-color: #F5F5F5; *//* Цвет фона */
+/*}*/
