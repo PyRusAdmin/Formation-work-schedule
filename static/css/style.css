@@ -104,7 +104,7 @@
     right: 0;
 }
 
-/* Overlay — затемнение всего фона */
+/* Затемнение фона при открытом меню */
 .overlay {
     position: fixed;
     top: 0;
@@ -123,25 +123,6 @@
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-}
-
-/* Затемнение фона при открытом меню */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    z-index: 998;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s;
-}
-
-.burger-checkbox:checked ~ .overlay {
-    opacity: 1;
-    visibility: visible;
 }
 
 /* Основной проект */
@@ -219,7 +200,7 @@
 .calendar-day {
     height: 45px; /* Высота дня */
     border: 1px solid #ddd;
-    padding: 5px;
+    padding: 4px;
     text-align: center;
     background-color: #fff;
     position: relative;
@@ -253,13 +234,9 @@
     border-radius: 5px;
 }
 
-.summary h3 {
-    margin-top: 0;
-}
+.summary h3 { margin-top: 0; }
 
-.summary-item {
-    margin-bottom: 10px;
-}
+.summary-item { margin-bottom: 10px; }
 
 .employees-table {
     width: 100%;
@@ -374,18 +351,12 @@ h1, h2 {
     max-width: 300px;
 }
 
-/* Стили меню (оставлены без изменений, но можно улучшить при необходимости) */
-.menu {
-    margin-bottom: 30px;
-}
-
 .dropdown-menu {
     position: absolute;
     top: 100%;
     left: 0;
     /*       Ширина выпадающего меню, выбора     */
     margin-top: 0.25rem;
-
     width: 15rem;
     background-color: white;
     border: 1px solid #e5e7eb;
@@ -420,26 +391,8 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f9f9f9;
     margin: 0;
-    padding: 20px;
+    padding: 30px;
     color: #333;
-}
-
-.container {
-    width: 100%; /* Ширина страницы */
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.employee-section {
-    margin-bottom: 30px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: #fafafa;
 }
 
 .employee-header {
@@ -475,27 +428,6 @@ button:hover {
     margin-top: 15px;
 }
 
-.calendar-header {
-    background: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 4px;
-    padding: 5px;
-    font-weight: bold;
-}
-
-.calendar-day {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    height: 45px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    cursor: pointer;
-}
-
 /* ======= СТАТУСЫ ДНЕЙ ======= */
 .legend-color.red { background: #fde2e2; } /* Б */
 .legend-color.blue { background: #dceeff; }/* О */
@@ -517,15 +449,6 @@ button:hover {
 .calendar-day.service { background: #e0f7fa; }     /* Г — Служит */
 .calendar-day.notworking { background: #f0f0f0; }  /* – — Не работает */
 .calendar-day.sick { background: #fde2e2; }        /* Б — Больничный */
-
-.summary {
-    margin-top: 20px;
-    background: #e3f2fd;
-    padding: 15px;
-    border-radius: 5px;
-}
-
-.summary-item { margin-bottom: 10px; }
 
 /* ======= ЛЕГЕНДА ======= */
 .legend-container {
