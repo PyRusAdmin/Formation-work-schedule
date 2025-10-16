@@ -6,49 +6,29 @@
 
 <h1 class="text-2xl font-bold mb-6 text-center">График работы сотрудников на декабрь 2025</h1>
 
-<!-- Filters -->
-<div class="bg-white p-4 rounded-lg shadow-md mb-6">
-    <h2 class="text-lg font-semibold mb-4">Фильтры</h2>
-    <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
-        <div>
-            <label class="block text-sm font-medium text-gray-700">КСП</label>
-            <input type="text" id="filter-ksp"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Наименование КСП</label>
-            <input type="text" id="filter-name"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Категория</label>
-            <input type="text" id="filter-category"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Профессия</label>
-            <input type="text" id="filter-profession"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Статус</label>
-            <input type="text" id="filter-status"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <!--        Поле ввода табельного номера-->
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Табельный номер</label>
-            <input type="text" id="filter-service-number"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <!--        Поле ввода фамилии-->
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Фамилия</label>
-            <input type="text" id="filter-surname"
-                   class="mt-1 block max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        </div>
+<!-- Фильтры -->
+<div class="filter-section mb-6">
+    <h2>Фильтры</h2>
+    <table>
+        <tr>
+            <th><label>КСП</label><input type="text" id="filter-ksp"></th>
+            <th><label>Наименование КСП</label><input type="text" id="filter-name"></th>
+            <th><label>Категория</label><input type="text" id="filter-category"></th>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th><label>Профессия</label><input type="text" id="filter-profession"></th>
+            <th><label>Статус</label><input type="text" id="filter-status"></th>
+            <th><label>Табельный номер</label><input type="text" id="filter-service-number"></th>
+        </tr>
+    </table>
+    <div style="margin-top: 10px;">
+        <label>Фамилия</label>
+        <input type="text" id="filter-surname" style="width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
 </div>
+
 
 <!-- Главная таблица -->
 <div class="overflow-x-auto overflow-y-auto max-h-[80vh] border rounded-md shadow-sm">
@@ -98,64 +78,37 @@
     </table>
 </div>
 
-<!-- Edit Mode Controls -->
-<div id="edit-controls" class="mt-6 bg-white p-4 rounded-lg shadow-md hidden">
-    <h2 class="text-lg font-semibold mb-4">Редактирование записи</h2>
-    <div class="flex space-x-4">
-        <button id="save-btn"
-                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Сохранить изменения
-        </button>
-        <button id="cancel-btn"
-                class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-            Отменить
-        </button>
-    </div>
-    <p class="mt-2 text-sm text-gray-600">
-        Кликните по ячейке в таблице для выбора значения из выпадающего списка.
-    </p>
-</div>
+<!--&lt;!&ndash; Edit Mode Controls &ndash;&gt;-->
+<!--<div id="edit-controls" class="mt-6 bg-white p-4 rounded-lg shadow-md hidden">-->
+<!--    <h2 class="text-lg font-semibold mb-4">Редактирование записи</h2>-->
+<!--    <div class="flex space-x-4">-->
+<!--        <button id="save-btn"-->
+<!--                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">-->
+<!--            Сохранить изменения-->
+<!--        </button>-->
+<!--        <button id="cancel-btn"-->
+<!--                class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">-->
+<!--            Отменить-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <p class="mt-2 text-sm text-gray-600">-->
+<!--        Кликните по ячейке в таблице для выбора значения из выпадающего списка.-->
+<!--    </p>-->
+<!--</div>-->
 
 <!-- Легенда значений -->
-<div class="mt-6 bg-white p-4 rounded-lg shadow-md">
-    <h2 class="text-lg font-semibold mb-4">Легенда значений</h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-red-100 border border-red-300 rounded mr-2"></div>
-            <span>Б - Больничный</span>
-        </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-blue-100 border border-blue-300 rounded mr-2"></div>
-            <span>О - Отпуск</span>
-        </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-green-100 border border-green-300 rounded mr-2"></div>
-            <span>1 - Рабочий день</span>
-        </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-amber-100 border border-amber-300 rounded mr-2"></div>
-            <span>ПС - Простой предприятия</span>
-        </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-purple-100 border border-purple-300 rounded mr-2"></div>
-            <span>ДО - Декретный отпуск</span>
-        </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-indigo-100 border border-indigo-300 rounded mr-2"></div>
-            <span>БД - Бесплатный день</span>
-        </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-cyan-100 border border-cyan-300 rounded mr-2"></div>
-            <span>Г - Служит</span>
-        </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-yellow-100 border border-yellow-300 rounded mr-2"></div>
-            <span>В - Выходной</span>
-        </div>
-        <div class="flex items-center">
-            <div class="w-6 h-6 bg-gray-100 border border-gray-300 rounded mr-2"></div>
-            <span>- - Не работает</span>
-        </div>
+<div class="legend-container">
+    <h2>Легенда значений</h2>
+    <div class="legend-grid">
+        <div class="legend-item"><div class="legend-color red"></div>Б - Больничный</div>
+        <div class="legend-item"><div class="legend-color blue"></div>О - Отпуск</div>
+        <div class="legend-item"><div class="legend-color green"></div>1 - Рабочий день</div>
+        <div class="legend-item"><div class="legend-color amber"></div>ПС - Простой предприятия</div>
+        <div class="legend-item"><div class="legend-color purple"></div>ДО - Декретный отпуск</div>
+        <div class="legend-item"><div class="legend-color indigo"></div>БД - Бесплатный день</div>
+        <div class="legend-item"><div class="legend-color cyan"></div>Г - Служит</div>
+        <div class="legend-item"><div class="legend-color yellow"></div>В - Выходной</div>
+        <div class="legend-item"><div class="legend-color gray"></div>- - Не работает</div>
     </div>
 </div>
 
