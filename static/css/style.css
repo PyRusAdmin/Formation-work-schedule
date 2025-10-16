@@ -266,8 +266,8 @@
 }
 
 .container {
-    /*    width: 100%; *//* Ширина страницы */
-    /*    max-width: 1300px;*/
+/*    width: 100%; *//* Ширина страницы */
+/*    max-width: 1300px;*/
     margin: 0 auto;
     background-color: white;
     padding: 20px;
@@ -674,7 +674,7 @@ h1, h2 {
 
 .table-report-card {
     overflow-x: auto;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .table-report-card table {
@@ -684,10 +684,10 @@ h1, h2 {
 
 .table-report-card th,
 .table-report-card td {
-    padding: 8px;
+    padding: 6px;
     border: 1px solid #ddd;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .table-report-card th {
@@ -726,8 +726,8 @@ h1, h2 {
 
 /* Легенда */
 .legend-container {
-    max-width: 1200px;
-    margin: 30px auto;
+/*    max-width: auto;*/
+/*    margin: 30px auto;*/
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -757,147 +757,41 @@ h1, h2 {
 }
 
 /* Цвета легенды */
-.legend-color.red {
-    background: #fde2e2;
-}
-
-.legend-color.blue {
-    background: #dceeff;
-}
-
-.legend-color.green {
-    background: #c8e6c9;
-}
-
-.legend-color.amber {
-    background: #ffecb3;
-}
-
-.legend-color.purple {
-    background: #f3e5f5;
-}
-
-.legend-color.indigo {
-    background: #e0e7ff;
-}
-
-.legend-color.cyan {
-    background: #e0f7fa;
-}
-
-.legend-color.yellow {
-    background: #fff9c4;
-}
-
-.legend-color.gray {
-    background: #f0f0f0;
-}
+.legend-color.red {background: #fde2e2;}
+.legend-color.blue {background: #dceeff;}
+.legend-color.green {background: #c8e6c9;}
+.legend-color.amber {background: #ffecb3;}
+.legend-color.purple {background: #f3e5f5;}
+.legend-color.indigo {background: #e0e7ff;}
+.legend-color.cyan {background: #e0f7fa;}
+.legend-color.yellow {background: #fff9c4;}
+.legend-color.gray {background: #f0f0f0;}
 
 /* Стили ячеек по значению (для JS) */
-.bg-red-100 {
-    background: #fde2e2;
-}
-
-.bg-blue-100 {
-    background: #dceeff;
-}
-
-.bg-green-100 {
-    background: #c8e6c9;
-}
-
-.bg-amber-100 {
-    background: #ffecb3;
-}
-
-.bg-purple-100 {
-    background: #f3e5f5;
-}
-
-.bg-indigo-100 {
-    background: #e0e7ff;
-}
-
-.bg-cyan-100 {
-    background: #e0f7fa;
-}
-
-.bg-yellow-100 {
-    background: #fff9c4;
-}
-
-.bg-gray-100 {
-    background: #f0f0f0;
-}
-
-.text-red-800 {
-    color: #b91c1c;
-}
-
-.text-blue-800 {
-    color: #1e40af;
-}
-
-.text-green-800 {
-    color: #166534;
-}
-
-.text-amber-800 {
-    color: #92400e;
-}
-
-.text-purple-800 {
-    color: #7e22ce;
-}
-
-.text-indigo-800 {
-    color: #3730a3;
-}
-
-.text-cyan-800 {
-    color: #0891b2;
-}
-
-.text-yellow-800 {
-    color: #a16207;
-}
-
-.text-gray-800 {
-    color: #374151;
-}
-
-.border-red-300 {
-    border-color: #fca5a5;
-}
-
-.border-blue-300 {
-    border-color: #93c5fd;
-}
-
-.border-green-300 {
-    border-color: #86efac;
-}
-
-.border-amber-300 {
-    border-color: #fcd34d;
-}
-
-.border-purple-300 {
-    border-color: #d8b4fe;
-}
-
-.border-indigo-300 {
-    border-color: #c7d2fe;
-}
-
-.border-cyan-300 {
-    border-color: #99f6e4;
-}
-
-.border-yellow-300 {
-    border-color: #fde047;
-}
-
-.border-gray-300 {
-    border-color: #d1d5db;
-}
+.bg-red-100 {background: #fde2e2;}
+.bg-blue-100 {background: #dceeff;}
+.bg-green-100 {background: #c8e6c9;}
+.bg-amber-100 {background: #ffecb3;}
+.bg-purple-100 {background: #f3e5f5;}
+.bg-indigo-100 {background: #e0e7ff;}
+.bg-cyan-100 {background: #e0f7fa;}
+.bg-yellow-100 {background: #fff9c4;}
+.bg-gray-100 {background: #f0f0f0;}
+.text-red-800 {color: #b91c1c;}
+.text-blue-800 {color: #1e40af;}
+.text-green-800 {color: #166534;}
+.text-amber-800 {color: #92400e;}
+.text-purple-800 {color: #7e22ce;}
+.text-indigo-800 {color: #3730a3;}
+.text-cyan-800 {color: #0891b2;}
+.text-yellow-800 {color: #a16207;}
+.text-gray-800 {color: #374151;}
+.border-red-300 {border-color: #fca5a5;}
+.border-blue-300 {border-color: #93c5fd;}
+.border-green-300 {border-color: #86efac;}
+.border-amber-300 {border-color: #fcd34d;}
+.border-purple-300 {border-color: #d8b4fe;}
+.border-indigo-300 {border-color: #c7d2fe;}
+.border-cyan-300 {border-color: #99f6e4;}
+.border-yellow-300 {border-color: #fde047;}
+.border-gray-300 {border-color: #d1d5db;}
