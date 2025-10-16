@@ -197,7 +197,7 @@
     // Загрузка данных
     async function loadData() {
         try {
-            const response = await fetch("/data_11");
+            const response = await fetch("/data_12");
             if (!response.ok) throw new Error("Ошибка загрузки данных");
             data = await response.json();
             renderTable();
