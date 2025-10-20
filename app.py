@@ -10,7 +10,7 @@ from fastapi.templating import Jinja2Templates
 from loguru import logger
 from pydantic import BaseModel
 
-from database import initialize_db, ReportCard10, ReportCard11
+from database import initialize_db, ReportCard10, ReportCard11, ReportCard12
 
 app = FastAPI()  # Создаем экземпляр FastAPI
 # Монтируем статические файлы
@@ -128,7 +128,7 @@ async def save_data(request: Request):
 async def get_data():
     """Получение данных из БД декабрь 2025 года"""
     employees = []
-    for emp in ReportCard11.select():
+    for emp in ReportCard12.select():
         employees.append({
             "КСП": emp.ksp,
             "Наименование": emp.name,
@@ -152,7 +152,7 @@ async def save_data(request: Request):
     now = datetime.now()  # текущее время
 
     for row in new_data:
-        emp, created = ReportCard11.get_or_create(tab=row["Таб"])
+        emp, created = ReportCard12.get_or_create(tab=row["Таб"])
         emp.ksp = row["КСП"]
         emp.name = row["Наименование"]
         emp.category = row["Категория"]
