@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 import json
-from datetime import date, datetime
+from datetime import date
+from datetime import datetime
+from typing import Annotated
 from typing import List
 
 from fastapi import FastAPI, Request
+from fastapi import Form
 from fastapi import HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from loguru import logger
 from pydantic import BaseModel
 
-from database import initialize_db, ReportCard10, ReportCard11, ReportCard12
+from database import initialize_db, ReportCard10, ReportCard11, ReportCard12, DataStaff, db
 
 app = FastAPI()  # Создаем экземпляр FastAPI
 # Монтируем статические файлы
@@ -280,6 +283,54 @@ async def forming_employee_report_card(request: Request):
     :return: templates.TemplateResponse
     """
     return templates.TemplateResponse("work_schedule/forming_employee_report_card.html", {"request": request})
+
+
+"""Формирование личного дела по сотруднику"""
+
+
+@app.get(path="/personal_business", response_model=None)
+async def personal_business(request: Request, message: str = None):
+    """Формирование личного дела по сотруднику"""
+    return templates.TemplateResponse("personal_business.html", {"request": request, "message": message})
+
+
+@app.post("/delete/")
+async def delete_employee(
+        request: Request,
+        service_number: Annotated[str, Form()],
+        dismissal_date: Annotated[str, Form()],  # ← принимаем как строку
+        month: Annotated[str, Form()]
+):
+    logger.info(f"Табельный номер {service_number}, дата сокращения {dismissal_date}, месяц {month}")
+    try:
+        # Преобразуем строку в date
+        dismissal_date_obj = datetime.strptime(dismissal_date, "%Y-%m-%d").date()
+    except ValueError:
+        message = "⚠️ Неверный формат даты. Ожидается ГГГГ-ММ-ДД."
+        return templates.TemplateResponse("personal_business.html", {"request": request, "message": message})
+
+    message = ""
+
+    with db.atomic():
+        emp = DataStaff.get_or_none(DataStaff.service_number == service_number)
+        if emp:
+            emp.dismissal_date = dismissal_date_obj  # ← используем объект date
+            emp.save()
+            message += f"✅ Сотрудник {emp.person} ({service_number}) уволен {dismissal_date_obj}.<br>"
+        else:
+            message = f"⚠️ Сотрудник с табельным номером {service_number} не найден."
+            return templates.TemplateResponse("personal_business.html", {"request": request, "message": message})
+
+        if int(month) <= 10:
+            ReportCard10.delete().where(ReportCard10.tab == service_number).execute()
+        if int(month) <= 11:
+            ReportCard11.delete().where(ReportCard11.tab == service_number).execute()
+        if int(month) <= 12:
+            ReportCard12.delete().where(ReportCard12.tab == service_number).execute()
+
+        message += f"🧹 Удалён из графиков, начиная с месяца №{month}."
+
+    return templates.TemplateResponse("personal_business.html", {"request": request, "message": message})
 
 
 # === Эндпоинты для формирования графика по табельному номеру (ноябрь 2025 → ReportCard11) ===

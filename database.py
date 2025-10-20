@@ -67,15 +67,22 @@ class Employee(BaseModel):
     vacation_end = DateField()  # Дата окончания отпуска
 
 
+
 def initialize_db():
     """Инициализация БД и создание таблиц"""
 
     db.connect()
+
+    # Проверяем, есть ли колонка dismissal_date в таблице datastaff
+    # columns = [col.name for col in db.get_columns('datastaff')]
+    # if 'dismissal_date' not in columns:
+    #     db.execute_sql("ALTER TABLE datastaff ADD COLUMN dismissal_date DATE;")
+
     db.create_tables([Employee])
     db.create_tables([ReportCard10])  # График выходов сотрудников на октябрь 2025
     db.create_tables([ReportCard11])  # График выходов сотрудников на ноябрь 2025
     db.create_tables([ReportCard12])  # График выходов сотрудников на декабрь 2025
-    db.create_tables([DataStaff])
+    # db.create_tables([DataStaff])
 
 
 class DataStaff(BaseModel):
@@ -83,6 +90,7 @@ class DataStaff(BaseModel):
     service_number = CharField(unique=True)  # Табельный номер
     person = CharField()  # ФИО
     profession = CharField()  # Должность
+    dismissal_date = DateField(null=True)  # 🆕 Дата увольнения
 
 
 def writing_employee_database():

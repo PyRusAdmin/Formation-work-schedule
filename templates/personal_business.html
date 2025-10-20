@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Личное дело сотрудника{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-6 text-center">Личное дело сотрудника</h1>
+
+<form action="/delete/" method="post" class="flex flex-col gap-4 max-w-md mx-auto">
+    <label>
+        Табельный номер:
+        <input type="text" name="service_number" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <label>
+        Дата увольнения:
+        <input type="date" name="dismissal_date" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <label>
+        Месяц, с которого сотрудник не работает:
+        <select name="month" class="border p-2 w-full" required>
+            <option value="10">Октябрь</option>
+            <option value="11">Ноябрь</option>
+            <option value="12">Декабрь</option>
+        </select>
+    </label>
+    <br><br>
+    <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+        Удалить сотрудника
+    </button>
+</form>
+
+{% if message %}
+<div class="mt-6 p-4 border rounded bg-gray-100 text-center">
+    {{ message | safe }}
+</div>
+{% endif %}
+{% endblock %}
