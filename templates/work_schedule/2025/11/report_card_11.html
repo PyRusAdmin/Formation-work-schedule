@@ -122,11 +122,48 @@
     </div>
 </div>
 
+
+<!-- Выбор даты для сортировки и подсчёта -->
+<div class="sort-section mb-6">
+    <br>
+    <label for="sort-date" class="sort-date">Сортировать и подсчитать по дате:</label>
+    <select id="sort-date">
+        <option value="">Не сортировать</option>
+        {% for day in range(1, 31) %}
+        <option value="{{ day }}">{{ day }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<!-- Статистика по легенде -->
+<div class="stats-section mb-6">
+    <h2>Статистика по выбранной дате</h2>
+    <div id="stats-output" class="grid grid-cols-3 gap-2 text-sm">
+        <!-- Заполняется JS -->
+    </div>
+</div>
+
+
 {% endblock %}
 
 {% block scripts %}
 <script>
     let data = [];
+    let currentSortDate = null; // текущая выбранная дата для сортировки
+
+    // Карта значений легенды → человекочитаемое название
+    const legendMap = {
+        'Б': 'Больничный',
+        'О': 'Отпуск',
+        '1': 'Рабочий день',
+        'ПС': 'Простой',
+        'ДО': 'Декрет',
+        'БД': 'Бесплатный день',
+        'Г': 'Служит',
+        'В': 'Выходной',
+        'в': 'Выходной',
+        '-': 'Не работает'
+    };
 
     // Получить цвет ячейки на основе значения
     function getCellColor(value) {
@@ -156,6 +193,49 @@
         }
     }
 
+
+
+    // Подсчёт статистики по дате (индекс = dayIndex, от 0 до 29)
+    function calculateStats(dayIndex) {
+        const stats = {};
+        data.forEach(row => {
+            const val = row.days[dayIndex];
+            stats[val] = (stats[val] || 0) + 1;
+        });
+        return stats;
+    }
+
+
+    // Отображение статистики
+    function renderStats(dayIndex) {
+        const statsContainer = document.getElementById('stats-output');
+        if (dayIndex === null) {
+            statsContainer.innerHTML = '<p>Выберите дату для отображения статистики</p>';
+            return;
+        }
+
+        const stats = calculateStats(dayIndex);
+        let html = '';
+        for (const [key, count] of Object.entries(stats)) {
+            const label = legendMap[key] || key;
+            html += `<div><strong>${key}</strong>: ${label} — ${count} шт.</div>`;
+        }
+        statsContainer.innerHTML = html || '<p>Нет данных</p>';
+    }
+
+
+
+    // Сравнение для сортировки по дате
+    function compareByDate(a, b, dayIndex) {
+        const valA = a.days[dayIndex] || '';
+        const valB = b.days[dayIndex] || '';
+
+        // Сортируем по алфавиту или по приоритету (можно настроить)
+        if (valA < valB) return -1;
+        if (valA > valB) return 1;
+        return 0;
+    }
+
     // Рендеринг таблицы
     function renderTable() {
         const tbody = document.getElementById('table-body');
@@ -178,6 +258,18 @@
             (!filterSurname || row.ФИО.toLowerCase().includes(filterSurname.toLowerCase()))
             );
         });
+
+        // Применяем сортировку, если выбрана дата
+        if (currentSortDate !== null) {
+            const dayIndex = currentSortDate - 1; // дни 1–30 → индексы 0–29
+            filteredData.sort((a, b) => compareByDate(a, b, dayIndex));
+            renderStats(dayIndex);
+        } else {
+            renderStats(null);
+        }
+
+
+
 
         tbody.innerHTML = '';
 
@@ -208,7 +300,21 @@
         try {
             const response = await fetch("/data_11");
             if (!response.ok) throw new Error("Ошибка загрузки данных");
-            data = await response.json();
+            const rawData = await response.json();
+
+            // Преобразуем days из строки JSON в массив
+            data = rawData.map(row => ({
+                КСП: row.КСП,              // ← ключи уже на русском!
+                Наименование: row.Наименование,
+                Категория: row.Категория,
+                Профессия: row.Профессия,
+                Статус: row.Статус,
+                Таб: row.Таб,
+                ФИО: row.ФИО,
+                Тариф: row.Тариф,
+                days: row.days  // ← УЖЕ массив, не строка!
+            }));
+
             renderTable();
         } catch (error) {
             console.error("Ошибка при загрузке данных:", error);
@@ -226,6 +332,15 @@
     document.getElementById('filter-status').oninput = renderTable;
     document.getElementById('filter-service-number').oninput = renderTable;
     document.getElementById('filter-surname').oninput = renderTable;
+
+
+    // Обработчик сортировки по дате
+    document.getElementById('sort-date').onchange = function () {
+        const val = this.value;
+        currentSortDate = val ? parseInt(val, 10) : null;
+        renderTable();
+    };
+
 
     // Загрузка при старте
     loadData();

@@ -743,3 +743,13 @@ h1, h2 {
 .border-cyan-300 {border-color: #99f6e4;}
 .border-yellow-300 {border-color: #fde047;}
 .border-gray-300 {border-color: #d1d5db;}
+
+
+
+.sort-date {
+    font-weight: bold;
+    color: #333;
+    font-size: 15px;
+    margin-bottom: 6px;
+    display: block;
+}
