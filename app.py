@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
+import calendar
 import json
-from datetime import date
-from datetime import datetime
+from datetime import date, datetime
 from typing import Annotated
 from typing import List
 
 from fastapi import FastAPI, Request
 from fastapi import Form
 from fastapi import HTTPException
+from fastapi import Path
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from loguru import logger
@@ -275,10 +276,23 @@ async def calendar_2025(request: Request):
     return templates.TemplateResponse("choosing_month.html", {"request": request})
 
 
+"""Формирование графика по сотруднику"""
+
+
+@app.get("/forming_employee_report_card_12", response_model=None)
+async def forming_employee_report_card_12(request: Request):
+    """
+    Формирование графика сотрудника (декабрь 2025)
+    :param request: FastAPI request
+    :return: templates.TemplateResponse
+    """
+    return templates.TemplateResponse("work_schedule/forming_employee_report_card_12.html", {"request": request})
+
+
 @app.get("/forming_employee_report_card", response_model=None)
 async def forming_employee_report_card(request: Request):
     """
-    Формирование графика сотрудника
+    Формирование графика сотрудника (ноябрь 2025)
     :param request: FastAPI request
     :return: templates.TemplateResponse
     """
@@ -389,6 +403,113 @@ async def update_employee_days(tab: str, request: Request):
     except Exception as e:
         logger.exception(e)
         raise HTTPException(status_code=500, detail="Ошибка при сохранении")
+
+
+# === Эндпоинты для формирования графика по табельному номеру (декабрь 2025 → ReportCard12) ===
+
+# Словарь для сопоставления месяца и модели
+REPORT_CARD_MODELS = {
+    10: ReportCard10,
+    11: ReportCard11,
+    12: ReportCard12,
+}
+
+
+def get_model_by_month(month: int):
+    model = REPORT_CARD_MODELS.get(month)
+    if not model:
+        raise HTTPException(status_code=400, detail="Некорректный месяц. Допустимы: 10, 11, 12.")
+    return model
+
+
+@app.get("/api/employee/{month}/{tab}")
+async def get_employee_by_tab_and_month(
+        month: int = Path(..., ge=10, le=12),
+        tab: str = Path(..., min_length=1)
+):
+    """Получить сотрудника по табельному номеру и месяцу (10=окт, 11=ноя, 12=дек)"""
+    model = get_model_by_month(month)
+    try:
+        emp = model.get(model.tab == tab)
+        return {
+            "id": emp.id,
+            "tab": emp.tab,
+            "fio": emp.fio,
+            "ksp": emp.ksp,
+            "name": emp.name,
+            "category": emp.category,
+            "profession": emp.profession,
+            "status": emp.status,
+            "abbreviation": emp.abbreviation,
+            "grade": emp.grade,
+            "salary": emp.salary,
+            "days": json.loads(emp.days)
+        }
+    except model.DoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail=f"Сотрудник с табельным номером {tab} не найден в {month} мес. 2025")
+
+
+@app.put("/api/employee/{month}/{tab}")
+async def update_employee_days_by_month(
+        month: int = Path(..., ge=10, le=12),
+        tab: str = Path(..., min_length=1),
+        request: Request = None
+):
+    """Обновить график сотрудника за указанный месяц"""
+    model = get_model_by_month(month)
+    try:
+        emp = model.get(model.tab == tab)
+    except model.DoesNotExist:
+        raise HTTPException(status_code=404, detail=f"Сотрудник не найден в {month} мес. 2025")
+
+    try:
+        data = await request.json()
+        new_days = data.get("days")
+
+        if not isinstance(new_days, list):
+            raise HTTPException(status_code=400, detail="Поле 'days' должно быть списком")
+
+        # Проверка количества дней
+        days_in_month = {10: 31, 11: 30, 12: 31}
+        expected_days = days_in_month[month]
+        if len(new_days) != expected_days:
+            raise HTTPException(
+                status_code=400,
+                detail=f"{month} месяц 2025 имеет {expected_days} дней. Передано: {len(new_days)}"
+            )
+
+        emp.days = json.dumps(new_days, ensure_ascii=False)
+        emp.date_change = datetime.now()
+        emp.save()
+
+        return {"status": "ok", "message": f"График за {month} месяц успешно обновлён"}
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Некорректный JSON")
+    except Exception as e:
+        logger.exception(e)
+        raise HTTPException(status_code=500, detail="Ошибка при сохранении")
+
+
+@app.get("/api/calendar/{year}/{month}")
+async def get_calendar_structure(year: int, month: int):
+    """Возвращает структуру календаря: смещение + количество дней"""
+    if not (1 <= month <= 12):
+        raise HTTPException(status_code=400, detail="Некорректный месяц")
+
+    # Количество дней в месяце
+    days_in_month = calendar.monthrange(year, month)[1]
+
+    # Первый день месяца: 0=Пн, ..., 6=Вс (как в вашем JS)
+    first_weekday = calendar.weekday(year, month, 1)  # Пн=0, Вс=6
+
+    return {
+        "year": year,
+        "month": month,
+        "days_in_month": days_in_month,
+        "offset": first_weekday,  # сколько пустых ячеек до 1-го числа
+        "weekdays": ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+    }
 
 
 @app.get("/")

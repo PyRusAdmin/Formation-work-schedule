@@ -67,7 +67,6 @@ class Employee(BaseModel):
     vacation_end = DateField()  # Дата окончания отпуска
 
 
-
 def initialize_db():
     """Инициализация БД и создание таблиц"""
 
