@@ -4,7 +4,55 @@
 {% block content %}
 <h1 class="text-2xl font-bold mb-6 text-center">Личное дело сотрудника</h1>
 
+<hr>
+
+<form action="/add_employee/" method="post" class="add_employee flex flex-col gap-4 max-w-md mx-auto">
+    <h2>Добавить сотрудника</h2>
+    <label>
+        Табельный номер:
+        <input type="text" name="service_number" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <label>
+        Ф.И.О.:
+        <input type="text" name="person" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <label>
+        Тариф / оклад:
+        <input type="text" name="salary" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <label>
+        Статус:
+        <input type="text" name="status" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <label>
+        Профессия:
+        <input type="text" name="profession" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <label>
+        Дата поступления:
+        <input type="date" name="admission_date" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <label>
+        Код подразделения:
+        <input type="text" name="ksp" required class="border p-2 w-full">
+    </label>
+    <br><br>
+    <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+        Добавить сотрудника
+    </button>
+</form>
+
+<hr>
+
 <form action="/delete/" method="post" class="flex flex-col gap-4 max-w-md mx-auto">
+    <h2>Удалить сотрудника</h2>
+
     <label>
         Табельный номер:
         <input type="text" name="service_number" required class="border p-2 w-full">
@@ -28,6 +76,7 @@
         Удалить сотрудника
     </button>
 </form>
+
 
 {% if message %}
 <div class="mt-6 p-4 border rounded bg-gray-100 text-center">

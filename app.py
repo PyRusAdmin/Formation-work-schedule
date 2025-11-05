@@ -4,7 +4,7 @@ import json
 from datetime import date, datetime
 from typing import Annotated
 from typing import List
-
+from peewee import IntegrityError
 from fastapi import FastAPI, Request
 from fastapi import Form
 from fastapi import HTTPException
@@ -510,6 +510,92 @@ async def get_calendar_structure(year: int, month: int):
         "offset": first_weekday,  # сколько пустых ячеек до 1-го числа
         "weekdays": ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     }
+
+
+
+@app.post("/add_employee/")
+async def add_employee(
+        request: Request,
+        service_number: Annotated[str, Form()],
+        person: Annotated[str, Form()],
+        salary: Annotated[str, Form()],
+        status: Annotated[str, Form()],
+        profession: Annotated[str, Form()],
+        admission_date: Annotated[str, Form()],  # или dismissal_date, если нужно
+        ksp: Annotated[str, Form()],
+):
+    """добавление сотрудника в базу данных"""
+    try:
+        # Преобразуем дату поступления (если используется)
+        admission_date = datetime.strptime(admission_date, "%Y-%m-%d").date()
+    except ValueError:
+        message = "⚠️ Неверный формат даты. Ожидается ГГГГ-ММ-ДД."
+        return templates.TemplateResponse("personal_business.html", {"request": request, "message": message})
+
+    try:
+        # 1. Добавляем в основную базу
+        with db.atomic():
+            # Создаём запись в DataStaff
+            DataStaff.create(
+                service_number=service_number,
+                person=person,
+                salary=salary,
+                status=status,
+                profession=profession,
+                admission_date=admission_date,
+                dismissal_date=None,  # так как это новый сотрудник
+                ksp=ksp
+            )
+
+        now = datetime.now()
+
+        # 2. Добавляем в ноябрь (ReportCard11), если дата приёма ≤ 30 ноября
+        if admission_date <= date(2025, 11, 30):
+            days_nov = [""] * 30  # 30 дней в ноябре
+            ReportCard11.create(
+                ksp=ksp,
+                name="",
+                category="",
+                profession=profession,
+                status=status,
+                abbreviation="",
+                grade="",
+                tab=service_number,
+                fio=person,
+                salary=salary,
+                days=json.dumps(days_nov, ensure_ascii=False),
+                date_change=now
+            )
+
+        # 3. Добавляем в декабрь (ReportCard12), если дата приёма ≤ 31 декабря
+        if admission_date <= date(2025, 12, 31):
+            days_dec = [""] * 31  # 31 день в декабре
+            ReportCard12.create(
+                ksp=ksp,
+                name="",
+                category="",
+                profession=profession,
+                status=status,
+                abbreviation="",
+                grade="",
+                tab=service_number,
+                fio=person,
+                salary=salary,
+                days=json.dumps(days_dec, ensure_ascii=False),
+                date_change=now
+            )
+
+        message = f"✅ Сотрудник {person} (таб. №{service_number}) успешно добавлен."
+    except IntegrityError:
+        message = f"⚠️ Ошибка: сотрудник с табельным номером {service_number} уже существует."
+    except Exception as e:
+        logger.exception(e)
+        message = "⚠️ Произошла ошибка при добавлении сотрудника."
+
+    return templates.TemplateResponse("personal_business.html", {"request": request, "message": message})
+
+
+
 
 
 @app.get("/")

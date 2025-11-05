@@ -72,16 +72,21 @@ def initialize_db():
 
     db.connect()
 
-    # Проверяем, есть ли колонка dismissal_date в таблице datastaff
-    # columns = [col.name for col in db.get_columns('datastaff')]
-    # if 'dismissal_date' not in columns:
-    #     db.execute_sql("ALTER TABLE datastaff ADD COLUMN dismissal_date DATE;")
+    # Проверяем, есть ли колонка admission_date в таблице datastaff
+    columns = [col.name for col in db.get_columns('datastaff')]
+    if 'admission_date' not in columns:
+        db.execute_sql("ALTER TABLE datastaff ADD COLUMN admission_date DATE;")
+    # if 'status' not in columns:
+    #     db.execute_sql("ALTER TABLE datastaff ADD COLUMN status;")
+    # if 'salary' not in columns:
+    #     db.execute_sql("ALTER TABLE datastaff ADD COLUMN salary;")
 
     db.create_tables([Employee])
     db.create_tables([ReportCard10])  # График выходов сотрудников на октябрь 2025
     db.create_tables([ReportCard11])  # График выходов сотрудников на ноябрь 2025
     db.create_tables([ReportCard12])  # График выходов сотрудников на декабрь 2025
-    # db.create_tables([DataStaff])
+
+    db.create_tables([DataStaff])
 
 
 class DataStaff(BaseModel):
@@ -90,6 +95,13 @@ class DataStaff(BaseModel):
     person = CharField()  # ФИО
     profession = CharField()  # Должность
     dismissal_date = DateField(null=True)  # 🆕 Дата увольнения
+
+    admission_date = DateField(null=True)   # Дата приема
+
+    ksp = CharField()  # Код подразделения
+    status = CharField()  # Статус
+    salary = CharField()  # Зарплата
+
 
 
 def writing_employee_database():
