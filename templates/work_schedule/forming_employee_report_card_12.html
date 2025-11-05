@@ -70,16 +70,16 @@
     let currentEmployee = null;
 
     async function loadEmployeeByTab() {
-//        const tabInput = document.getElementById('tab-input');
+        //        const tabInput = document.getElementById('tab-input');
         const tab = document.getElementById('tab-input').value.trim();
-//        const tab = tabInput.value.trim();
+        //        const tab = tabInput.value.trim();
         if (!tab) {
             alert("⚠️ Введите табельный номер");
             return;
         }
 
         try {
-//            Декабрь 2025
+            //            Декабрь 2025
             const res = await fetch(`/api/employee/12/${encodeURIComponent(tab)}`);
             if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
@@ -181,9 +181,9 @@
     async function saveEmployee() {
         if (!currentEmployee) return;
         try {
-//            Декабрь 2025
+            //            Декабрь 2025
             const res = await fetch(`/api/employee/12/${currentEmployee.tab}`, {
-//            const res = await fetch(`/api/employee/${currentEmployee.tab}`, {
+                //            const res = await fetch(`/api/employee/${currentEmployee.tab}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({days: currentEmployee.days})
