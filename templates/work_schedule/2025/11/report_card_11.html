@@ -25,8 +25,7 @@
     </table>
     <div style="margin-top: 10px;">
         <label>Фамилия</label>
-        <input type="text" id="filter-surname"
-               style="width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
+        <input type="text" id="filter-surname" style="width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
 </div>
 
@@ -122,7 +121,6 @@
     </div>
 </div>
 
-
 <!-- Выбор даты для сортировки и подсчёта -->
 <div class="sort-section mb-6">
     <br>
@@ -142,7 +140,6 @@
         <!-- Заполняется JS -->
     </div>
 </div>
-
 
 {% endblock %}
 
@@ -193,8 +190,6 @@
         }
     }
 
-
-
     // Подсчёт статистики по дате (индекс = dayIndex, от 0 до 29)
     function calculateStats(dayIndex) {
         const stats = {};
@@ -204,7 +199,6 @@
         });
         return stats;
     }
-
 
     // Отображение статистики
     function renderStats(dayIndex) {
@@ -222,8 +216,6 @@
         }
         statsContainer.innerHTML = html || '<p>Нет данных</p>';
     }
-
-
 
     // Сравнение для сортировки по дате
     function compareByDate(a, b, dayIndex) {
@@ -267,9 +259,6 @@
         } else {
             renderStats(null);
         }
-
-
-
 
         tbody.innerHTML = '';
 
