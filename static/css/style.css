@@ -1,131 +1,5 @@
 /* ======= БУРГЕР-МЕНЮ ======= */
 
-/* Общий контейнер меню — оставляем, но он больше не позиционирует кнопку */
-.menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    pointer-events: none; /* чтобы не мешать контенту */
-}
-
-/* Чекбокс скрыт */
-.burger-checkbox {
-    position: absolute;
-    visibility: hidden;
-}
-
-/* Кнопка бургера — слева */
-.burger {
-    position: absolute;
-    top: 20px;
-    left: 20px; /* ← слева! */
-    z-index: 1002;
-    cursor: pointer;
-    display: block;
-    width: 36px;
-    height: 20px;
-    background: transparent;
-    border: none;
-    padding: 0;
-    pointer-events: auto; /* чтобы реагировала на клик */
-}
-
-.burger::before,
-.burger::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #4CAF50;
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.burger::before {
-    top: 0;
-    box-shadow: 0 8px 0 #4CAF50;
-}
-
-.burger::after {
-    bottom: 0;
-}
-
-.burger-checkbox:checked + .burger::before {
-    top: 10px;
-    transform: rotate(45deg);
-    box-shadow: 0 0 0 transparent;
-}
-
-.burger-checkbox:checked + .burger::after {
-    bottom: 10px;
-    transform: rotate(-45deg);
-}
-
-/* Панель меню — выезжает СПРАВА */
-.menu-list {
-    position: fixed;
-    top: 0;
-    right: -300px; /* спрятана справа */
-    width: 250px;
-    height: 100vh;
-    background: #4CAF50;
-    padding: 80px 20px 30px;
-    margin: 0;
-    list-style: none;
-    transition: right 0.3s ease;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-    pointer-events: auto;
-}
-
-.menu-list li {
-    margin-bottom: 15px;
-}
-
-.menu-item {
-    display: block;
-    padding: 12px 15px;
-    color: white;
-    font-size: 18px;
-    text-align: left;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background 0.2s ease;
-}
-
-.menu-item:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* При checked — панель выезжает */
-.burger-checkbox:checked ~ .menu-list {
-    right: 0;
-}
-
-/* Затемнение фона при открытом меню */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 998;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s;
-    pointer-events: none;
-}
-
-.burger-checkbox:checked ~ .overlay {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
 /* Основной проект */
 
 .calendar-controls {
@@ -266,22 +140,11 @@
 }
 
 .container {
-/*    width: 100%; *//* Ширина страницы */
-/*    max-width: 1300px;*/
-/*    margin: 0 auto;*/
-    background-color: white;
-    /*    padding: 100%;*/
-    /*    border-radius: 8px;*/
-    /*    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);*/
-}
-
-
-/* Основные стили */
-.container {
-/*    margin: 0 auto;*/
-/*    background-color: white;*/
-/*    padding: 20px;*/
-/*    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);*/
+    padding-top: 80px; /* Отступ под фиксированное меню */
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
 }
 
 /* Дни */
@@ -304,7 +167,6 @@
     border-spacing: 58px 0; /* Горизонтальный отступ 10px, вертикальный 0 */
 }
 
-
 .divider {
     width: 100%;
     height: 2px;
@@ -317,11 +179,6 @@ h1 {
     color: #333;
 }
 
-h1, h2 {
-    text-align: center;
-    margin-bottom: 24px;
-    color: #2c3e50;
-}
 
 /* Стили для кнопок-ссылок */
 .btn {
@@ -493,13 +350,6 @@ button:hover {
     gap: 10px 20px;
 }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    color: #444;
-}
-
 .legend-color {
     display: inline-block;
     width: 20px;
@@ -509,119 +359,9 @@ button:hover {
     margin-right: 10px;
 }
 
-.table-report-card th,
-.table-report-card td {
-    text-align: center; /* центрирование текста */
-    font-size: 17px; /* размер шрифта */
-}
 
 
 /* ======= БУРГЕР-МЕНЮ ======= */
-.menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    pointer-events: none;
-}
-
-.burger-checkbox {
-    position: absolute;
-    visibility: hidden;
-}
-
-.burger::before,
-.burger::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: #4CAF50;
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.burger::before {
-    top: 0;
-    box-shadow: 0 8px 0 #4CAF50;
-}
-
-.burger::after {
-    bottom: 0;
-}
-
-.burger-checkbox:checked + .burger::before {
-    top: 10px;
-    transform: rotate(45deg);
-    box-shadow: 0 0 0 transparent;
-}
-
-.burger-checkbox:checked + .burger::after {
-    bottom: 10px;
-    transform: rotate(-45deg);
-}
-
-.menu-list {
-    position: fixed;
-    top: 0;
-    right: -300px;
-    width: 250px;
-    height: 100vh;
-    background: #4CAF50;
-    padding: 80px 20px 30px;
-    margin: 0;
-    list-style: none;
-    transition: right 0.3s ease;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-    pointer-events: auto;
-}
-
-.menu-list li {
-    margin-bottom: 15px;
-}
-
-.menu-item {
-    display: block;
-    padding: 12px 15px;
-    color: white;
-    font-size: 18px;
-    text-align: left;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background 0.2s ease;
-}
-
-.menu-item:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.burger-checkbox:checked ~ .menu-list {
-    right: 0;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 998;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s;
-    pointer-events: none;
-}
-
-.burger-checkbox:checked ~ .overlay {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
 
 
 h1, h2 {
@@ -633,6 +373,13 @@ h1, h2 {
 .table-report-card {
     overflow-x: auto;
     margin-bottom: 18px;
+}
+
+/* Фильтры */
+.filter-section table {
+    width: 100%;
+    margin-bottom: 10px;
+    border-collapse: collapse;
 }
 
 .table-report-card table {
@@ -653,13 +400,6 @@ h1, h2 {
     position: sticky;
     top: 0;
     z-index: 10;
-}
-
-/* Фильтры */
-.filter-section table {
-    width: 100%;
-    margin-bottom: 10px;
-    border-collapse: collapse;
 }
 
 .filter-section th {
@@ -744,12 +484,151 @@ h1, h2 {
 .border-yellow-300 {border-color: #fde047;}
 .border-gray-300 {border-color: #d1d5db;}
 
-
-
 .sort-date {
     font-weight: bold;
     color: #333;
     font-size: 15px;
     margin-bottom: 6px;
     display: block;
+}
+
+/* Контейнер шапки — занимает всю ширину */
+.main-header {
+    background-color: #4CAF50; /* единый цвет фона */
+    width: 100%;
+    height: 50px; /* увеличили высоту шапки (было 20px) */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Кнопка бургера — слева */
+.burger {
+    position: absolute;
+    top: 15px;
+    left: -330px; /* Положение кнопки относительно .main-header */
+    z-index: 1002;
+    cursor: pointer;
+    display: block;
+    width: 36px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    pointer-events: auto;
+    /* Добавляем относительное позиционирование для дочерних псевдоэлементов */
+    position: relative;
+}
+
+/* Контейнер внутри шапки */
+.header-container {
+    max-width: 1200px; /* ограничение ширины контента */
+    margin: 0 auto; /* центрирование */
+    padding: 0 20px; /* отступы по краям */
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Панель меню — выезжает СПРАВА */
+.menu-list {
+    position: fixed;
+    top: 0;
+    right: -300px; /* спрятана справа */
+    width: 250px;
+    height: 100vh;
+    background: #4CAF50;
+    padding: 80px 20px 30px;
+    margin: 0;
+    list-style: none;
+    transition: right 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    pointer-events: auto;
+}
+
+.menu-list li {
+    margin-bottom: 15px;
+}
+
+.burger::after {
+    bottom: 0;
+}
+
+.burger::before {
+    top: 0;
+    box-shadow: 0 8px 0 #f9fafb;
+}
+
+.burger::before,
+.burger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #f9fafb;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Затемнение фона при открытом меню */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    pointer-events: none;
+}
+
+/* Активация меню */
+.burger-checkbox:checked + .burger::before {
+    top: 10px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 0 transparent;
+}
+
+.burger-checkbox:checked + .burger::after {
+    bottom: 10px;
+    transform: rotate(-45deg);
+}
+
+/* При checked — панель выезжает */
+.burger-checkbox:checked ~ .menu-list {
+    right: 0;
+}
+
+.burger-checkbox:checked ~ .overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Чекбокс скрыт */
+.burger-checkbox {
+    position: absolute;
+    visibility: hidden;
+}
+
+.menu-item {
+    display: block;
+    padding: 12px 15px;
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
