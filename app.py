@@ -512,7 +512,6 @@ async def get_calendar_structure(year: int, month: int):
     }
 
 
-
 @app.post("/add_employee/")
 async def add_employee(
         request: Request,
@@ -593,9 +592,6 @@ async def add_employee(
         message = "⚠️ Произошла ошибка при добавлении сотрудника."
 
     return templates.TemplateResponse("personal_business.html", {"request": request, "message": message})
-
-
-
 
 
 @app.get("/")
