@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 import calendar
 import json
+import secrets
 from datetime import date, datetime
 from typing import Annotated
 from typing import List
-from peewee import IntegrityError
-from fastapi import FastAPI, Request
-from fastapi import Form
-from fastapi import HTTPException
-from fastapi import Path
+
+from fastapi import FastAPI, Request, Depends, HTTPException, Form, Path
+from fastapi.responses import HTMLResponse
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from loguru import logger
+from peewee import IntegrityError
 from pydantic import BaseModel
 
+from config import AUTHORIZED_USERNAME, AUTHORIZED_PASSWORD
 from database import initialize_db, ReportCard10, ReportCard11, ReportCard12, DataStaff, db
+
+security = HTTPBasic()  # ← это обязательный объект
 
 app = FastAPI()  # Создаем экземпляр FastAPI
 # Монтируем статические файлы
@@ -24,6 +28,7 @@ templates = Jinja2Templates(directory="templates")
 
 # Инициализация БД при запуске приложения
 initialize_db()
+
 
 
 # Модели Pydantic
@@ -195,11 +200,29 @@ async def report_card_12(request: Request):
     """
     return templates.TemplateResponse("work_schedule/2025/12/report_card_12.html", {"request": request})
 
+def authenticate_user(credentials: HTTPBasicCredentials = Depends(security)):
+    # Защита от None (если переменные не заданы в .env)
+    expected_username = AUTHORIZED_USERNAME or ""
+    expected_password = AUTHORIZED_PASSWORD or ""
 
-@app.get("/list_employees")
-async def list_employees(request: Request):
+    correct_username = secrets.compare_digest(credentials.username, expected_username)
+    correct_password = secrets.compare_digest(credentials.password, expected_password)
+
+    if not (correct_username and correct_password):
+        raise HTTPException(
+            status_code=401,
+            detail="Неверный логин или пароль",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
+
+@app.get("/list_employees", response_class=HTMLResponse)
+async def list_employees(
+        request: Request,
+        _username: str = Depends(authenticate_user)  # ← добавили зависимость
+):
     """
-    Страница списка сотрудников
+    Страница списка сотрудников (требует авторизации)
     """
     try:
         employees = []
