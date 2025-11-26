@@ -127,7 +127,7 @@
     <label for="sort-date" class="sort-date">Сортировать и подсчитать по дате:</label>
     <select id="sort-date">
         <option value="">Не сортировать</option>
-        {% for day in range(1, 31) %}
+        {% for day in range(1, 32) %}
         <option value="{{ day }}">{{ day }}</option>
         {% endfor %}
     </select>
@@ -190,14 +190,22 @@
         }
     }
 
+    // 👇 ДОБАВЛЕНО: какие статусы входят в численность
+    const countedStatuses = new Set(['1', 'Г', 'ПС', 'ДО', 'О', 'В', 'в']);
+
     // Подсчёт статистики по дате (индекс = dayIndex, от 0 до 29)
     function calculateStats(dayIndex) {
         const stats = {};
+        let totalCount = 0; // общая численность по критерию
+
         data.forEach(row => {
-            const val = row.days[dayIndex];
+            const val = row.days[dayIndex] || '-';
             stats[val] = (stats[val] || 0) + 1;
+            if (countedStatuses.has(val)) {
+                totalCount++;
+            }
         });
-        return stats;
+        return { stats, totalCount }; // 👈 важно: возвращаем объект
     }
 
     // Отображение статистики
@@ -208,12 +216,21 @@
             return;
         }
 
-        const stats = calculateStats(dayIndex);
+        const result = calculateStats(dayIndex); // 👈 получаем объект
+        const stats = result.stats;
+        const totalCount = result.totalCount;
+
         let html = '';
+
+        // Отображаем детали
         for (const [key, count] of Object.entries(stats)) {
             const label = legendMap[key] || key;
             html += `<div><strong>${key}</strong>: ${label} — ${count} шт.</div>`;
         }
+
+        // Добавляем общую численность
+        html += `<div class="col-span-3 mt-2 font-bold">Общая численность: ${totalCount} чел.</div>`;
+
         statsContainer.innerHTML = html || '<p>Нет данных</p>';
     }
 

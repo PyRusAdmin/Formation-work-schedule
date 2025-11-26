@@ -125,10 +125,48 @@
 
 {% endblock %}
 
+<!-- Выбор даты для сортировки и подсчёта -->
+<div class="sort-section mb-6">
+    <br>
+    <label for="sort-date" class="sort-date">Сортировать и подсчитать по дате:</label>
+    <select id="sort-date">
+        <option value="">Не сортировать</option>
+        {% for day in range(1, 32) %}
+        <option value="{{ day }}">{{ day }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<!-- Статистика по легенде -->
+<div class="stats-section mb-6">
+    <h2>Статистика по выбранной дате</h2>
+    <div id="stats-output" class="grid grid-cols-3 gap-2 text-sm">
+        <!-- Заполняется JS -->
+    </div>
+</div>
+
 {% block scripts %}
 
 <script>
     let data = [];
+    let currentSortDate = null; // текущая выбранная дата для сортировки
+
+    // Карта значений легенды → человекочитаемое название
+    const legendMap = {
+        'Б': 'Больничный',
+        'О': 'Отпуск',
+        '1': 'Рабочий день',
+        'ПС': 'Простой',
+        'ДО': 'Декрет',
+        'БД': 'Бесплатный день',
+        'Г': 'Служит',
+        'В': 'Выходной',
+        'в': 'Выходной',
+        '-': 'Не работает'
+    };
+
+    // 👇 ДОБАВЛЕНО: какие статусы входят в численность
+    const countedStatuses = new Set(['1', 'Г', 'ПС', 'ДО', 'О', 'В', 'в']);
 
     // Получить цвет ячейки на основе значения
     function getCellColor(value) {
@@ -156,6 +194,58 @@
             default:
                 return 'bg-white text-black border border-gray-200';
         }
+    }
+
+    // Подсчёт статистики по дате (индекс = dayIndex, от 0 до 30)
+    function calculateStats(dayIndex) {
+        const stats = {};
+        let totalCount = 0; // общая численность по критерию
+
+        data.forEach(row => {
+            const val = row.days[dayIndex] || '-';
+            stats[val] = (stats[val] || 0) + 1;
+            if (countedStatuses.has(val)) {
+                totalCount++;
+            }
+        });
+        return { stats, totalCount }; // 👈 возвращаем объект
+    }
+
+    // Отображение статистики
+    function renderStats(dayIndex) {
+        const statsContainer = document.getElementById('stats-output');
+        if (dayIndex === null) {
+            statsContainer.innerHTML = '<p>Выберите дату для отображения статистики</p>';
+            return;
+        }
+
+        const result = calculateStats(dayIndex);
+        const stats = result.stats;
+        const totalCount = result.totalCount;
+
+        let html = '';
+
+        // Отображаем детали
+        for (const [key, count] of Object.entries(stats)) {
+            const label = legendMap[key] || key;
+            html += `<div><strong>${key}</strong>: ${label} — ${count} шт.</div>`;
+        }
+
+        // Добавляем общую численность
+        html += `<div class="col-span-3 mt-2 font-bold">Общая численность: ${totalCount} чел.</div>`;
+
+        statsContainer.innerHTML = html || '<p>Нет данных</p>';
+    }
+
+    // Сравнение для сортировки по дате
+    function compareByDate(a, b, dayIndex) {
+        const valA = a.days[dayIndex] || '';
+        const valB = b.days[dayIndex] || '';
+
+        // Сортируем по алфавиту или по приоритету
+        if (valA < valB) return -1;
+        if (valA > valB) return 1;
+        return 0;
     }
 
     // Рендеринг таблицы
